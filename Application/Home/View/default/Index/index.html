@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta name="Author" content="技术支持：小蜜蜂竞价单页订单系统www.minbee.cn 咨询热线：15622741979"  rel="nofollow" />
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>{:C('SITE_TITLE')}</title>
+<meta name="description" content="{:C('SITE_DESCRIBE')}" />
+<meta name="keywords" content="{:C('SITE_KEYWORDS')}" /> 
+<link rel="shortcut icon" href="__PUBLIC__/Home/images/tubiao.ico" type="image/x-icon"/>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.lazyload.js"></script>
+<eq name="language" value="1">
+<script type="text/javascript" src="__PUBLIC__/Home/js/language.js"></script>
+</eq>
+<script type="text/javascript"> 
+	jQuery(document).ready( 
+	function($){ 
+		$("img").lazyload({ 
+			placeholder : "__PUBLIC__/Home/images/grey.gif", 
+			effect      : "fadeIn",
+			threshold : 200
+		}); 
+	}); 
+</script> 
+<style>
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,html{margin:0;padding:0;}
+html{ background:#e2e2e2; font-family:"微软雅黑"}
+body{ margin:0 auto; background:#fff;max-width:750px; overflow-x:hidden;}
+li{list-style:none;}
+img{border:0;vertical-align:middle;}
+table{border-collapse:collapse;border-spacing:0;}
+p{word-wrap:break-word;}
+
+header{ height:40px; line-height:40px; font-size:18px; color:#fff; text-align:center; background:#FF6700;}
+.clear{clear:both;}
+footer{ margin-top:10px; text-align:center; font-size:16px; padding-top:10px; border-top:1px solid #ddd; line-height:30px;}
+footer a{ color:#333; margin:0 6px; text-decoration:none;}
+img{ border:0;}
+
+.content{ margin:1%; width:98%;word-wrap:break-word; word-break:break-all; white-space:normal;}
+.content img{ max-width:100%;}
+.list dl{ float:left; width:48%; margin:10px 1%;}
+.list dl dt{ width:100%;}
+.list dl dt img{ width:100%;}
+.list dl dd{ padding:3% 0px;clear:both;overflow:hidden;}
+.list dl dd span{ float:left; font-size:18px;font-weight:bold; color:#FF6700;}
+.list dl dd em{float:right;font-style:normal; color:#000; font-size:14px;}
+.list dl dd em i{text-decoration:line-through;font-style:normal; }
+.list dl li{ color:#FF6700;line-height:25px; font-weight:bold;font-size:16px;}
+.list dl li span{font-weight:bold; float:right; height:35px; width:100%; background:#FF6700; color:#fff; border-radius:5px; line-height:35px; text-align:center; font-weight:normal;font-size:16px;}
+.icp{text-align:center; font-size:14px; padding:20px 0px;overflow:hidden}
+
+@media screen and (max-width:500px){
+	.list dl dd span{ font-size:14px; }
+	.list dl li span{font-size:16px;}
+}
+
+</style>
+</head>
+<body>
+<header>{:C('WEB_INDEX_TITLE')}</header>
+
+<div class="list">
+<volist name="_list" id="v">
+<eq name="value" value="1">
+<a href="{:U('Home/index/info',array('proid' => $v[proid]))}">
+<else/>
+<a href="__ROOT__/html/{$v[proid]}-1.html">
+</eq>
+	<dl>
+		<dt><img src="{$v['thumb']}"/></dt>
+		<dd><em>原价：<i>{$v['currency']}{$v['oldprice']}</i></em><span>&yen;{$v['price']}</span></dd>
+		<li><span>立即抢购</span></li>
+	</dl>
+</a>
+</volist>
+</div>
+<div class="clear"></div>
+<div class="icp">{:C('WEB_SITE_ICP')}</div>
+</body>
+</html>

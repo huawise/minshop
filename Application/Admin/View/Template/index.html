@@ -1,0 +1,63 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>模板管理</b></div>
+	<div class="c"></div>
+	<br/>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<php>	if(in_array("template_add",$peradmin[product])){ </php>
+				<li class="ul-add ahover"><a href="{:U('add')}"><i class="fa fa-plus-square-o"></i> 添加模板</a></li>
+			<php>	} </php>
+			<php>	if(in_array("template_del",$peradmin[product])){ </php>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除模板<a></li>
+			<php>	} </php>	
+				<li class="ul-break ahover"><a href="{:U('index')}"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个模板</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th>模板名称</th>
+				<th>短信验证码</th>
+				<th>底部导航</th>
+				<th>订单查询</th>
+				<th>添加时间</th>
+				<th>操作</th>
+			<tbody>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><neq name="vo.tid" value="1"><input class="ids" type="checkbox" name="tid[]" value="{$vo.tid}" /></neq></td>
+				<td>{$vo.name}</td>
+				<td><eq name="vo.sms" value="0">开启<else/><font color="red" style="font-weight:bold;">关闭</font></eq></td>
+				<td><eq name="vo.nav" value="0">开启<else/><font color="red" style="font-weight:bold;">关闭</font></eq></td>
+				<td><eq name="vo.search" value="0">开启<else/><font color="red" style="font-weight:bold;">关闭</font></eq></td>
+				<td>{$vo.addtime|time_format}</td>
+				<td><a href="{:U('update?tid='.$vo['tid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a> <php>	if(in_array("template_del",$peradmin[product])){ </php><neq name="vo.tid" value="1"><a url="{:U('del?tid='.$vo['tid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a></neq><php>	} </php>	</td>
+			</tr>
+			</volist>
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	
+	<script type="text/javascript">
+	
+	
+	
+	</script>
+</block>

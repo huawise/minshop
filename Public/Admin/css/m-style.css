@@ -1,0 +1,130 @@
+@charset "utf-8";
+/* CSS Document */
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,html{margin:0;padding:0;}
+html{ background:#fff;}
+body{ font-size:12px; font-family:"微软雅黑",Arial  !important; background:#fff;-webkit-text-size-adjust:100%; max-width:900px; overflow-x:hidden;margin:0 auto; }
+a{text-decoration:none; font-family:"微软雅黑";}
+a:hover{text-decoration:none;}
+em,i{font-style:normal;}
+li{list-style:none;}
+img{border:0;vertical-align:middle;}
+table{border-collapse:collapse;border-spacing:0;}
+select{font-family:"微软雅黑";}
+p{word-wrap:break-word;}
+.c{clear:both;}
+.e{display:inline-block;*display:inline;*zoom:1;height:100%;width:1px;margin-left:-1px;vertical-align:middle;}
+.fr{ float:right;}
+.fl{ float:left;}
+.show{ display:block;}
+.hide{ display:none;}
+
+.login a{ display:block; height:30px; line-height:30px; text-align:center; width:100px; font-size:14px; color:#333;}
+.login a:nth-child(1){ border-bottom:1px solid #ccc;}
+.user-bg{ background:url(../images/timg.jpg) no-repeat center center; height:200px; width:100%; position:relative;}
+.user-bg span{ position:absolute; font-size:20px; color:#fff; opacity:0.8; right:10px; top:10px; cursor:pointer;}
+.user-bg dl.user{ position:absolute; overflow:hidden; text-align:center;top:25px; left:25px;}
+.user-bg dl.user dt{ font-size:40px; width:70px; height:70px;background:#fff; border-radius:50%; float:left;}
+.user-bg dl.user img{ width:70%;}
+.user-bg dl.user .head{ background:url(../images/blue_color/bg_icon.png) no-repeat; height:45px; width:40px; display:block; position:absolute; top:2px; left:5px; border-radius:50%; overflow:hidden; background-position:-10px 0px;}
+.user-bg dl.user dd{ font-size:16px; float:left; margin-left:10px; margin-top:25px;}
+.div-dl{ position:absolute; bottom:0px; overflow:hidden; width:100%; background:#000; padding:10px 0px; opacity:0.5;}
+.div-dl dl{ float:left; width:25%; text-align:center; color:#fff; font-size:14px; border-left:1px solid #fff;box-sizing: border-box;}
+.div-dl dl:nth-child(1){ border:none;}
+.div-dl dl dd{ font-weight:bold;}
+
+.main{ width:98%; border:1px solid #ccc; border-radius:3px; overflow:hidden; margin:5px auto;}
+.main ul li{ border-bottom:1px solid #ccc; position:relative;}
+.main ul li.li-no{ border:none;}
+.main ul li a{ display:block; padding:15px; font-size:16px; color:#333;}
+.main ul li i{position:absolute; right:15px; top:20px;}
+
+.main-title{ height:40px; line-height:40px; background:#e2e2e2; padding:0 10px; font-size:16px;}
+.main table{ width:100%;font-size:14px;}
+.main table tr{ height:35px; line-height:35px; text-align:center;}
+.main table tr th{  width:33.3%; }
+.main table tr{ border-bottom:1px solid #ccc;}
+.main table tr:nth-child(8){ border:none;}
+.main table tr th:nth-child(2){ border-left:1px solid #ccc;border-right:1px solid #ccc;}
+.main table tr td:nth-child(2){ border-left:1px solid #ccc;border-right:1px solid #ccc;}
+
+header{ height:40px; background:#2A3F54; position:relative; overflow:hidden; text-align:center; color:#fff; font-size:16px; line-height:40px;}
+header a{ position:absolute; left:10px; top:12px; display:block; cursor:pointer; color:#fff;}
+
+.query{ width:98%; margin:5px auto; overflow:hidden;}
+.query-l{width:82%;}
+.query-l input[name="phone"]{ height:40px; line-height:40px; padding:0px 2%; width:96%; border:1px solid #ccc; border-radius:3px; font-size:14px; font-size:16px;}
+.query-r{ width:15%; background:#1E9FFF; border-radius:3px; display:block; height:40px; line-height:40px; text-align:center; color:#fff; font-size:14px;}
+
+.url{ width:98%; border:1px solid #ccc; border-radius:3px; overflow:hidden; margin:5px auto;}
+.url table{ width:100%;font-size:14px;}
+.url table tr{ height:35px; line-height:35px; text-align:center;}
+.url table tr th{  width:33.3%; }
+.url table tr{ border-bottom:1px solid #ccc;}
+.url table tr th:nth-child(1){ border-right:1px solid #ccc;}
+.url table tr td:nth-child(1){ border-right:1px solid #ccc;}
+.url table tr td a{color:#337ab7;font-weight:bold;}
+.url input{ width:1px; border:none; height:1px;}
+
+.html{ width:90%; color:#000; margin:10px auto;}
+
+
+.order dl{width:98%; border:1px solid #ccc; border-radius:3px; overflow:hidden; margin:5px auto; position:relative;}
+.order dl dt{ height:30px; line-height:30px; font-size:14px; border-bottom:1px solid #ccc; padding:0px 10px; background:#e2e2e2;}
+.order dl dt i{ float:right; background:#F7B824; color:#fff; height:24px; line-height:25px; width:60px; font-size:12px; text-align:center; margin-top:3px; display:inline-block; border-radius:3px;}
+.order dl dt i.red{ background:red;}
+.order dl dd{ padding:10px; font-size:14px;}
+.order dl dd p{ padding:5px 0px; clear:both; overflow:hidden; width:100%;}
+.order dl dd p span{ display:block; float:left; width:80px; text-align:center; padding-right: 10px; color:#000; font-weight:bold;}
+.order dl dd p span a{ color:#337ab7;}
+.order dl dd p em{ display:block; color:#333;margin-left:90px;}
+.order dl dd p em.red{ color:red;}
+.order dl dd p i{ float:right;}
+.order dl dd input{ width:0px; border:none; }
+
+
+.password{ width:98%; margin:5px auto;}
+.password dl{ clear:both; overflow:hidden; margin:15px 0px;}
+.password dl dt{ width:20%; float:left; font-size:14px; text-align:right;line-height:35px;}
+.password dl dd{ width:76%; float:right; }
+.password dl dd input{ font-size:14px; height:35px; line-height:35px; padding:0px 2%; width:90%; border-radius:3px; border:1px solid #ccc;}
+.password p button{ width:98%; height:35px; line-height:35px; background:#009688; text-align:center; color:#fff; font-size:16px; margin:10px auto; border-radius:3px; border:none;}
+
+.top{ height:5px; background:#2A3F54}
+.enter-logo{ background:url(../images/blue_color/bg_icon.png) no-repeat; height:50px; width:50px; margin:10px auto}
+.enter{ width:90%; margin:0px auto;}
+.enter ul li{ width:100%; margin:10px 0px; border-radius:3px; border:1px solid #ccc; position:relative;}
+.enter ul li i{ font-size:20px; color:#999; position:absolute; top:11px; left:7px;}
+.enter ul li input[name="username"]{ height:45px; line-height:45px; font-size:16px; border-bottom:3px; border:none; width:80%; padding-left:33px;}
+.enter ul li input[name="password"]{ height:45px; line-height:45px; font-size:16px; border-bottom:3px; border:none; width:80%; padding-left:33px;}
+.login-btn{ width:100%; height:45px; line-height:45px; text-align:center; background:#2A3F54; border:none; color:#fff; font-size:18px; border-radius:3px;}
+.enter-txt{ text-align:center; font-size:20px; color:#333;}
+.enter ul ol{ position:relative;margin:10px 0px; overflow:hidden;}
+.enter ul ol i{ font-size:20px; color:#999; position:absolute; top:7px; left:7px;}
+.enter ul ol input[name="verify"]{ height:35px; line-height:35px; font-size:14px; border-bottom:3px; border:none; width:70%; padding-left:33px;}
+.enter ul ol span:nth-child(1){ float:left; display:block; width:40%; overflow:hidden;border:1px solid #ccc; height:35px; line-height:35px; border-radius:3px;}
+.enter ul ol span:nth-child(2){ float:left; width:40%; margin-left:10px;}
+.enter ul ol span img{ width:130px; height:35px;}
+.page{ width:100%;  height:45px; line-height:45px; text-align:center; margin:20px 0px;}
+.page a{color:#fff; font-size:14px; display:block; width:45%;background:#2A3F54; } 
+.page a:nth-child(1){ float:left;}
+.page a:nth-child(2){ float:right;}
+.page a.a{ background:#999;}
+
+.null{ font-size:18px; text-align:center;color:red; margin:50px 0px;}
+
+@media screen and (max-width:500px){
+	
+	.user-bg{ background:url(../images/timg.jpg) no-repeat center center; height:150px; width:100%; position:relative;}
+	.user-bg span{ position:absolute; font-size:20px; color:#fff; opacity:0.8; right:10px; top:10px; cursor:pointer;}
+	.user-bg dl.user{ position:absolute; overflow:hidden; text-align:center;top:15px; left:15px;}
+	.user-bg dl.user dt{ font-size:34px; width:50px; height:50px;background:#fff; border-radius:50%; float:left;}
+	.user-bg dl.user dd{ font-size:16px; float:left; margin-left:10px; margin-top:15px;}
+	.div-dl{ position:absolute; bottom:0px; overflow:hidden; width:100%; background:#000; padding:10px 0px; opacity:0.5;}
+	.div-dl dl{ float:left; width:25%; text-align:center; color:#fff; font-size:14px; border-left:1px solid #fff;box-sizing: border-box;}
+	.div-dl dl:nth-child(1){ border:none;}
+	.div-dl dl dd{ font-weight:bold;}
+	
+	.query-l{width:77%;}
+	.query-l input[name="phone"]{ height:35px; line-height:35px; padding:0px 2%; width:96%; border:1px solid #ccc; border-radius:3px; font-size:14px;}
+	.query-r{ width:20%; background:#1E9FFF; border-radius:3px; display:block; height:35px; line-height:35px; text-align:center; color:#fff; font-size:14px;}
+}

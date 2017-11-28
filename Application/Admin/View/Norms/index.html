@@ -1,0 +1,154 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>产品管理</b></div>
+	
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <li <eq name="type" value="">class="active"</eq>><a href="{:U('product/update?proid='.$proid)}">产品详情</a></li>
+		  <li <eq name="type" value="5">class="active"</eq>><a href="{:U('product/audit?proid='.$proid.'&type=5')}">产品审核</a></li>
+		  <li <eq name="type" value="1">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=1')}"><eq name="info[temp][pro_title]" value="">产品类别一<else/>产品{$info['temp']['pro_title']}</eq></a></li>
+		  <li <eq name="type" value="2">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=2')}"><eq name="info[temp][size_title]" value="">产品类别二<else/>产品{$info['temp']['size_title']}</eq></a></li>
+		  <li <eq name="type" value="3">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=3')}"><eq name="info[temp][color_title]" value="">产品类别三<else/>产品{$info['temp']['color_title']}</eq></a></li>
+		  <li <eq name="type" value="4">class="active"</eq>><a href="{:U('product/gz?proid='.$proid.'&type=4')}">推广链接</a></li>
+		</ul>
+	</div>
+	
+	<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<eq name="type" value="1">
+				<li class="ul-add ahover"><a href="{:U('add?proid='.$proid.'&type='.$type)}"><i class="fa fa-plus-square-o"></i> 添加{$info['temp']['pro_title']}</a></li>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除{$info['temp']['pro_title']}<a></li>
+			</eq>
+			<eq name="type" value="2">
+				<li class="ul-add ahover"><a href="{:U('add?proid='.$proid.'&type='.$type)}"><i class="fa fa-plus-square-o"></i> 添加{$info['temp']['size_title']}</a></li>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除{$info['temp']['size_title']}<a></li>
+			</eq>
+			<eq name="type" value="3">
+				<li class="ul-add ahover"><a href="{:U('add?proid='.$proid.'&type='.$type)}"><i class="fa fa-plus-square-o"></i> 添加{$info['temp']['color_title']}</a></li>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除{$info['temp']['color_title']}<a></li>
+			</eq>
+				<li class="ul-add ahover"><a class="target-sort" url="{:U('sort_arr')}" target-form="sort"><i class="fa fa-sort-amount-asc"></i> 排 序<a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+				<li class="ul-list ahover"><a href="{:U('product/index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+			</ul>
+		</div>
+	</div>
+	<php>	} </php>
+	<div class="col-md-12 main-cen">
+	<if condition="($type eq 1)">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th width="60">排序</th>
+				<th>{$info['temp']['pro_title']}</th>
+				<th>价格（元）</th>
+				<th>库存</th>
+				<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+				<th>操作</th>
+				<php>	} </php>
+			<tbody>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><input class="ids" type="checkbox" name="nid[]" value="{$vo.nid}" /></td>
+				<td><input type="text" value="{$vo.def}" name="def[{$vo.nid}]" class="sort"/></td>
+				<td>{$vo.title}</td>
+				<td>&yen; {$vo.price}</td>
+				<td>{$vo.number}</td>
+				<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+				<td><a href="{:U('update?nid='.$vo['nid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a> <a url="{:U('del?nid='.$vo['nid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a></td>
+				<php>	} </php>
+			</tr>
+			</volist>
+		</table>
+	</if>
+	<if condition="($type eq 2)">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th width="60">排序</th>
+				<th>{$info['temp']['size_title']}</th>
+				<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+				<th>操作</th>
+				<php>	} </php>
+			<tbody>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><input class="ids" type="checkbox" name="nid[]" value="{$vo.nid}" /></td>
+				<td><input type="text" value="{$vo.def}" name="def[{$vo.nid}]" class="sort"/></td>
+				<td>{$vo.title}</td>
+				<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+				<td><a href="{:U('update?nid='.$vo['nid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a> <a url="{:U('del?nid='.$vo['nid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a></td>
+				<php>	} </php>
+			</tr>
+			</volist>
+		</table>
+	</if>
+	<if condition="($type eq 3)">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th width="60">排序</th>
+				<th>{$info['temp']['color_title']}</th>
+				<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+				<th>操作</th>
+				<php>	} </php>
+			<tbody>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><input class="ids" type="checkbox" name="nid[]" value="{$vo.nid}" /></td>
+				<td><input type="text" value="{$vo.def}" name="def[{$vo.nid}]" class="sort"/></td>
+				<td>{$vo.title}</td>
+				<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+				<td><a href="{:U('update?nid='.$vo['nid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a> <a url="{:U('del?nid='.$vo['nid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a></td>
+				<php>	} </php>
+			</tr>
+			</volist>
+		</table>
+	
+	</if>
+	</div>
+	<div class="page col-md-12">{$_page}</div>
+	
+</block>
+<block name="script">
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".target-sort").click(function(){ 
+			var url = $(this).attr('url');
+			var target = $(this).attr('target-form');
+			var form = $('.'+target);
+			query = form.serialize();
+			swal({ 
+				title: "确认要执行该操作吗?", 
+				type: "warning", 
+				showCancelButton: true, 
+				closeOnConfirm: false, 
+				confirmButtonText: "是的", 
+				confirmButtonColor: "#ec6c62" 
+			}, function() { 
+				
+				$.post(url,query).success(function(data){
+					if (data.status==1) {
+						if (data.url) {
+							swal(data.info, "", "success");
+						}else{
+							swal(data.info, "", "success");
+						}
+						setTimeout(function(){
+							location.reload();
+						},1500);
+					}else{
+						swal(data.info, "", "error");
+						setTimeout(function(){
+							location.reload();
+						},1500);
+					}
+				});
+			});
+		});
+	});
+</script>
+</block>

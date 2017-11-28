@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,html{margin:0;padding:0;}
+html{ background:#e2e2e2;}
+body{ font-size:14px; font-family:"微软雅黑",Arial; background:#fff;-webkit-text-size-adjust:100%; max-width:750px; overflow-x:hidden; margin:0 auto; }
+a{text-decoration:none; font-family:"微软雅黑";}
+a:hover{text-decoration:none;}
+em,i{font-style:normal;}
+li{list-style:none;}
+img{border:0;vertical-align:middle;}
+table{border-collapse:collapse;border-spacing:0;}
+input{font-family:"微软雅黑"; }
+select{font-family:"微软雅黑";}
+p{word-wrap:break-word;}
+.c{clear:both;}
+.e{display:inline-block;*display:inline;*zoom:1;height:100%;width:1px;margin-left:-1px;vertical-align:middle;}
+.fr{ float:right;}
+.fl{ float:left;}
+
+.title{ text-align:center; height:45px; line-height:45px; font-size:16px; background:#000; font-weight:bold; color:#fff;}
+.ems-title{ width:100%; height:40px; line-height:40px; overflow:hidden;}
+.ems-title dl{ width:100%;position:relative;}
+.ems-title dl dt{ float:left; width:100px; text-align:center; overflow:hidden; background:#fff; padding-right:8px;}
+.ems-title dl dd{ background:#f1f1f1; overflow:hidden; padding-left:12px; font-size:16px; font-weight:bold;}
+.ems{ width:100%; overflow:hidden;}
+.ems dl{ width:100%; overflow:hidden; position:relative;padding:15px 0px; width:100%;}
+.ems dl li{ background:url(../images/ems-4.png) no-repeat center center; width:15px; height:15px; position:absolute; top:40%; left:100px;z-index:2;}
+.ems dl p{ height:100%; width:1px; background:#ccc; position:absolute;left:107px;top:0px; z-index:1;}
+.ems dl:nth-child(1) li{ background:url(../images/ems-5.png) no-repeat center center; width:15px; height:15px; position:absolute; top:40%; left:100px;z-index:2;}
+.ems dl:nth-child(1) p{ height:100%; width:1px; background:#ccc; position:absolute;left:107px;top:40%; z-index:1;}
+.ems dl dt{ float:left; width:100px; text-align:center; margin-right:25px; color:#666; overflow:hidden;}
+.ems dl dt span{ clear:both; display:block; font-size:14px;}
+.ems dl dt i{ font-size:20px; font-weight:bold;}
+.ems dl dd{ color:#333; display:block; overflow:hidden; }
+.ems-bg{ background:#f1f1f1; }
+#sign dt{ color:#ff5e00 !important;}
+#sign dd{ color:#ff5e00 !important;}
+#sign li{background:url(../images/ems-3.png) no-repeat center center; width:21px; height:21px; position:absolute; top:35%; left:97px;z-index:2;}
+#sign p{height:50%; width:1px; background:#ccc; position:absolute;left:107px;top:0px; z-index:1;}
+
+.submit{ text-align:center;display:block; width:96%;overflow:hidden; padding:3% 0px; background:#666; margin:3% auto; font-size:18px; color:#fff; border-radius:5px;cursor:pointer;}
+.submit a{color:#fff; display:block;}
+.h-30{ height:30px; overflow:hidden;}

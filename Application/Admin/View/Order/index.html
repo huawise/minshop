@@ -1,0 +1,370 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单管理</b></div>
+	<div class="c"></div>
+	<div class="order-search">
+		<ul>
+			<input type="hidden" name="r" value="{$reclaim}"/>
+			<li><input type="text" name="phone" placeholder="手机号" value="{$phone}"/></li>
+			<li><input type="text" name="ordernum" placeholder="订单号" value="{$ordernum}"/></li>
+			<li><input type="text" name="starttime" class="time" id="starttime" placeholder="开始时间" readonly="readonly" value="{$s}"/></li>
+			<li><input type="text" name="endtime" class="time" id="endtime"  placeholder="截止时间" readonly="readonly" value="{$e}"/></li>
+			<li class="order-li">
+				<p><i class="fa fa-chevron-down"></i> <span><eq name="whereproid" value="">订购产品<else /><volist name="pro_list" id="vo"><if condition="($vo.proid eq I('get.proid'))">{$vo['title']}</if></volist></eq></span><input type="hidden" name="proid" value="{:I('get.proid')}"/></p>
+				<div class="order-select">	
+					<i class="fa fa-angle-up"></i>
+					<volist name="pro_list" id="vo">
+					<ol Onclick="olclick(this);" data-text="{$vo.title}" data-id="{$vo.proid}">{$vo.title}</ol>
+					</volist>
+				</div>
+			</li>
+			<li class="order-li">
+				<p><i class="fa fa-chevron-down"></i> <span><eq name="where.paytype" value="">支付方式<else />{$pay[$_GET['paytype']]}</eq></span> <input type="hidden" name="paytype" value="{:I('get.paytype')}"/></p>
+				<div class="order-select">
+					<i class="fa fa-angle-up"></i>
+					<foreach name="pay" item="v" key="k">
+					<ol Onclick="olclick(this);" data-text="{$v}" data-id="{$k}">{$v}</ol>
+					</foreach>
+				</div>
+			</li>
+			<li class="order-li">
+				<p><i class="fa fa-chevron-down"></i> <span><eq name="where.paytime" value="">支付状态<else /><if condition="($where['paytime'][0] eq 'exp')">未支付<elseif condition="($where['paytime'][0] eq 'gt')"/>已支付</if></eq></span> <input type="hidden" name="paytime" value="{:I('get.paytime')}"/></p>
+				<div class="order-select">
+					<i class="fa fa-angle-up"></i>
+					<ol Onclick="olclick(this);" data-text="未支付" data-id="1">未支付</ol>
+					<ol Onclick="olclick(this);" data-text="已支付" data-id="2">已支付</ol>
+					
+				</div>
+			</li>
+			<li class="order-li">
+				<p><i class="fa fa-chevron-down"></i> <span><eq name="where.gzid" value="">推广来源<else /><volist name="gzlist" id="vo"><if condition="($vo.gzid eq I('get.gzid'))">{$vo['name']}</if></volist></eq></span> <input type="hidden" name="gzid" value="{:I('get.gzid')}"/></p>
+				<div class="order-select">
+					<i class="fa fa-angle-up"></i>
+					<volist name="gzlist" id="vo">
+					<ol Onclick="olclick(this);" data-text="{$vo.name}" data-id="{$vo.gzid}">{$vo.name}</ol>
+					</volist>
+				</div>
+			</li>
+			<li class="order-li">
+				<p><i class="fa fa-chevron-down"></i> <span><eq name="where.status" value="">订单状态<else />{$status[$_GET['status']]}</eq></span> <input type="hidden" name="status" value="{:I('get.status',0)}"/></p>
+				<div class="order-select">
+					<i class="fa fa-angle-up"></i>
+					<foreach name="status" item="v" key="k">
+					<ol Onclick="olclick(this);" data-text="{$v}" data-id="{$k}">{$v}</ol>
+					</foreach>
+				</div>
+			</li>
+			<eq name="uid" value="1">
+			<li class="order-li">
+				<p><i class="fa fa-chevron-down"></i> <span><eq name="where.uid" value="">员工<else /><volist name="member" id="vo"><if condition="($vo.uid eq I('get.uid'))">{$vo['nickname']}</if></volist></eq></span> <input type="hidden" name="uid" value="{:I('get.uid')}"/></p>
+				<div class="order-select">
+					<i class="fa fa-angle-up"></i>
+					<volist name="member" id="vo">
+					<ol Onclick="olclick(this);" data-text="{$vo.nickname}" data-id="{$vo.uid}">{$vo.nickname}(ID:{$vo.uid})</ol>
+					</volist>
+				</div>
+			</li>
+			</eq>
+			<li><a class="ahover a-list" id="search"><i class="fa fa-search"></i> 搜 索</a></li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<eq name="reclaim" value="0">
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<php>	if(in_array("order_add",$peradmin[order])){ </php>
+				<li class="ul-add ahover"><a href="{:U('product/index')}"><i class="fa fa-plus-square-o"></i> 添加订单</a></li>
+			<php>	} </php>	
+			<php>	if(in_array("order_del",$peradmin[order])){ </php>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('reclaim_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除订单<a></li>
+			<php>	} </php>	
+			<php>	if(in_array("order_update",$peradmin[order])){ </php>
+				<li class="ul-add ahover"><a onclick="delivery(this);" target-form="ids"><i class="fa fa-truck"></i> 批量发货<a></li>
+			<php>	} </php>	
+				<li class="ul-del ahover"><a onclick="status(this);" target-form="ids"><i class="fa fa-edit"></i> 更改状态<a></li>
+			<php>	if(in_array("order_export",$peradmin[order])){ </php>
+				<li class="ul-list ahover"><a href="javascript:;" id="export"><i class="fa fa-file-o"></i> 导出数据</a></li>
+				<li class="ul-list ahover"><a href="javascript:;" id="exportorder"><i class="fa fa-file-o"></i> 导出订单号</a></li>
+				<li class="ul-add ahover"><a href="{:U('import_order')}"><i class="fa fa-copy"></i> 导入快递单</a></li>
+			<php>	} </php>	
+			
+				<li class="ul-break ahover"><a href="{:U('index')}"><i class="fa fa-refresh"></i> 刷新</a></li>
+			</ul>
+		</div>
+	</div>
+	<else />
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<php>	if(in_array("order_del",$peradmin[order])){ </php>
+				<li class="ul-add ahover"><a class="ajax-post confirm" url="{:U('add_arr')}" target-form="ids"><i class="fa fa-plus-square-o"></i> 还原订单<a></li>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 永久删除<a></li>
+				
+			<php>	} </php>	
+				<li class="ul-break ahover"><a href="{:U('index')}"><i class="fa fa-refresh"></i> 刷新</a></li>
+			</ul>
+		</div>
+	</div>
+	</eq>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<eq name="reclaim" value="0">
+			<li>共查询到<span>{$count}</span>笔订单</li>
+			<li><a href="{:U('index?starttime='.$stime.'&endtime='.$etime)}">【今日新订单】</a><span>{$news_day_count}</span>笔</li>
+			<li><a href="{:U('index?status=2')}" class="yfh">【已发货】</a><span>{$yfh_count}</span>笔</li>
+			<li><a href="{:U('index?status=1')}" class="wfh">【未发货】</a><span>{$wfh_count}</span>笔</li>
+			<li>所有订单金额<span>{$total}</span>元</li>
+			<li><a href="{:U('repeat')}" class="yfh">【重复订单检测】</a></li>
+			<else />
+			<li>共查询到<span>{$count}</span>笔订单</li>
+			<li>所有订单金额<span>{$total}</span>元</li>
+			</eq>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="page col-md-12">{$_page}</div>
+	<div class="col-md-12 main-cen" style="margin:0px 0px 15px 0px;">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th width="320">购买产品+规格+订购数量</th>
+				<th width="100">支付方式</th>
+				<th width="100">收货人</th>
+				<th width="250">地址</th>
+				<th width="250">留言</th>
+				<th width="150">物流</th>
+				<th width="100">订单来源</th>
+				<th width="75">状态</th>
+				<th width="85">操作</th>
+			<tbody>
+			<foreach name="list" item="v" key="k">
+			
+			<tr>
+				<td><input class="ids" type="checkbox" name="orderid[]" value="{$v.orderid}" /></td>
+				
+				<td>订单号：{$v.ordernum}<br/><font color="#1E9FFF">下单时间：{$v.addtime|time_format}</font><br/>{$v.title}</td>
+				<td>{$pay[$v['paytype']]}<eq name="v.paytype" value="alipay"><eq name="v.paytime" value="">/<font color="red"><strong>未支付</strong></font><else/>/已支付</eq></eq><eq name="v.paytype" value="wechat"><eq name="v.paytime" value="">/<font color="red"><strong>未支付</strong></font><else/>/已支付</eq></eq><br/><font color="red">&yen; {$v.total}</font></td>
+				<td>{$v.name}<br/>{$v.phone}</td>
+				<td>{$v.province}{$v.city}{$v.area}{$v.address}<br/><font color="#999">IP地址:{$v.ip} ({$v.ipprovince} {$v.ipcity})</font></td>
+				<td><font color="red">商家留言:{$v.note}</font><br/><font color="#1E9FFF">顾客留言:{$v.message}</font></td>
+				<td><neq name="v.exp_num" value=""><strong><a href="{:U('home/index/ems?ordernum='.$v['ordernum'])}" style="color:red" target="_blank">{$v.exp_com}</a></strong><br/>{$v.exp_num}<else/>暂无物流</neq></td>
+				<td>{$v.gzname}</td>
+				<td><eq name="v.status" value="1"><font color="red"><strong>{$status[$v['status']]}</strong></font><else/>{$status[$v['status']]}</eq>
+				<br/>
+				<select name="status" id="status_{$v.orderid}" onchange="gradeChange({$v.orderid});">
+					<foreach name="status" item="sv" key="sk">
+					<option value="{$sk}">{$sv}</option>
+					</foreach>
+				</select></td>
+				<eq name="reclaim" value="0">
+				<td><a href="{:U('order/update?orderid='.$v['orderid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a><br/><br/> <php>	if(in_array("order_del",$peradmin[order])){ </php><a url="{:U('order/reclaim?orderid='.$v['orderid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a><php>	} </php></td>
+				<else />
+				<td><a href="{:U('order/update?orderid='.$v['orderid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a><br/><br/> <php>	if(in_array("order_del",$peradmin[order])){ </php><a url="{:U('order/del?orderid='.$v['orderid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a><php>	} </php></td>
+				</eq>
+				
+			</tr>
+			
+			</foreach>
+			
+		</table>
+	</div>
+</div>
+
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+	<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('.time').datetimepicker({
+			format: 'yyyy-mm-dd hh:ii',
+			language:"zh-CN",
+			minView:0,
+			autoclose:true
+		});
+		showTab();
+	});
+	
+	function olclick(obj){
+		var text = $(obj).data('text'); 
+		var id = $(obj).data('id'); 
+		$(obj).parent().siblings("p").find('span').html(text);
+		$(obj).parent().siblings("p").find('input').val(id);
+		$(obj).parent().hide();
+		
+	}
+	
+	function delivery(obj){
+		var target,query,form;
+		var target_form = $(obj).attr('target-form');
+		form = $('.'+target_form);
+		query = form.serialize();
+		
+		$.post("{:U('delivery')}",query,function(data){
+			if(data.status == 0){
+				swal({
+					title: data.info,
+					type: "error",
+					timer: 1500,
+					showConfirmButton: false
+				});
+			}else{
+				location = "{:U('delivery')}";
+			}
+		}, "json");
+		
+	}
+	
+	
+	function status(obj){
+		var target,query,form;
+		var target_form = $(obj).attr('target-form');
+		form = $('.'+target_form);
+		query = form.serialize();
+		
+		$.post("{:U('update_arr')}",query,function(data){
+			if(data.status == 0){
+				swal({
+					title: data.info,
+					type: "error",
+					timer: 1500,
+					showConfirmButton: false
+				});
+			}else{
+				location = "{:U('update_arr')}";
+			}
+		}, "json");
+		
+	}
+	
+	
+	function gradeChange(id){
+		var status = $('#status_'+id).val();
+		if(status != '0'){
+			$.post("{:U('josn_status')}",{status:status,orderid:id},function(data){
+				swal({
+					title: data.info,
+					type: "success",
+					timer: 1000,
+					showConfirmButton: false
+				});
+				setTimeout(function() {
+					location = location;
+				},1000);
+			}, "json");
+		}
+		
+	}
+	
+	$(document).ready(function(){
+		$(".order-li p").click(function(){
+			$(this).siblings('div').toggle();
+			$(this).parent('.order-li').siblings().children('.order-select').hide();
+		});
+		
+		$("#search").click(function(){
+		
+			var ordernum = $('input[name="ordernum"]').val();
+			var phone = $('input[name="phone"]').val();
+			var starttime = $('input[name="starttime"]').val();
+			var starttime2 = Date.parse(new Date(starttime));
+			starttime2 = starttime2 / 1000;
+			var endtime = $('input[name="endtime"]').val();
+			var endtime2 = Date.parse(new Date(endtime));
+			endtime2 = endtime2 / 1000;
+			var status = $('input[name="status"]').val();
+			var paytype = $('input[name="paytype"]').val();
+			var proid = $('input[name="proid"]').val();
+			var gzid = $('input[name="gzid"]').val();
+			var paytime = $('input[name="paytime"]').val();
+			var uid = $('input[name="uid"]').val();
+			var r = $('input[name="r"]').val();
+			var reclaim = $('input[name="uid"]').val();
+			
+			
+			if(!ordernum){	var ordernum = 'no';}
+			if(!phone){	var phone = 'no';}
+			if(!starttime2){ var starttime2 = 'no';}
+			if(!endtime2){ var endtime2 = 'no';}
+			if(!gzid){ var gzid = 'no';}
+			if(!paytype){ var paytype = 'no';}
+			if(!paytime){ var paytime = 'no';}
+			if(!uid){ var uid = '0';}
+			
+			window.location.href = '__ROOT__/index.php?s=/admin/order/index/ordernum/'+ordernum+'/phone/'+phone+'/starttime/'+starttime2+'/endtime/'+endtime2+'/status/'+status+'/paytype/'+paytype+'/proid/'+proid+'/gzid/'+gzid+'/paytime/'+paytime+'/uid/'+uid+'/r/'+reclaim+'.html';
+			
+		});
+		
+		$("#export").click(function(){
+		
+			var ordernum = $('input[name="ordernum"]').val();
+			var phone = $('input[name="phone"]').val();
+			var starttime = $('input[name="starttime"]').val();
+			var starttime2 = Date.parse(new Date(starttime));
+			starttime2 = starttime2 / 1000;
+			var endtime = $('input[name="endtime"]').val();
+			var endtime2 = Date.parse(new Date(endtime));
+			endtime2 = endtime2 / 1000;
+			var status = $('input[name="status"]').val();
+			var paytype = $('input[name="paytype"]').val();
+			var proid = $('input[name="proid"]').val();
+			var gzid = $('input[name="gzid"]').val();
+			var paytime = $('input[name="paytime"]').val();
+			var reclaim = $('input[name="uid"]').val();
+			
+			
+			if(!ordernum){	var ordernum = 'no';}
+			if(!phone){	var phone = 'no';}
+			if(!starttime2){ var starttime2 = 'no';}
+			if(!endtime2){ var endtime2 = 'no';}
+			if(!gzid){ var gzid = 'no';}
+			if(!paytime){ var paytime = 'no';}
+			if(!uid){ var uid = '0';}
+			
+			window.location.href = '__ROOT__/index.php?s=/admin/order/get_export/ordernum/'+ordernum+'/phone/'+phone+'/starttime/'+starttime2+'/endtime/'+endtime2+'/status/'+status+'/paytype/'+paytype+'/proid/'+proid+'/gzid/'+gzid+'/paytime/'+paytime+'/uid/'+uid+'/r/'+reclaim+'.html';
+			
+		});
+		
+		$("#exportorder").click(function(){
+		
+			var ordernum = $('input[name="ordernum"]').val();
+			var phone = $('input[name="phone"]').val();
+			var starttime = $('input[name="starttime"]').val();
+			var starttime2 = Date.parse(new Date(starttime));
+			starttime2 = starttime2 / 1000;
+			var endtime = $('input[name="endtime"]').val();
+			var endtime2 = Date.parse(new Date(endtime));
+			endtime2 = endtime2 / 1000;
+			var status = $('input[name="status"]').val();
+			var paytype = $('input[name="paytype"]').val();
+			var proid = $('input[name="proid"]').val();
+			var gzid = $('input[name="gzid"]').val();
+			var paytime = $('input[name="paytime"]').val();
+			var reclaim = $('input[name="uid"]').val();
+			
+			
+			if(!ordernum){	var ordernum = 'no';}
+			if(!phone){	var phone = 'no';}
+			if(!starttime2){ var starttime2 = 'no';}
+			if(!endtime2){ var endtime2 = 'no';}
+			if(!gzid){ var gzid = 'no';}
+			if(!paytime){ var paytime = 'no';}
+			
+			window.location.href = '__ROOT__/index.php?s=/admin/order/get_exportorder/ordernum/'+ordernum+'/phone/'+phone+'/starttime/'+starttime2+'/endtime/'+endtime2+'/status/'+status+'/paytype/'+paytype+'/proid/'+proid+'/gzid/'+gzid+'/paytime/'+paytime+'/uid/'+uid+'/r/'+reclaim+'.html';
+			
+		});
+	});
+	
+	
+	
+	</script>
+</block>

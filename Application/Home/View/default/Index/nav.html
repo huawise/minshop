@@ -1,0 +1,31 @@
+<if condition="($temp.nav eq 0)">
+<nav>
+  <ul class="Transverse">
+	 <php>if(in_array(index,$temp['nav_temp'])){ </php>
+	 <li class="index"><a href="{:U('index')}"><strong>首页</strong></a></li>
+	 <php>}</php>
+	 <php>if(in_array(buy,$temp['nav_temp'])){ </php>
+     <li class="buy"><a href="#buy"><strong>在线下单</strong></a></li> 
+	 <php>}</php>
+	 <php>if(in_array(tel,$temp['nav_temp'])){ </php>
+	 <li class="tel"><a href="tel:{$temp.phone}"><strong>电话咨询</strong></a></li>
+	 <php>}</php>
+	 <php>if(in_array(sms,$temp['nav_temp'])){ </php>
+  	 <li class="sms"><a href="sms:{$temp.smsphone}"><strong>短信订购</strong></a></li>
+	 <php>}</php>
+	 <php>if(in_array(qq,$temp['nav_temp'])){ </php>
+	 <li class="qq"><a href="http://wpa.qq.com/msgrd?v=3&uin={$temp.qq}&Site=mg&Menu=yes"><strong>QQ咨询</strong></a></li>
+	 <php>}</php>
+	 <php>if(in_array(top,$temp['nav_temp'])){ </php>
+	 <li class="top"><a href="javascript:scrollTo(0,0);"><strong>返回顶部</strong></a></li>
+	 <php>}</php>
+  </ul>
+</nav>
+<script type="text/javascript"> 
+$(document).ready(function(){
+	var w = 100/{$temp['nav_count']};
+	$('.Transverse li').width(w+'%');
+	
+});
+</script> 
+</if>

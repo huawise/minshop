@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$meta_title}|小蜜蜂订单系统</title>
+	<link rel="shortcut icon" href="__ROOT__/Public/Home/images/tubiao.ico" type="image/x-icon"/>
+	<script type="text/javascript" src="__JS__/jquery.js"></script>
+	<script type="text/javascript" src="__JS__/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="__JS__/bootstrap.min.js"></script>
+	<script type="text/javascript" src="__JS__/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__CSS__/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+	<link rel="stylesheet" type="text/css" href="__CSS__/sweetalert.css">
+    <block name="style"></block>
+</head>
+<body>
+
+	<div class="user-img">{:get_nickname(UID)} <i class="fa fa-user fa-3x"></i></div>
+	<div class="c"></div>
+	<div class="user-operate">
+		<li><a href="{:U('admin/user/update?uid='.UID)}"><i class="fa fa-edit"></i> 修改密码</a></li>
+		<li><a href="javascript:;" onclick="logout();"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+	</div>
+
+	<div class="all">
+		<div class="right main-main">
+			<div class="right_in">
+				<block name="body"> </block>
+			</div>
+		</div>
+		<eq name="adminid" value="1">
+		<div class="left main-l">
+		  <div class="col-md-12 logo" onclick="window.open('{:U('Home/Index/index')}')"><img src="__IMG__/blue_color/bg_icon.png"/></div>
+		  <div class="col-md-12 padd-no hover" onclick="window.location.href='{:U('Index/index')}'"><i class="fa fa-home fa-lg main-ico"></i> 首页</div>
+		  <div class="col-md-12 padd-no" id="nav-list"><i class="fa fa-cog fa-lg main-ico"></i> 系统管理 <i class="fa fa-angle-down fa-lg"></i></div>
+		  <div class="col-md-12 padd-no nav-overflow" id="system">
+			  <div class="col-md-12 padd-left-30" id="group"><a href="{:U('config/group?id=1')}"><i class="fa fa-wrench"></i> 系统配置 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="source"><a href="{:U('source/index')}"><i class="fa fa-location-arrow"></i> 订单来源管理 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="order_table"><a href="{:U('order/order_table_list')}"><i class="fa fa-tags"></i> 订单字段管理 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="user"><a href="{:U('User/index')}"><i class="fa  fa-user"></i> 管理员管理 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="permissions"><a href="{:U('User/permissions')}"><i class="fa fa-users"></i> 管理员权限 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="database"><a href="{:U('Database/index?type=export')}"><i class="fa fa-database"></i> 数据库管理 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="paycode"><a href="{:U('Paycode/index')}"><i class="fa fa-qrcode"></i> 支付二维码 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="actionlog"><a href="{:U('action/actionlog')}"><i class="fa  fa-paw"></i> 日志记录管理 <em></em></a></div>
+		  </div>
+		  <div class="col-md-12 padd-no" id="nav-list"><i class="fa fa-list-alt fa-lg main-ico"></i> 订单管理 <i class="fa fa-angle-down fa-lg"></i></div>
+		  <div class="col-md-12 padd-no nav-overflow" id="order">
+			  <div class="col-md-12 padd-left-30" id="order_list"><a href="{:U('order/index?r=0')}"><i class="fa fa-navicon (alias)"></i> 订单列表 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="order_del"><a href="{:U('order/index?r=1')}"><i class="fa fa-trash-o"></i> 订单回收站 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="gzlist"><a href="{:U('order/gzlist')}"><i class="fa  fa-pie-chart"></i> 来源统计 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="sumlist"><a href="{:U('order/sumlist')}"><i class="fa fa-line-chart"></i> 综合统计 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="users"><a href="{:U('order/user')}"><i class="fa fa-user"></i> 员工统计 <em></em></a></div>
+		  </div>
+		  <div class="col-md-12 padd-no" id="nav-list"><i class="fa fa-th-large fa-lg main-ico"></i> 产品管理 <i class="fa fa-angle-down fa-lg"></i></div>
+		  <div class="col-md-12 padd-no nav-overflow" id="product">
+			  <div class="col-md-12 padd-left-30" id="temp"><a href="{:U('template/index')}"><i class="fa fa-folder-open"></i> 模板管理 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="pro"><a href="{:U('product/index')}"><i class="fa  fa-navicon (alias)"></i> 产品列表 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="domain"><a href="{:U('domain/index')}"><i class="fa  fa-chain"></i> 域名管理 <em></em></a></div>
+		  </div>
+		  <div class="col-md-12 padd-no hover" onclick="cache();"><i class="fa fa-trash-o fa-lg main-ico"></i> 清除缓存</div>
+		</div>
+		<else/>
+		<div class="left main-l">
+		  <div class="col-md-12 logo" onclick="window.open('{:U('Home/Index/index')}')"><img src="__IMG__/blue_color/bg_icon.png"/></div>
+		  <div class="col-md-12 padd-no hover" onclick="window.location.href='{:U('Index/index')}'"><i class="fa fa-home fa-lg main-ico"></i> 首页</div>
+		  <neq name="peradmin.system" value="">
+		  <div class="col-md-12 padd-no" id="nav-list"><i class="fa fa-cog fa-lg main-ico"></i> 系统管理 <i class="fa fa-angle-down fa-lg"></i></div>
+		  <div class="col-md-12 padd-no nav-overflow" id="system">
+		  <php>	if(in_array("system",$peradmin[system])){ </php>
+			  <div class="col-md-12 padd-left-30" id="group"><a href="{:U('config/group?id=1')}"><i class="fa fa-wrench"></i> 系统配置 <em></em></a></div>
+		  <php>	} </php>
+		  
+		  <php>	if(in_array("source",$peradmin[system])){ </php>
+			  <div class="col-md-12 padd-left-30" id="source"><a href="{:U('source/index')}"><i class="fa fa-location-arrow"></i> 订单来源管理 <em></em></a></div>
+	      <php>	} </php>
+		  <php>	if(in_array("order_field",$peradmin[system])){ </php>
+		  <div class="col-md-12 padd-left-30" id="order_table"><a href="{:U('order/order_table_list')}"><i class="fa fa-tags"></i> 订单字段管理 <em></em></a></div>
+		  <php> } </php>
+		  <php>	if(in_array("user",$peradmin[system])){ </php>
+			  <div class="col-md-12 padd-left-30" id="user"><a href="{:U('User/index')}"><i class="fa fa-user"></i> 管理员管理 <em></em></a></div>
+	      <php> } </php>
+		  <php> if(in_array("per",$peradmin[system])){ </php>
+			  <div class="col-md-12 padd-left-30" id="permissions"><a href="{:U('User/permissions')}"><i class="fa fa-users"></i> 管理员权限 <em></em></a></div>
+		  <php> } </php>
+		   <php> if(in_array("database",$peradmin[system])){ </php>
+		  <div class="col-md-12 padd-left-30" id="database"><a href="{:U('Database/index?type=export')}"><i class="fa fa-database"></i> 数据库管理 <em></em></a></div>
+		  <php> } </php>
+		  <php> if(in_array("paycode",$peradmin[system])){ </php>
+		  <div class="col-md-12 padd-left-30" id="paycode"><a href="{:U('Paycode/index')}"><i class="fa fa-qrcode"></i> 支付二维码 <em></em></a></div>
+		   <php> } </php>
+		    <php> if(in_array("actionlog",$peradmin[system])){ </php>
+		   <div class="col-md-12 padd-left-30" id="actionlog"><a href="{:U('action/actionlog')}"><i class="fa  fa-paw"></i> 日志记录管理 <em></em></a></div>
+		    <php> } </php>
+		  </div>
+		  </neq>
+		  <neq name="peradmin.order" value="">
+		  <div class="col-md-12 padd-no" id="nav-list"><i class="fa fa-list-alt fa-lg main-ico"></i> 订单管理 <i class="fa fa-angle-down fa-lg"></i></div>
+		  <div class="col-md-12 padd-no nav-overflow" id="order">
+		  <php>	if(in_array("order_list",$peradmin[order])){ </php>
+			  <div class="col-md-12 padd-left-30" id="order_list"><a href="{:U('order/index?r=0')}"><i class="fa fa-navicon (alias)"></i> 订单列表 <em></em></a></div>
+			  <div class="col-md-12 padd-left-30" id="order_del"><a href="{:U('order/index?r=1')}"><i class="fa fa-trash-o"></i> 订单回收站 <em></em></a></div>
+		  <php> } </php>
+		  <php>	if(in_array("order_gz",$peradmin[order])){ </php>
+			  <div class="col-md-12 padd-left-30" id="gzlist"><a href="{:U('order/gzlist')}"><i class="fa fa-pie-chart"></i> 来源统计 <em></em></a></div>
+		  <php> } </php>
+		  <php>	if(in_array("order_sum",$peradmin[order])){ </php>
+			  <div class="col-md-12 padd-left-30" id="sumlist"><a href="{:U('order/sumlist')}"><i class="fa fa-line-chart"></i> 综合统计 <em></em></a></div>
+		  <php> } </php>
+		  </div>
+		   </neq>
+		   <neq name="peradmin.product" value="">
+		  <div class="col-md-12 padd-no" id="nav-list"><i class="fa fa-th-large fa-lg main-ico"></i> 产品管理 <i class="fa fa-angle-down fa-lg"></i></div>
+		  <div class="col-md-12 padd-no nav-overflow" id="product">
+		  <php>	if(in_array("template",$peradmin[product])){ </php>
+			  <div class="col-md-12 padd-left-30" id="temp"><a href="{:U('template/index')}"><i class="fa fa-folder-open"></i> 模板管理 <em></em></a></div>
+	      <php>	} </php>
+		  <php>	if(in_array("pro",$peradmin[product])){ </php>
+			  <div class="col-md-12 padd-left-30" id="pro"><a href="{:U('product/index')}"><i class="fa fa-navicon (alias)"></i> 产品列表 <em></em></a></div>
+		  <php> } </php>
+		  <php>	if(in_array("domain",$peradmin[product])){ </php>
+		  <div class="col-md-12 padd-left-30" id="domain"><a href="{:U('domain/index')}"><i class="fa  fa-chain"></i> 域名管理 <em></em></a></div>
+		   <php> } </php>
+		  </div>
+		  </neq>
+		  <div class="col-md-12 padd-no hover" onclick="cache();"><i class="fa fa-trash-o fa-lg main-ico"></i> 清除缓存</div>
+		</div>
+		</eq>
+	</div>
+    <script type="text/javascript">
+	(function(){
+		var ThinkPHP = window.Think = {
+			"ROOT"   : "__ROOT__", //当前网站地址
+			"APP"    : "__APP__", //当前项目地址
+			"PUBLIC" : "__PUBLIC__", //项目公共目录地址
+			"DEEP"   : "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+			"MODEL"  : ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+			"VAR"    : ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"]
+		}
+		
+	})();
+	var PUBLIC = "__PUBLIC__";
+	$(function(){
+		$(".main-l #nav-list").click(function(){
+			$(this).next().siblings(".nav-overflow").animate({height:'hide'});
+			$(this).next().animate({height:'toggle'});
+		});
+		
+		var nav_type = '{$nav_type}';
+		var nav_type_li = '{$nav_type_li}';
+		$("#"+nav_type).show();
+		$("#"+nav_type_li).addClass("nav-hover");
+		var fa = '<i class="fa fa-angle-right"></i>';
+		$("#"+nav_type_li+" em").html(fa);
+			
+		$(".user-img").mouseover(function (){  
+            $(".user-operate").show();  
+        }).mouseout(function (){  
+            $(".user-operate").hide();  
+        });  
+		
+		$(".user-operate").mouseover(function (){  
+            $(".user-operate").show();  
+        }).mouseout(function (){  
+            $(".user-operate").hide();  
+        });  
+		
+		
+	});
+	</script>
+	<script type="text/javascript">
+	function cache(){
+		swal({
+			title: "清除缓存中...",
+			imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+			showConfirmButton: false
+		});
+		
+		$.get("{:U('Index/deldir')}", function(data){
+			swal({
+				title: "清除缓存成功！",
+				type: "success",
+				timer: 1000,
+				showConfirmButton: false
+			});
+			setTimeout(function() {
+				location=location;
+			},1000);
+		});
+	}
+	
+	function  logout(){
+		swal({
+			title: "退出登录中...",
+			imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+			showConfirmButton: false
+		});
+		
+		$.get("{:U('Public/logout')}", function(data){
+			swal({
+				title: "退出登录成功！",
+				type: "success",
+				timer: 1000,
+				showConfirmButton: false
+			});
+			setTimeout(function() {
+				location=location;
+			},1000);
+		});
+	}
+	</script>
+	<script type="text/javascript" src="__STATIC__/think.js"></script>
+	<script type="text/javascript" src="__JS__/common.js"></script>
+    <block name="script"></block>
+</body>
+</html>
+
+

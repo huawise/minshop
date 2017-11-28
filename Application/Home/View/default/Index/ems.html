@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<title>物流跟踪</title>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/ems.css">
+<eq name="language" value="1">
+<script type="text/javascript" src="__PUBLIC__/Home/js/language.js"></script>
+</eq>
+</head>
+
+<body>
+<div class="title">物流跟踪</div>
+<div class="ems-title">
+	<dl>
+		<dt>{$ems[$order['ShipperCode']]}</dt>
+		<dd>{$order['LogisticCode']}</dd>
+	<dl>
+</div>
+<div class="ems">
+<foreach name="order.Traces" item="v" key="k">
+	<php>if($k%2 == 1){</php>
+	<dl class="ems-bg" <eq name="count" value="$k"><eq name="order.State" value="3">id="sign"</eq></eq>>
+	<php>}else{</php>
+	<dl <eq name="count" value="$k"><eq name="order.State" value="3">id="sign"</eq></eq>>
+	<php>}</php>
+		<dt><span>{$v['AcceptTime'][0]}</span><i>{$v['AcceptTime'][1]}</i></dt>
+		<dd>{$v['AcceptStation']}</dd>
+		<li></li>
+		<p></p>
+	</dl>
+</foreach>
+</div>
+<neq name="proid" value="">
+<div class="submit"><a href="{:U('phone?phone='.$info['phone'].'&proid='.$proid)}">返回</a></div>
+<div class="h-30"></div>
+</neq>
+</body>
+</html>

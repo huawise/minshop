@@ -1,0 +1,60 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>管理员权限</b></div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">登录名</td>
+				<td><input name="username" type="text"  /> <span><i class="fa fa-exclamation-circle"></i> 请填写登录名</span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">昵称</td>
+				<td><input name="nickname" type="text"  /> <span><i class="fa fa-exclamation-circle"></i> 请填写昵称</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">新密码</td>
+				<td><input name="password" type="password" autocomplete="off"/> <span><i class="fa fa-exclamation-circle"></i> 请填写新密码</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">确认密码</td>
+				<td><input name="repassword" type="password" autocomplete="off"/> <span><i class="fa fa-exclamation-circle"></i> 请填写确认密码</span></td>
+			  </tr>
+			 <tr>
+				<td align="right">管理员权限</td>
+				<td>
+				<select name="perid">
+				<foreach name="list" item="vo" key="k" >
+				<neq name="vo.perid" value="1">
+					<option value="{$vo.perid}">{$vo.name}</option>
+				</neq>
+				</foreach>
+				</select>
+				<span><i class="fa fa-exclamation-circle"></i> 请选择管理员权限</span></td>
+			  </tr>
+			 
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+				<li class="ul-list ahover"><a href="{:U('permissions')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+<block name="script">
+<script type="text/javascript">
+	
+	
+	</script>
+</block>

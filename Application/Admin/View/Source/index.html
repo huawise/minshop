@@ -1,0 +1,57 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单来源管理</b></div>
+	<div class="c"></div>
+	<br/>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<php>	if(in_array("source_add",$peradmin[system])){ </php>
+				<li class="ul-add ahover"><a href="{:U('add')}"><i class="fa fa-plus-square-o"></i> 添加来源</a></li>
+			<php>	} </php>
+			<php>	if(in_array("source_del",$peradmin[system])){ </php>	
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除来源<a></li>
+			<php>	} </php>	
+				<li class="ul-break ahover"><a href="{:U('index')}"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个订单来源</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th width="200">订单来源</th>
+				<th>操作</th>
+			<tbody>
+			<volist name="_list" id="vo">
+			<neq name="vo.gzid" value="22">
+			<tr>
+				<td><input class="ids" type="checkbox" name="gzid[]" value="{$vo.gzid}" /></td>
+				<td>{$vo.name}</td>
+				<td><php>	if(in_array("source_update",$peradmin[system])){ </php>	<a href="{:U('add?gzid='.$vo['gzid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a><php>	} </php>	 <php>	if(in_array("source_del",$peradmin[system])){ </php>	<a url="{:U('del?gzid='.$vo['gzid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a><php>	} </php>	</td>
+			</tr>
+			</neq>
+			</volist>
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	
+	<script type="text/javascript">
+	
+	
+	
+	</script>
+</block>

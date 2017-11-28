@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="Author" content="技术支持：小蜜蜂竞价单页订单系统www.minbee.cn 咨询热线：15622741979"  rel="nofollow" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<link rel="shortcut icon" href="__PUBLIC__/Home/__PUBLIC__/Home/images/tubiao.ico" type="image/x-icon"/>
+<title>{$info.title}</title>
+<meta name="description" content="{:C('SITE_DESCRIBE')}" />
+<meta name="keywords" content="{:C('SITE_KEYWORDS')}" /> 
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script>
+<eq name="language" value="1">
+<script type="text/javascript" src="__PUBLIC__/Home/js/language.js"></script>
+</eq>
+<style>
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,html{margin:0;padding:0;}
+html{ background:#eee;}
+body{ font-size:12px; font-family:"微软雅黑",Arial  !important; background:#fff;-webkit-text-size-adjust:100%; max-width:750px; overflow-x:hidden;margin:0 auto; }
+a{text-decoration:none; font-family:"微软雅黑";}
+a:hover{text-decoration:none;}
+em,i{font-style:normal;}
+li{list-style:none;}
+img{border:0;vertical-align:middle;}
+table{border-collapse:collapse;border-spacing:0;}
+select{font-family:"微软雅黑";}
+p{word-wrap:break-word;}
+.c{clear:both;}
+.e{display:inline-block;*display:inline;*zoom:1;height:100%;width:1px;margin-left:-1px;vertical-align:middle;}
+.fr{ float:right;}
+.fl{ float:left;}
+
+.main{ width:100%; margin:0px auto; overflow:hidden;}
+.main img{ width:100%;}
+.title{ background:#EEE9E6; font-size:18px; color:#6C594D; padding:5px; margin:0;}
+.pro-title{	background-color: #C20000;color:#FFF;font-size:18px;font-weight:bold;height:40px;text-align:center;line-height:40px;overflow: hidden; margin:20px auto; width:80%;}
+.order-title{color: #333;margin: 15px 10%;font-size:18px;font-weight: 500; text-align:center;}
+.order-dl{ width:70%; margin:0px auto;}
+.order-dl dl{ clear:both; margin:10px 0px; overflow:hidden;}
+.order-dl dl dt{ float:left; font-size:16px; line-height:30px; width:25%; text-align:right;}
+.order-dl dl dd{ float:right; width:73%;}
+.order-dl dl dd input{ height:25px; line-height:25px; width:90%;}
+.order-dl dl dd i{ font-size:20px; color:red; line-height:30px; display:inline-block; margin-left:2%}
+.wx-title{ font-size:18px; font-weight:bold; color:red; text-align:center;}
+.time-title{ font-size:18px; text-align:center; color:#666; line-height:40px;}
+
+.select {position: relative;margin-left: 18%;width: 60%;}
+.select span{width: 12%;background-color: #ff0000;height: 26px;color: #FFF;line-height: 26px;display: inline-block;position: absolute;z-index: 99;top: 1px;right: 1px;text-align: center;font-size: 140%;}
+.select select {border: solid #828282 1px;width: 100%;height: 28px; font-size:16px; color:#666;}
+.sumbit{ width:200px; height:35px; line-height:35px; text-align:center; background:red; color:#fff; margin:20px auto; font-size:14px; border-radius:5px; cursor:pointer;}
+#demo{ font-size:14px; padding:20px 10px; text-align:center; color:#666;}
+.cop-title{ text-align:center; font-size:18px; color:#333; margin:20px 0px 100px 0px ; padding-bottom:50px;}
+.foot{ position:fixed; bottom:0px;}
+.foot img{ width:100%;}
+</style>
+
+</head>
+<body>
+<form>
+<input type="hidden" name="proid" value="{$proid}">
+<input type="hidden" name="gzid" value="{$gzid}">
+<input type="hidden" name="tid" value="{$info['template']}">
+<input type="hidden" name="pro_class" value="{$temp['pro_class']}">
+<input type="hidden" name="title" value="{$info['title']}">
+<input type="hidden" name="size" value="{$norms_size[0]['title']}">
+<input type="hidden" name="color" value="{$norms_color[0]['title']}">
+<input type="hidden" name="total" value="{$norms_pro[0]['price']}">
+<input type="hidden" name="totals" value="{$norms_pro[0]['price']}">
+<input type="hidden" name="price" value="{$info.price}">
+<input type="hidden" name="number" value="{$norms_pro[0]['number']}">
+<input type="hidden" name="paytype" value="{$pay[0]}">
+<input type="hidden" id="num" name="num" value="1">
+<input type="hidden" name="nid" value="{$norms_pro[0]['nid']}">
+<input type="hidden" name="sid" value="{$norms_size[0]['nid']}">
+<input type="hidden" name="cid" value="{$norms_color[0]['nid']}">
+<div class="main">{$info['content']}</div>
+<div class="title">▼在线下单</div>
+<div class="pro-title">{$info['description']}</div>
+<div class="order-title">请填写收件人信息：</div>
+<div class="order-dl">
+	<dl>
+    	<dt>姓名：</dt>
+        <dd><input name="name" type="text"/><i>*</i></dd>
+    </dl>
+    <dl>
+    	<dt>电话：</dt>
+        <dd><input name="phone" type="tel"/><i>*</i></dd>
+    </dl>
+     <dl>
+    	<dt>地址：</dt>
+        <dd><input name="address" type="text"/><i>*</i></dd>
+    </dl>
+</div>
+
+<div class="wx-title">{$info['song']}</div>
+<div class="time-title">方便接听电话时间:</div>
+<div class="select">
+	<span>▼</span>
+	<select name="message">
+        <option value="0" selected="selected">请选择...</option>
+        <option value="上午（9点~12点）">上午（9点~12点）</option>
+        <option value="下午（12点~18点）">下午（12点~18点）</option>
+        <option value="09：00~10：00">09：00~10：00</option>
+        <option value="10：00~11：00">10：00~11：00</option>
+        <option value="11：00~12：00">11：00~12：00</option>
+        <option value="12：00~13：00">12：00~13：00</option>
+        <option value="13：00~14：00">13：00~14：00</option>
+        <option value="14：00~15：00">14：00~15：00</option>
+        <option value="15：00~16：00">15：00~16：00</option>
+        <option value="16：00~17：00">16：00~17：00</option>
+        <option value="17：00~18：00">17：00~18：00</option>
+        <option value="随时可以联系我">随时可以联系我</option>
+      </select>
+</div>
+<div class="sumbit">提交</div>
+</form>
+<div id="demo" class="order_smg"></div>
+<script>
+var marquee = new Array(
+<?php foreach($orderhtml as $v){ ?>
+"<?php echo $v;?><br/>",
+<?php }?>
+""
+);
+var marqeeI = 0;var marqueeII = 1;function marqueeL(){if(marqeeI>(marquee.length-1))marqeeI = 0;if(marqueeII>(marquee.length-1))marqeeI = 0;marqueeII = marqeeI +1;var marHTML = marquee[marqeeI]+marquee[marqueeII];document.getElementById("demo").innerHTML = marHTML;marqeeI +=1;marqueeII +=1;}
+window.setInterval("marqueeL()", 2000);
+</script>
+<div class="cop-title">{:C('WEB_SITE_ICP')}</div>
+<div class="foot">
+<volist name="info.images" id="v">
+<img src="{$v}"/>
+</volist>
+</div>
+</body>
+</html>
+<script>
+$(document).ready(function(){
+	$(".sumbit").click( function () { 
+		var name = $('input[name="name"]').val();
+		var phone = $('input[name="phone"]').val();
+		var address = $('input[name="address"]').val();
+		var message = $('select[name="message"]').val();
+		if(!name){
+			alert('姓名不能为空！'); return false;
+		}
+		if(!phone){
+			alert('电话不能为空！'); return false;
+		}
+		if(!address){
+			alert('地址不能为空！'); return false;
+		}
+		
+		$.post("{:U('post_json')}", $("form").serialize(),function(data){
+        if(data.status == 1){
+			alert(data.info);
+			location = data.url;
+		}else{
+			alert('提交失败！');
+			return false;
+		}
+        }, "json");
+	});
+});
+</script>

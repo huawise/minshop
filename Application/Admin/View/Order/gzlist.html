@@ -1,0 +1,41 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>来源统计</b></div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个订单来源</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="200">订单来源</th>
+				<th width="200">订单数量</th>
+				<th width="200">订单金额（元）</th>
+				<th>统计操作</th>
+			<tbody>
+			<volist name="_list" id="v">
+			<tr>
+				<td><a href="{:U('Order/gzinfo?gzid='.$v['gzid'])}">{$v.name}</a></td>
+				<td>{$v.count}</td>
+				<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+				<td><a href="{:U('order/index?starttime='.$stime.'&endtime='.$etime.'&gzid='.$v['gzid'])}" class="ahover a-list a"><i class="fa fa-clock-o"></i> 今天的</a> <a href="{:U('order/index?starttime='.$zstime.'&endtime='.$stime.'&gzid='.$v['gzid'])}" class="ahover a-list a"><i class="fa fa-clock-o"></i> 昨天的</a> <a href="{:U('order/index?gzid='.$v['gzid'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i> 所有的</a> <a href="{:U('Order/gzinfo?gzid='.$v['gzid'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i> 产品的</a></td>
+			</tr>
+			</volist>
+			
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+	
+	
+	</script>
+</block>

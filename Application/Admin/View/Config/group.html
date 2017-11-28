@@ -1,0 +1,267 @@
+<extend name="Public/base" />
+<block name="body">
+<link href="__CSS__/component.css" rel="stylesheet">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>系统配置</b></div>
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <volist name="Think.config.CONFIG_GROUP_LIST" id="group">
+		  <li <eq name="id" value="$key">class="active"</eq>><a href="{:U('?id='.$key)}">{$group}配置</a></li>
+		  </volist>
+		</ul>
+	</div>
+	<form action="{:U('save')}" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			<volist name="list" id="config">
+			<switch name="config.type">
+			<case value="0">
+			  <tr>
+				<td width="150" align="right">{$config.title}</td>
+				<td><input type="text" name="config[{$config.name}]" value="{$config.value}" /> <span><i class="fa fa-exclamation-circle"></i> {$config.remark}</span></td>
+			  </tr>
+			</case>
+			<case value="1">
+			  <tr>
+				<td width="150" align="right">{$config.title}</td>
+				<td><input type="text" name="config[{$config.name}]" value="{$config.value}" /> <span><i class="fa fa-exclamation-circle"></i> {$config.remark}</span></td>
+			  </tr>
+			</case>
+			<case value="2">
+				<if condition="$config.name eq 'WX_APICERT' OR $config.name eq 'WX_APIKEY' OR $config.name eq 'WX_ROOTCA'">
+					  <tr>
+						<td width="150" align="right">{$config.title}</td>
+						<td><textarea name="config[{$config.name}]" class="textarea"></textarea> <span><i class="fa fa-exclamation-circle"></i>
+						<if condition="$config.name eq 'WX_APICERT' OR $config.name eq 'WX_APIKEY' OR $config.name eq 'WX_ROOTCA'">
+							<if condition="$config.value eq ''">
+							<kbd>(未上传)</kbd>
+							<else />
+							<kbd>(已上传)</kbd>
+							</if>
+							,为保证证书安全，保存后不显示证书内容！
+						<else />
+						{$config.remark}
+						</if>
+						</span></td>
+					  </tr>
+				<else />
+					<tr>
+						<td width="150" align="right">{$config.title}</td>
+						<td><textarea name="config[{$config.name}]" class="textarea">{$config.value}</textarea> <span><i class="fa fa-exclamation-circle"></i> {$config.remark}</span></td>
+					  </tr>
+					  
+				</if>
+			</case>
+			<case value="3">
+				<tr>
+					<td width="150" align="right">{$config.title}</td>
+					<td><textarea name="config[{$config.name}]" class="textarea">{$config.value}</textarea> <span><i class="fa fa-exclamation-circle"></i> {$config.remark}</span></td>
+				  </tr>
+			</case>
+			<case value="4">
+			<tr>
+				<td width="150" align="right">{$config.title}</td>
+				<td><select name="config[{$config.name}]">
+					<volist name=":parse_config_attr($config['extra'])" id="vo">
+						<option value="{$key}" <eq name="config.value" value="$key">selected</eq>>{$vo}</option>
+					</volist>
+				</select>
+				<span><i class="fa fa-exclamation-circle"></i> {$config.remark}</span></td>
+			  </tr>
+			</case>
+			<case value="5">
+			<tr class="sms-h">
+			</tr>
+			<tr class="sms-title">
+				<td colspan="2">{$config.title}</td>	 
+			</tr>
+			<tr class="sms-h">
+			</tr>
+			</case>
+			<case value="6">
+			<input type="hidden" name="config[SMS_DX][]" value="1"/>
+			<tr>
+				<td width="150" align="right">{$config.title}</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="smsarr" item="vo" key="k">
+					<php>
+					if(in_array($k,$smsvalue)){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="config[SMS_DX][]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>
+					</foreach>
+					</ul>
+				</td>	 
+			</tr>
+			</case>
+			<case value="7">
+			  <tr>
+				<td width="150" align="right">{$config.title}</td>
+				<td><input type="password" name="config[{$config.name}]" placeholder="*******************" /> <span><i class="fa fa-exclamation-circle"></i> {$config.remark}</span></td>
+			  </tr>
+			</case>
+			<case value="8">
+			<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+				<tr>
+				<td width="150" align="right">{$config.title}</td>
+				<td><em>
+					<input type="file" id="upload_picture_thumb">
+					<input type="hidden" name="thumb" id="cover_id_thumb"/>
+					</em>
+					<span><i class="fa fa-exclamation-circle"></i> {$config.remark}</span>
+					<div class="c"></div>
+					<div class="upload-img-box">
+					<notempty name="info.thumb">
+						<div class="upload-pre-item"></div>
+					</notempty>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+					/* 初始化上传插件 */
+					$("#upload_picture_thumb").uploadify({
+						"height"          : 30,
+						"swf"             : "__STATIC__/uploadify/uploadify.swf",
+						"fileObjName"     : "download",
+						"buttonText"      : "<i class='fa fa-file-text-o'></i> 上传验证码",
+						"uploader"        : "{:U('upload_verify',array('session_id'=>session_id()))}",
+						"width"           : 120,
+						'removeTimeout'	  : 1,
+						'fileTypeExts'	  : '*.txt;',
+						"onUploadSuccess" : uploadPicturethumb
+					});
+					function uploadPicturethumb(file,data){
+					//	var data = $.parseJSON(data);
+						console.log(data);
+						/*
+						var src = '';
+						if(data.status){
+							src = data.url || '__ROOT__' + data.path
+							$("#cover_id_thumb").val(src);
+							$("#cover_id_thumb").parent().parent().find('.upload-img-box').html(
+								'<div class="upload-pre-item"><img src="' + src + '" width="150" height="150"/></div>'
+							);
+						} else {
+							updateAlert(data.info);
+							setTimeout(function(){
+								$('#top-alert').find('button').click();
+								$(that).removeClass('disabled').prop('disabled',false);
+							},1500);
+						}*/
+					}
+					
+					</script></td>
+			  </tr>
+			</case>
+			</switch>
+			</volist>  
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+	<div class="md-modal md-effect-1" id="modal-1">
+    <div class="md-content">
+      <h3>通用系统变量</h3>
+      <div>
+        <p>订单号：{ordernum}　订购日期：{time}　订购产品：{title}　产品尺码：{size}  产品颜色：{color}　数量：{num}　价格：{total}　姓名：{name}　手机：{phone}  省份：{province}	城市：{city}  区域：{area}  地址：{address}	  快递公司：{exp_com}    快递号：{exp_num} 	 …… 更多变量请联系客服</p>
+        <button class="md-close btn-sm btn-primary">关闭</button>
+      </div>
+    </div>
+  </div>
+  <div class="md-overlay"></div>
+</block>
+<block name="script">
+<script src="__JS__/classie.js"></script>
+<script src="__JS__/modalEffects.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	$(".table-ul li").click(function(){
+		var opk = $(this).data('opk');
+		var opname = $(this).data('opname');
+		if($(this).hasClass('table-ul-bg') ) {
+			var html = '<i class="fa fa-square-o"></i> '+opname;
+			$(this).removeClass('table-ul-bg');
+			$(this).html(html);
+		}else{
+			var html = '<i class="fa fa-check-square-o"></i> '+opname+'<input type="hidden" name="config[SMS_DX][]" value="'+opk+'"/>';
+			$(this).addClass('table-ul-bg');
+			$(this).html(html);
+		}
+		
+	});
+});
+
+function email(){
+
+	swal({
+		title: "邮箱发送中...",
+		imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+		showConfirmButton: false
+	});
+
+	$.post("{:U('Home/mail/index')}",function(data){
+		if(data.status == 1){
+			swal({
+				title: data.info,
+				type: "success",
+				timer: 5000,
+				showConfirmButton: true
+			});
+		}else{
+			swal({
+				title: data.info,
+				type: "error",
+				timer: 5000,
+				showConfirmButton: true
+			});
+		}
+	},"json");
+}
+
+function sms(){
+	swal({
+		title: "短信发送中...",
+		imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+		showConfirmButton: false
+	});
+	
+	$.post("{:U('Home/mail/sms')}",function(data){
+		if(data.status == 1){
+			swal({
+				title: data.info,
+				type: "success",
+				timer: 5000,
+				showConfirmButton: true
+			});
+		}else{
+			swal({
+				title: data.info,
+				type: "error",
+				timer: 5000,
+				showConfirmButton: true
+			});
+		}
+	},"json");
+}
+
+</script>
+</block>

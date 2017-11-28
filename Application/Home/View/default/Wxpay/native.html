@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>扫码支付页面</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<script src="__PUBLIC__/Home/js/jquery.js"></script>
+<style>
+*{margin:0;padding:0;}
+body,html{overflow-y:hidden; }
+body{position:relative;max-width:750px; margin:0px auto;}
+.anti{ background:#22ab38; text-align:center; z-index:5;}
+.anti h2{ padding:6% 0; width:100%; display:inline-block; background:#fefefe;}
+.anti h2 img{ width:55%;}
+.anti dl{ padding-top:6%;}
+.anti dl img{width:58%;}
+.anti dl p{ font-size:14px; color:#fff; font-family:"宋体"; padding:2%; text-align:left; line-height:20px;}
+.texts{position:fixed; width:100%; height:100%; left:0; top:0; background:#fff; text-align:center; z-index:6; display:none;}
+.texts img{ margin-top:20%;}
+</style>
+</head>
+<body>
+	<div class="anti">
+    	<h2><img src="__PUBLIC__/Home/images/wxsaom.png"></h2>
+        <dl>
+			<img src="{$qrcode}">
+            <br><p>微信扫码支付，打开微信扫一扫</p>
+        </dl>
+    </div>
+	<div class="texts"><img src="__PUBLIC__/Home/images/suss.png"></div>
+</body>
+</html>
+<script type="text/javascript">  
+
+    $(function(){
+        setInterval("runajax()",5000);
+    });
+    function runajax(){
+        $.ajax({  
+            url:"__ROOT__/index.php?s=/Home/wxpay/setinterval/ordernum/{$ordernum}.html",
+            dataType:"text",
+            type:"GET",
+			success:function(data){
+				if(data == 'ok'){
+					$(".texts").show();
+					setTimeout("tiaozhuan()",1000);
+				}
+			}
+        });
+    }
+	function tiaozhuan(){
+		window.location.href="__ROOT__/index.php?s=/Home/Index/order/ordernum/{$ordernum}.html";
+	}
+	
+</script>

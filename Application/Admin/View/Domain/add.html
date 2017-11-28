@@ -1,0 +1,109 @@
+<extend name="Public/base" />
+<block name="body">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>产品管理</b></div>
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <li <eq name="type" value="">class="active"</eq>><a href="{:U('product/update?proid='.$proid)}">产品详情</a></li>
+		  <li <eq name="type" value="5">class="active"</eq>><a href="{:U('product/audit?proid='.$proid.'&type=5')}">产品审核</a></li>
+		  <li <eq name="type" value="1">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=1')}"><eq name="info[temp][pro_title]" value="">产品类别一<else/>产品{$info['temp']['pro_title']}</eq></a></li>
+		  <li <eq name="type" value="2">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=2')}"><eq name="info[temp][size_title]" value="">产品类别二<else/>产品{$info['temp']['size_title']}</eq></a></li>
+		  <li <eq name="type" value="3">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=3')}"><eq name="info[temp][color_title]" value="">产品类别三<else/>产品{$info['temp']['color_title']}</eq></a></li>
+		  <li <eq name="type" value="4">class="active"</eq>><a href="{:U('product/gz?proid='.$proid.'&type=4')}">推广链接</a></li>
+		</ul>
+	</div>
+	
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">标题</td>
+				<td><input name="title" type="text" /> <span><i class="fa fa-exclamation-circle"></i> 请填写标题</span></td>
+			  </tr>
+			 
+			  <tr>
+				<td width="120" align="right">产品图片</td>
+				<td>
+					<em>
+					<input type="file" id="upload_picture_thumb">
+					<input type="hidden" name="thumb" id="cover_id_thumb"/>
+					</em>
+					<span><i class="fa fa-exclamation-circle"></i> 上传产品图片</span>
+					<div class="c"></div>
+					<div class="upload-img-box">
+					<notempty name="info.thumb">
+						<div class="upload-pre-item"></div>
+					</notempty>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+					/* 初始化上传插件 */
+					$("#upload_picture_thumb").uploadify({
+						"height"          : 30,
+						"swf"             : "__STATIC__/uploadify/uploadify.swf",
+						"fileObjName"     : "download",
+						"buttonText"      : "<i class='fa fa-file-image-o'></i> 上传产品图片",
+						"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+						"width"           : 120,
+						'removeTimeout'	  : 1,
+						'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+						"onUploadSuccess" : uploadPicturethumb
+					});
+					function uploadPicturethumb(file, data){
+						var data = $.parseJSON(data);
+						var src = '';
+						if(data.status){
+							src = data.url || '__ROOT__' + data.path
+							$("#cover_id_thumb").val(src);
+							$("#cover_id_thumb").parent().parent().find('.upload-img-box').html(
+								'<div class="upload-pre-item"><img src="' + src + '" width="150" height="150"/></div>'
+							);
+						} else {
+							updateAlert(data.info);
+							setTimeout(function(){
+								$('#top-alert').find('button').click();
+								$(that).removeClass('disabled').prop('disabled',false);
+							},1500);
+						}
+					}
+					</script>
+				</td>
+			  </tr>
+			    <if condition="($type neq 2) AND ($type neq 3)">
+			  <tr>
+				<td width="120" align="right">套餐价格</td>
+				<td><input name="price" type="text" value="{$info.price|default=0}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写套餐价格,例如（<kbd>100</kbd>）</span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">套餐库存</td>
+				<td><input name="number" type="text" value="{$info.number|default=9999999}"/> <span><i class="fa fa-exclamation-circle"></i> 请填写套餐库存,例如（<kbd>100</kbd>）</span></td>
+			  </tr>
+			  </if>
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<input type="hidden" name="type" value="{$type}">
+	<input type="hidden" name="proid" value="{$proid}">
+	<input type="hidden" name="nid" value="{$info.nid}">
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+				<li class="ul-list ahover"><a href="{:U('index?proid='.$proid.'&type='.$type)}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+<block name="script">
+<script type="text/javascript">
+	Think.setValue("status", {$info.status|default=1});
+	Think.setValue("template", {$info.template|default=1});
+
+	</script>
+</block>

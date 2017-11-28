@@ -1,0 +1,113 @@
+<extend name="Public/base"/>
+
+<block name="body">
+<link href="__CSS__/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__JS__/bootstrap-switch.min.js"></script>
+	<form action="__SELF__" method="post" class="form-horizontal">
+    <div class="col-md-12 main-main">
+		<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单管理</b></div>
+		<div class="col-md-12 show-table">
+			
+			<div class="col-md-12">
+				<table class="table table-bordered">
+				  <tbody>
+					<tr>
+					  <td align="right" width="120">快递公司</td>
+					  <td>
+						<select name="exp_com">
+							<option value="0">请选择</option>
+							<foreach name="ems" item="v" key="k">
+							<option value="{$k}">{$v}</option>
+							</foreach>
+						</select>
+					  </td>
+					</tr>
+					<tr>
+					  <td align="right">添加快递单号</td>
+					  <td>
+						<table class="table table-bordered">
+						  <tbody>
+							<th width="100">订单ID</th>
+							<th width="250">订单单号</th>
+							<th width="150">姓名</th>
+							<th width="200">手机</th>
+							<th>快递单号</th>
+						  </tbody>
+						 <volist name="order" id="v">
+						  <tr>
+							<td>{$v.orderid}</td>
+							<td>{$v.ordernum}</td>
+							<td>{$v.name}</td>
+							<td>{$v.phone}</td>
+							<td><input type="text" name="exp_num[{$v.orderid}]"/></td>
+						  </tr>
+						  </volist>
+						</table>
+						
+					  </td>
+					</tr>
+					<tr>
+					  <td align="right">订单状态</td>
+					  <td><em><input type="checkbox" name="status"></em><span class="span"><i class="fa fa-exclamation-circle"></i> 开启后将所选订单状态都改为已发货</span></td>
+					</tr>
+					
+					<tr>
+					  <td align="right">发货后短信通知</td>
+					  <td><em><input type="checkbox" name="sms"></em><span class="span"><i class="fa fa-exclamation-circle"></i> 开启后自动发送已发货短信通知，如果要修改短信内容，请前往<a href="{:U('admin/config/group?id=11')}" target="_blank">【短信接口设置】</a>——订单发货后发送短信</span></td>
+					</tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li class="ahover"><a id="submit"><i class="fa fa-check-circle-o"></i> 保存单号</a></li>
+				<li class="ul-list ahover"><a href="{:U('index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+
+<block name="script">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#submit").click(function(){
+		
+			swal({
+				title: "数据提交中...",
+				imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+				showConfirmButton: false
+			});
+			var form = $('form').serialize();
+			$.post("{:U('json_delivery')}",form,function(data){
+				if(data.status == 0){
+					swal({
+						title: data.info,
+						type: "error",
+						timer: 1500,
+						showConfirmButton: false
+					});
+				}else{
+					swal({
+						title: data.info,
+						type: "success",
+						timer: 1500,
+						showConfirmButton: false
+					});
+					setTimeout(function() {
+						window.location.href = "{:U('index')}";
+					},1500);
+				}
+			}, "json");
+		});
+	});
+	$(function(){
+		$("[name='status']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("[name='sms']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+	});
+</script>
+</block>

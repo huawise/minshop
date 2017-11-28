@@ -1,0 +1,40 @@
+.bw-cart-ico{ background:url(../images/icon_cart_alt.png) no-repeat center center #fff; border-radius:50%; background-size:30px 30px; overflow:hidden; width:50px; height:50px; position:fixed; z-index:99; top:50px; right:10px;}
+.bw-cart-ico a{ background:red; display:inline-block; padding:1px 5px; color:#fff; border-radius:20px; font-size:12px; position:relative; float:right; top:5px; right:8px;}
+
+.bw-cart-nav{ position:fixed; left:0px; bottom:0px; width:100%;}
+.bw-cart-nav li{ float:left; margin:0px 1%; width:48%; text-align:center; font-size:16px; color:#fff; height:45px; line-height:45px; border-radius:8px 8px 0px 0px; cursor:pointer}
+.bw-cart-nav li:nth-child(1){ background:#fe7938;}
+.bw-cart-nav li:nth-child(2){ background:#c60a1e;}
+
+.bw-bg{ width:100%; height:100%; background:#000; position:fixed; opacity:0.8; top:0px; left:0px; z-index:99; display:none;}
+.bw-buy{ width:100%; position:fixed; background:#fff; bottom:0px; max-width:750px; left:50%; margin-left:-375px; z-index:999;display:none;}
+.bw-buy dl{ clear:both; height:90px; border-bottom:1px solid #ccc; margin-bottom:15px;}
+.bw-buy dl dt{ float:left; border:1px solid #ccc; position:absolute; top:-15px; left:15px; border-radius:5px; overflow:hidden; width:100px; height:100px;}
+.bw-buy dl dt img{width:100px; height:100px;}
+.bw-buy dl dd{ margin-left:140px; margin-top:20px;font-size:16px; color:red}
+.bw-buy dl em{margin-left:140px; margin-top:40px;font-size:16px; color:#333}
+.bw-buy p{ width:100%; height:45px; font-size:16px; color:#fff; cursor:pointer !important; text-align:center; background:#c60a1e; line-height:45px;}
+.bw-buy dl span{ position:absolute; top:5px; right:15px; font-size:26px; color:#333; cursor:pointer;}
+.bw-title{ font-size:14px; color:#666; margin-left:15px;}
+.bw-buy ul{ margin:15px; overflow:hidden;}
+.bw-buy ul li{ float:left;  font-size:16px; color:#333; border:1px solid #ccc; padding:0px 7px; height:30px; line-height:30px; margin:0px 7px 7px 0px; cursor:pointer;}
+.bw-buy ul li.ul-no{border:1px solid #c60a1e; color:#c60a1e}
+
+.bw-sum{ margin:10px 0px 15px 15px; overflow:hidden;}
+.bw-sum a{ cursor:pointer;}
+.bw-sum a.b-sum-del{ height:30px; width:45px; border:1px solid #ccc; display:inline-block; text-align:center; font-size:20px; color:#666; line-height:30px; float:left;}
+.bw-sum a.b-sum-add{ height:30px; width:45px; border:1px solid #ccc; display:inline-block; text-align:center; font-size:20px; color:#666; line-height:30px;float:left;}
+.bw-sum input{ float:left; border:none; border-top:1px solid #ccc;border-bottom:1px solid #ccc; height:30px; width:50px; text-align:center; font-size:16px; color:#333;float:left;}
+.bw-sum span{ color:#666; line-height:30px; margin-left:10px;}
+.bw-sum strong{ float:right; font-size:20px; color:#c60a1e; line-height:30px; margin-right:10px;}
+
+.u-flyer{display: block;width: 50px;height: 50px;border-radius: 50px;position: fixed;z-index: 9999;}
+
+@media screen and (max-width:750px){
+	.bw-buy{ width:96%; position:fixed; background:#fff; bottom:0px; left:2%; margin:0px;}
+}
+
+@media screen and (max-width:500px){
+	.bw-cart-ico{ background:url(../images/icon_cart_alt.png) no-repeat center center #fff; border-radius:50%; background-size:20px 20px; overflow:hidden; width:40px; height:40px; position:fixed; z-index:99; top:50px; right:10px;}
+	.bw-cart-ico a{ background:red; display:inline-block; padding:1px 5px; color:#fff; border-radius:20px; font-size:12px; position:relative; float:right; top:3px; right:5px;}
+}

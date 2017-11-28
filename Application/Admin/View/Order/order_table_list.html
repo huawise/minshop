@@ -1,0 +1,133 @@
+<extend name="Public/base" />
+
+<block name="body">
+<form action="__SELF__" method="post" class="form-horizontal">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单管理</b></div>
+	<div class="c"></div>
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			<!--
+			  <tr>
+				<td width="160" align="right">订单列表选项</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="table" item="vo" key="k">
+					<php>
+					if(in_array($k,$table_1)){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}" data-name="table_1"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="table_1[]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}" data-name="table_1"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>
+					</foreach>
+					</ul>
+				</td>
+			  </tr>-->
+			   <tr>
+				<td width="160" align="right">订单导出选项</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="table" item="vo" key="k">
+					<php>
+					if(in_array($k,$table_2)){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}" data-name="table_2"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="table_2[]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}" data-name="table_2"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>
+					</foreach>
+					</ul>
+				</td>
+			  </tr>
+			  <tr>
+				<td width="160" align="right">快递公司选项</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="allems" item="vo" key="k">
+					<php>
+					if(in_array($vo,$ems)){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}" data-name="table_3" data-type="kd"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="table_3[{$k}]" value="{$vo}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}" data-name="table_3" data-type="kd"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>
+					</foreach>
+					</ul>
+				</td>
+			  
+			  
+			  
+			  </tbody>
+		  </table>
+		</div>
+	</div>
+	
+</div>
+<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+			</ul>
+		</div>
+	</div>
+</form>
+
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+	$(function(){
+		
+		$(".table-ul li").click(function(){
+			var opk = $(this).data('opk');
+			var opname = $(this).data('opname');
+			var kd = $(this).data('type');
+			
+			if(kd == 'kd'){
+				if($(this).hasClass('table-ul-bg') ) {
+					var html = '<i class="fa fa-square-o"></i> '+opname;
+					$(this).removeClass('table-ul-bg');
+					$(this).html(html);
+				}else{
+					var html = '<i class="fa fa-check-square-o"></i> '+opname+'<input type="hidden" name="table_3['+opk+']" value="'+opname+'"/>';
+					$(this).addClass('table-ul-bg');
+					$(this).html(html);
+				}
+			}else{
+				if($(this).hasClass('table-ul-bg') ) {
+					var html = '<i class="fa fa-square-o"></i> '+opname;
+					$(this).removeClass('table-ul-bg');
+					$(this).html(html);
+				}else{
+					var name = $(this).data('name');
+					var html = '<i class="fa fa-check-square-o"></i> '+opname+'<input type="hidden" name="'+name+'[]" value="'+opk+'"/>';
+					$(this).addClass('table-ul-bg');
+					$(this).html(html);
+				}
+			}
+			
+			
+			
+		});
+		
+		
+	});
+	
+	</script>
+</block>

@@ -1,0 +1,94 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>域名管理</b></div>
+	<div class="c"></div>
+	<br/>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+				<eq name="domain" value="1">
+				<li class="a-list ahover"><a url="{:U('domain?t=0')}" class="confirm ajax-get"><i class="fa  fa-power-off"></i> 一键开启单独域名</a></li>
+				<else/>
+				<li class="a-add ahover"><a url="{:U('domain?t=1')}" class="confirm ajax-get"><i class="fa fa-times-circle"></i> 一键关闭单独域名</a></li>
+				</eq>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="40%">产品标题</th>
+				<th width="250px">绑定域名</th>
+				<th>操作</th>
+			<tbody>
+			<tr>
+				<td><strong>主域名</strong></td>
+				<td><input type="text" name="domain" value="{$zdomain}" style="width:100%;  padding:0px 5px;"></td>
+				<td><a href="javascript:zdomain()" class="a a-add ahover"><i class="fa fa-check-circle-o"></i> 保 存</a></td>
+			</tr>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><eq name="value" value="1">
+				<a href="{:U('home/index/info?proid='.$vo[proid].'&uid='.UID)}" target="_blank">{$vo.title}</a>
+				<else/>
+				<a href="__ROOT__/html/{$vo[proid]}-{:UID}.html" target="_blank">{$vo.title}</a>
+				</eq></td>
+				<td><input type="text" name="domain-{$vo['proid']}" value="{$vo['domain']}" style="width:100%;  padding:0px 5px;"></td>
+				<td><a href="javascript:domain({$vo['proid']})" class="a a-add ahover"><i class="fa fa-check-circle-o"></i> 保 存</a></td>
+			</tr>
+			</volist>
+		</table>
+	
+	</div>
+	<div class="page col-md-12">{$_page}</div>
+	
+</block>
+<block name="script">
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+			
+	});
+	
+	function domain(id){
+		swal({ 
+			title: "确认要执行该操作吗?", 
+			type: "warning", 
+			showCancelButton: true, 
+			closeOnConfirm: false, 
+			confirmButtonText: "是的", 
+			confirmButtonColor: "#ec6c62" 
+		}, function() { 
+			var url = $("input[name=domain-"+id+"]").val();
+			$.post("{:U('domain_json')}", {"proid":id,"domain":url},function(data){
+				swal(data.info, "", "success");
+				setTimeout(function(){
+					location.reload();
+				},1500);
+			},"json");
+		});
+	}
+	
+	function zdomain(){
+		swal({ 
+			title: "确认要执行该操作吗?", 
+			type: "warning", 
+			showCancelButton: true, 
+			closeOnConfirm: false, 
+			confirmButtonText: "是的", 
+			confirmButtonColor: "#ec6c62" 
+		}, function() { 
+			var url = $("input[name=domain]").val();
+			$.post("{:U('zdomain_json')}", {"domain":url},function(data){
+				swal(data.info, "", "success");
+				setTimeout(function(){
+					location.reload();
+				},1500);
+			},"json");
+		});
+	}
+	
+</script>
+</block>

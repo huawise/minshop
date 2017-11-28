@@ -1,0 +1,203 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<form action="__SELF__" method="post" class="form-horizontal">
+    <div class="col-md-12 main-main">
+		<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单管理</b></div>
+		<div class="col-md-12 show-table">
+			<div class="col-md-6">
+				<table class="table table-bordered">
+				  <tbody>
+					<tr>
+					  <td width="100" align="right">订单号</td>
+					  <td>{$info.ordernum}</td>
+					</tr>
+					<tr>
+					  <td align="right">订购时间</td>
+					  <td>{$info.addtime|date='Y-m-d H:i',###}</td>
+					</tr>
+					<tr>
+					  <td align="right">产品名称</td>
+					  <td>{$info.protitle}</td>
+					</tr>
+					<tr>
+					  <td align="right">订购产品</td>
+					  <td>{$info.title}</td>
+					</tr><tr>
+				    <td align="right">产品{$info['temp']['size_title']}</td>
+					  <td>{$info.size}</td>
+					</tr>
+					<td align="right">产品{$info['temp']['color_title']}</td>
+					  <td>{$info.color}</td>
+					</tr>
+					<td align="right">订购数量</td>
+					  <td><kbd> {$info.num} </kbd></td>
+					</tr>
+					<td align="right">价格</td>
+					  <td><font color="red" style="font-weight:bold;">&yen; {$info.total} 元</font></td>
+					</tr>
+					<td align="right">姓名</td>
+					  <td><input name="name" type="text" value="{$info.name}"/></td>
+					</tr>
+					<td align="right">手机号码</td>
+					  <td><input name="phone" type="text" value="{$info.phone}"/></td>
+					</tr>
+					<td align="right">收货地址</td>
+					  <td>
+						<div class="hide">
+						<select id="s_province" name="province"></select>
+						<select id="s_city" name="city"></select>
+						<select id="s_county" name="area"></select>
+						<script class="resources library" src="__PUBLIC__/Home/js/PCASClass.js" type="text/javascript"></script>
+						<script type="text/javascript">
+						new PCAS("province","city","area","{$info.province}","{$info.city}","{$info.area}");
+						</script>
+					    <input name="address" type="text" value="{$info.address}"/>
+						</div>
+						<div class="show">{$info.province}{$info.city}{$info.area}{$info.address} <a class="ahover"><i class="fa fa-edit"></i> 修 改</a></div>
+					  </td>
+					</tr>
+					<td align="right">付款方式</td>
+					  <td><kbd><if condition="($info.paytype eq 'alipay')">支付宝<elseif condition="($info.paytype eq 'wechat')"/>微信<elseif condition="($info.paytype eq 'alipaycode')"/>支付宝二维码<elseif condition="($info.paytype eq 'wechatcode')"/>微信二维码<elseif condition="($info.paytype eq 'huodao')"/>货到付款<elseif condition="($info.paytype eq 'ty')"/>同意支付<elseif condition="($info.paytype eq 'bty')"/>不同意支付</if><if condition="($info.paytype eq 'alipay') OR ($info.paytype eq 'wechat')">/<if condition="($info.paytime eq '')"><font color="red" style="font-weight:bold;">未支付</font><else />已支付</if></if></kbd></td>
+					</tr>
+					<td align="right">顾客留言</td>
+					  <td>{$info.message}</td>
+					</tr>
+					<td align="right">订单来源</td>
+					  <td><kbd>{$info.gzname}</kbd></td>
+					</tr>
+					<td align="right">下单地址</td>
+					  <td><a href="<php>echo _SERVER_NAME_;</php>/index.php?s=/home/index/info/proid/{$info.proid}/gzid/{$info.gzid}/uid/{$info.uid}.html" style="color:#000;" target="_blank"><php>echo _SERVER_NAME_;</php>/index.php?s=/home/index/info/proid/{$info.proid}/gzid/{$info.gzid}/uid/{$info.uid}.html</a></td>
+					</tr>
+					<td align="right">支付宝订单号</td>
+					  <td>{$info.alinum}</td>
+					</tr>
+					<td align="right">补充说明</td>
+					  <td>{$info.explain}</td>
+					</tr>
+				  </tbody>
+				</table>
+			</div>
+			<div class="col-md-6">
+				<table class="table table-bordered">
+				  <tbody>
+					<tr>
+					  <td width="100" align="right">性别</td>
+					  <td><eq name="info.sex" value="1">男<else />女</eq></td>
+					</tr>
+					<tr>
+					  <td align="right">年龄</td>
+					  <td>{$info.age}（岁）</td>
+					</tr>
+					<tr>
+					  <td align="right">身高</td>
+					  <td>{$info.height} （CM）</td>
+					</tr>
+					<tr>
+					  <td align="right">体重</td>
+					  <td>{$info.weight} （KG）</td>
+					</tr>
+					<tr>
+					  <td align="right">身份证号</td>
+					  <td>{$info.idnumber}</td>
+					</tr>
+					<tr>
+					  <td align="right">电话号码</td>
+					  <td>{$info.tel}</td>
+					</tr>
+					<tr>
+					  <td align="right">邮编</td>
+					  <td>{$info.code}</td>
+					</tr>
+					<tr>
+					  <td align="right">QQ号</td>
+					  <td>{$info.qq}</td>
+					</tr>
+					<tr>
+					  <td align="right">微信号</td>
+					  <td>{$info.wechat}</td>
+					</tr>
+					<tr>
+					  <td align="right">邮箱</td>
+					  <td>{$info.email}</td>
+					</tr>
+					<tr>
+					  <td align="right">IP地址</td>
+					  <td><kbd>{$info.ip} （{$info.ipprovince}{$info.ipcity}）</kbd></td>
+					</tr>
+					<tr>
+					  <td align="right">订单状态</td>
+					  <td>
+					  <select name="status">
+						<foreach name="status" item="v" key="k">
+						<option value="{$k}">{$v}</option>
+						</foreach>>
+					  </select>
+					  </td>
+					</tr>
+					<tr>
+					  <td align="right">快递公司</td>
+					  <td>
+						<select name="exp_com">
+							<option value="0">请选择</option>
+							<foreach name="ems" item="v" key="k">
+							<option value="{$k}">{$v}</option>
+							</foreach>
+						</select>
+						 <a href="{:U('home/index/ems?ordernum='.$info['ordernum'])}" target="_blank">查询物流</a>
+					  </td>
+					</tr>
+					<tr>
+					  <td align="right">快递单号</td>
+					  <td><input name="exp_num" type="text" value="{$info.exp_num}"/></td>
+					</tr>
+					<tr>
+					  <td align="right">客服备注</td>
+					  <td><textarea name="note" style="width:100%;">{$info.note}</textarea></td>
+					</tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="orderid" value="{$info.orderid}">
+	<input type="hidden" name="sarea" value="{$info.area}">
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<neq name="next" value=""><li class="ul-list ahover"><a href="{:U('update?orderid='.$next)}"><i class="fa fa-angle-left"></i> 上一单</a></li></neq>
+				<php>	if(in_array("order_update",$peradmin[order])){ </php>				
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保存订单</button></li>
+				<php>	} </php>
+				<php>	if(in_array("order_del",$peradmin[order])){ </php>	
+				<eq name="info.reclaim" value="0">
+				<li class="ul-del ahover"><a url="{:U('reclaim?orderid='.$info['orderid'])}" class="ajax-get confirm"><i class="fa fa-trash-o"></i> 删除订单</a></li>
+				<else/>
+				<li class="ul-del ahover"><a url="{:U('del?orderid='.$info['orderid'])}" class="ajax-get confirm"><i class="fa fa-trash-o"></i> 删除订单</a></li>
+				</eq>
+				
+				<php>	} </php>
+				<li class="ul-list ahover"><a href="{:U('index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+				<neq name="previous" value=""><li class="ul-list ahover"><a href="{:U('update?orderid='.$previous)}">下一单 <i class="fa fa-angle-right"></i></a></li></neq> 
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+
+<block name="script">
+<script type="text/javascript">
+	Think.setValue("status",{$info['status']|default=1});
+	Think.setValue("exp_com",'{$info.exp_com|default=0}');
+	$(document).ready(function(){
+		$(".show a").click(function(){
+			$(this).parent('div').removeClass('show');
+			$(this).parent('div').addClass('showh');
+			$('.showh').hide();
+			$('.hide').removeClass('hide');
+			$('.hide').addClass('show');
+		});
+	});
+</script>
+</block>

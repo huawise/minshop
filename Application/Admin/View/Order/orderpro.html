@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>小蜜蜂管理中心</title>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/layer.css">	
+<link rel="stylesheet" type="text/css" href="__CSS__/m-style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+</head>
+
+<body>
+<header><a class="fa fa-chevron-left fa-lg" href="{:U('index/mindex')}"></a>选择产品</header>
+<div class="main">
+	<ul>
+	<foreach name="list" item="v" key="k">
+    	<li><a href="{:U('index?proid='.$v['proid'])}">{$v.title}</a></li>
+	</foreach>	
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+    $("li:last").css({"border":"none"});
+})
+</script>

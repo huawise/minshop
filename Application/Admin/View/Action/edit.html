@@ -1,0 +1,53 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>日志记录管理</b></div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">行为名称</td>
+				<td>{:get_action($info['action_id'], "title")}</td>
+			  </tr>
+			  <tr>
+				<td align="right">执行者</td>
+				<td>{:get_nickname($info['user_id'])}</td>
+			  </tr>
+			   <tr>
+				<td align="right">执行IP</td>
+				<td>{:long2ip($info['action_ip'])}</td>
+			  </tr>
+			  <tr>
+				<td align="right">执行时间</td>
+				<td>{:date('Y-m-d H:i:s',$info['create_time'])}</td>
+			  </tr>
+			  <tr>
+				<td align="right">备注</td>
+				<td><textarea readonly="readonly" class="textarea">{$info.remark}</textarea></td>
+			  </tr>
+			  
+			  
+			  </tbody>
+		  </table>
+		</div>
+	</div>
+	<input type="hidden" name="pid" value="{$info.pid}">
+	<input type="hidden" name="type" value="{$info.type}">
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li class="ul-list ahover"><a href="{:U('actionlog')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+	
+</block>
+<block name="script">
+<script type="text/javascript">
+	</script>
+</block>

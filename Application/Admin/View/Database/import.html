@@ -1,0 +1,79 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>数据库管理</b></div>
+	<div class="c"></div>
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <li <eq name="type" value="export">class="active"</eq>><a href="{:U('database/index?type=export')}">数据库备份</a></li>
+		  <li <eq name="type" value="import">class="active"</eq>><a href="{:U('database/index?type=import')}">数据库还原</a></li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+	 <form id="export-form" method="post" action="{:U('export')}">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="200">备份名称</th>
+				<th width="80">卷数</th>
+				<th width="80">压缩</th>
+				<th width="80">数据大小</th>
+				<th width="200">备份时间</th>
+				<th>状态</th>
+				<th width="150">操作</th>
+			<tbody>
+			<volist name="list" id="data">
+				<tr>
+					<td>{$data.time|date='Ymd-His',###}</td>
+					<td>{$data.part}</td>
+					<td>{$data.compress}</td>
+					<td>{$data.size|format_bytes}</td>
+					<td>{$key}</td>
+					<td>-</td>
+					<td class="action">
+						<a class="db-import a a-list ahover" href="{:U('import?time='.$data['time'])}"><i class="fa fa-mail-reply-all (alias)"></i> 还 原</a>&nbsp;
+						<a class="ajax-get confirm a a-del ahover" href="{:U('del?time='.$data['time'])}"><i class="fa fa-trash-o"></i> 删 除</a>
+					</td>
+				</tr>
+			</volist>
+		</table>
+		</form>
+	</div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript">
+	$(".db-import").click(function(){
+		var self = this, status = ".";
+		$.get(self.href, success, "json");
+		window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }
+		return false;
+	
+		function success(data){
+			if(data.status){
+				if(data.gz){
+					data.info += status;
+					if(status.length === 5){
+						status = ".";
+					} else {
+						status += ".";
+					}
+				}
+				$(self).parent().prev().text(data.info);
+				if(data.part){
+					$.get(self.href, 
+						{"part" : data.part, "start" : data.start}, 
+						success, 
+						"json"
+					);
+				}  else {
+					window.onbeforeunload = function(){ return null; }
+				}
+			} else {
+				updateAlert(data.info,'alert-error');
+			}
+		}
+	});
+</script>
+</block>

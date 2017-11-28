@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>小蜜蜂管理中心</title>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/m-style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+</head>
+
+<body>
+<header><a class="fa fa-chevron-left fa-lg" href="{:U('index/mindex')}"></a>订单统计</header>
+<div class="main">
+	<ul>
+    	<li><a href="{:U('order/sumlist?t=months')}">按月统计<i class="fa fa-calendar-o fa-lg"></i></a></li>
+        <li><a href="{:U('order/sumlist?t=day')}">按日统计<i class="fa fa-calendar fa-lg"></i></a></li>
+		<li><a href="{:U('order/sumlist?t=pro')}">按产品统计<i class="fa fa-cube fa-lg"></i></a></li>
+		<li><a href="{:U('order/sumlist?t=area')}">按所在地区统计<i class="fa fa-globe fa-lg"></i></a></li>
+        <li><a href="{:U('order/sumlist?t=pay')}">按支付方式统计<i class="fa fa-credit-card fa-lg"></i></a></li>
+		<li><a href="{:U('order/gzlist')}">按来源统计<i class="fa fa-pie-chart fa-lg"></i></a></li>
+		<eq name="uid" value="1">
+		<li class="li-no"><a href="{:U('order/user')}">按员工统计<i class="fa fa-user fa-lg"></i></a></li>
+		</eq>
+    </ul>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+    $("li:last").css({"border":"none"});
+})
+</script>

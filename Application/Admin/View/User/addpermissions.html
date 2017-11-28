@@ -1,0 +1,138 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>管理员权限</b></div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">权限组名称</td>
+				<td><input name="name" type="text" value="{$perinfo.name}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写权限组名称</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">系统管理</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="system" item="vo" key="k">
+					<php>
+					if(in_array($k,$perinfo['system'])){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}" data-name="system"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="system[]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}" data-name="system"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>					
+					</foreach>
+					</ul>
+				</td>
+			  </tr>
+			  <tr>
+				<td align="right">订单管理</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="order" item="vo" key="k">
+					<php>
+					if(in_array($k,$perinfo['order'])){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}" data-name="order"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="order[]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}" data-name="order"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>	
+					</foreach>
+					</ul>
+				</td>
+			  </tr>
+			  <tr>
+				<td align="right">产品管理</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="product" item="vo" key="k">
+					<php>
+					if(in_array($k,$perinfo['product'])){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}" data-name="product"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="product[]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}" data-name="product"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>	
+					</foreach>
+					</ul>
+				</td>
+			  </tr>
+			  
+			  <tr>
+				<td align="right">授权产品</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="list" item="vo" key="k">
+					<php>
+					if(in_array($vo['proid'],$perinfo['list'])){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$vo.proid}" data-opname="{$vo.title}" data-name="list"><i class="fa fa-check-square-o"></i> {$vo.title} <input type="hidden" name="list[]" value="{$vo.proid}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$vo.proid}" data-opname="{$vo.title}" data-name="list"><i class="fa fa-square-o"></i> {$vo.title}</li>
+					<php>
+					}
+					</php>	
+					</foreach>
+					</ul>
+				</td>
+			  </tr>
+			 
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<input type="hidden" name="perid" value="{$perinfo.perid}">
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+			<neq name="perinfo.perid" value="1">
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+			</neq>	
+				<li class="ul-list ahover"><a href="{:U('permissions')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+<block name="script">
+<script type="text/javascript">
+	
+	$(function(){
+		
+		$(".table-ul li").click(function(){
+			var opk = $(this).data('opk');
+			var opname = $(this).data('opname');
+			if($(this).hasClass('table-ul-bg') ) {
+				var html = '<i class="fa fa-square-o"></i> '+opname;
+				$(this).removeClass('table-ul-bg');
+				$(this).html(html);
+			}else{
+				var name = $(this).data('name');
+				var html = '<i class="fa fa-check-square-o"></i> '+opname+'<input type="hidden" name="'+name+'[]" value="'+opk+'"/>';
+				$(this).addClass('table-ul-bg');
+				$(this).html(html);
+			}
+			
+		});
+		
+	});
+	</script>
+</block>

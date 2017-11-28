@@ -1,0 +1,116 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>管理员管理</b></div>
+	<div class="c"></div>
+	<br/>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<php>	if(in_array("user_add",$peradmin[system])){ </php>
+				<li class="ul-add ahover"><a href="{:U('add')}"><i class="fa fa-plus-square-o"></i> 添加管理员</a></li>
+			<php>	} </php>
+			<php>	if(in_array("user_del",$peradmin[system])){ </php>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除管理员<a></li>
+			<php>	} </php>
+				<li class="ul-break ahover"><a href="{:U('index')}"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个管理员</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th>UID</th>
+				<th>登录名</th>
+				<th>昵称</th>
+				<th>登录次数</th>
+				<th>最后登录时间</th>
+				<th>最后登录IP</th>
+				<th>状态</th>
+				<th>操作</th>
+			<tbody>
+			<volist name="_list" id="vo">
+			<neq name="uid" value="1">
+			<neq name="vo.uid" value="1">
+			<tr>
+				<td><neq name="vo.uid" value="1"><input class="ids" type="checkbox" name="uid[]" value="{$vo.uid}" /></neq></td>
+				<td>{$vo.uid}</td>
+				<td>{$vo.username}</td>
+				<td>{$vo.nickname}</td>
+				<td>{$vo.login}</td>
+				<td>{$vo.last_login_time|time_format}</td>
+				<td>{:long2ip($vo['last_login_ip'])}</td>
+				<td>{$vo.status_text}</td>
+				<td>
+				<php>	if(in_array("user_update",$peradmin[system])){ </php>
+				<neq name="vo.uid" value="1">
+				<eq name="vo.status" value="1">
+				<a url="{:U('User/changeStatus?method=forbidUser&id='.$vo['uid'])}" class="confirm ajax-get a a-add ahover"><i class="fa fa-minus-circle"></i> 禁 用</a>
+				<else/>
+				<a url="{:U('User/changeStatus?method=resumeUser&id='.$vo['uid'])}" class="confirm ajax-get a a-list ahover"><i class="fa fa-circle-thin"></i> 启 用</a>
+				</eq>
+				</neq>
+				<a href="{:U('update?uid='.$vo['uid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a>
+				<php>	} </php>
+				<neq name="vo.uid" value="1">
+				<php>	if(in_array("user_del",$peradmin[system])){ </php>
+				<a url="{:U('User/del?uid='.$vo['uid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a>
+				<php>	} </php>
+				</neq>
+				</td>
+			</tr>
+			</neq>
+			<else/>
+			<tr>
+				<td><neq name="vo.uid" value="1"><input class="ids" type="checkbox" name="uid[]" value="{$vo.uid}" /></neq></td>
+				<td>{$vo.uid}</td>
+				<td>{$vo.username}</td>
+				<td>{$vo.nickname}</td>
+				<td>{$vo.login}</td>
+				<td>{$vo.last_login_time|time_format}</td>
+				<td>{:long2ip($vo['last_login_ip'])}</td>
+				<td>{$vo.status_text}</td>
+				<td>
+				<php>	if(in_array("user_update",$peradmin[system])){ </php>
+				<neq name="vo.uid" value="1">
+				<eq name="vo.status" value="1">
+				<a url="{:U('User/changeStatus?method=forbidUser&id='.$vo['uid'])}" class="confirm ajax-get a a-add ahover"><i class="fa fa-minus-circle"></i> 禁 用</a>
+				<else/>
+				<a url="{:U('User/changeStatus?method=resumeUser&id='.$vo['uid'])}" class="confirm ajax-get a a-list ahover"><i class="fa fa-circle-thin"></i> 启 用</a>
+				</eq>
+				</neq>
+				<a href="{:U('update?uid='.$vo['uid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a>
+				<php>	} </php>
+				<neq name="vo.uid" value="1">
+				<php>	if(in_array("user_del",$peradmin[system])){ </php>
+				<a url="{:U('User/del?uid='.$vo['uid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a>
+				<php>	} </php>
+				</neq>
+				</td>
+			</tr>
+			</neq>
+			
+			</volist>
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	
+	<script type="text/javascript">
+	
+	
+	
+	</script>
+</block>

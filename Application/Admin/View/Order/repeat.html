@@ -1,0 +1,47 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单管理</b></div>
+	
+	<div class="c"></div>
+	<div class="col-md-6 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="140">姓名重复</th>
+				<th>订单数量</th>
+			<tbody>
+			<volist name="name" id="v">
+			<tr>
+				<td><a href="{:U('order/index?name='.$v[name])}">{$v.name}</a></td>
+				<td>{$v.count}</td>
+			</tr>
+			</volist>
+			
+		</table>
+	</div>
+	<div class="col-md-6 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="140">手机号重复</th>
+				<th>订单数量</th>
+			<tbody>
+			<volist name="phone" id="v">
+			<tr>
+				<td><a href="{:U('order/index?phone='.$v[phone])}">{$v.phone}</a></td>
+				<td>{$v.count}</td>
+			</tr>
+			</volist>
+			
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+	
+	
+	</script>
+</block>

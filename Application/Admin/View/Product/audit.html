@@ -1,0 +1,77 @@
+<extend name="Public/base" />
+<block name="body">
+<link href="__CSS__/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__JS__/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>产品管理</b></div>
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <li <eq name="type" value="">class="active"</eq>><a href="{:U('update?proid='.I('get.proid'))}">产品详情</a></li>
+		  <li <eq name="type" value="5">class="active"</eq>><a href="{:U('audit?proid='.I('get.proid').'&type=5')}">产品审核</a></li>
+		  <li <eq name="type" value="1">class="active"</eq>><a href="{:U('norms/index?proid='.I('get.proid').'&type=1')}"><eq name="info[temp][pro_title]" value="">产品类别一<else/>产品{$info['temp']['pro_title']}</eq></a></li>
+		  <li <eq name="type" value="2">class="active"</eq>><a href="{:U('norms/index?proid='.I('get.proid').'&type=2')}"><eq name="info[temp][size_title]" value="">产品类别二<else/>产品{$info['temp']['size_title']}</eq></a></li>
+		  <li <eq name="type" value="3">class="active"</eq>><a href="{:U('norms/index?proid='.I('get.proid').'&type=3')}"><eq name="info[temp][color_title]" value="">产品类别三<else/>产品{$info['temp']['color_title']}</eq></a></li>
+		  <li <eq name="type" value="4">class="active"</eq>><a href="{:U('gz?proid='.I('get.proid').'&type=4')}">推广链接</a></li>
+		</ul>
+	</div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">审核标题</td>
+				<td><input name="title" type="text" value="{$audit.title}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写产品名称</span></td>
+			  </tr>
+			 
+			   
+			  
+			  <tr>
+				<td align="right">审核内容</td>
+				<td>
+					<textarea name="content">{$audit.content}</textarea>
+					{:hook('adminArticleEdit',array('name'=>'content'))}  
+				</td>
+			  </tr>
+			
+			  <tr>
+				<td align="right">审核状态</td>
+				<td><em><input type="checkbox" name="status" <eq name="audit.status" value="0">checked</eq>></em><span class="span"><i class="fa fa-exclamation-circle"></i> 产品状态，是否审核页面状态</span></td>
+			  </tr>
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<div class="height-50"></div>
+	<input type="hidden" name="id" value="{:I('get.proid')}">
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+			<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+			<php>	} </php>	
+				<li class="ul-list ahover"><a href="{:U('index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+			<php>	if(in_array("pro_add",$peradmin[product])){ </php>
+				<li class="ahover"><a href="{:U('add')}"><i class="fa fa-plus-square-o"></i> 添加产品</a></li>
+			<php>	} </php>	
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		$("input[name='status']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		
+		
+	});
+	</script>
+</block>

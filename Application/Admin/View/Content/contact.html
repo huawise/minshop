@@ -1,0 +1,45 @@
+<extend name="Public/base" />
+<block name="body">
+<link href="__CSS__/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__JS__/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>联系我们</b></div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  
+			  <tr>
+				<td align="right" width="120px;">内容</td>
+				<td>
+					<textarea name="content">{$contact}</textarea>
+					{:hook('adminArticleEdit',array('name'=>'content'))}  
+				</td>
+			  </tr>
+			  
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+</block>
+

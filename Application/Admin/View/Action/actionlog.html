@@ -1,0 +1,90 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>日志记录管理</b></div>
+	<div class="c"></div>
+	<br/>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('remove')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除日志<a></li>
+				<li class="ul-list ahover"><a onclick="del();"><i class="fa fa-trash-o"></i> 删除全部日志<a></li>
+				<li class="ul-break ahover"><a href="{:U('actionlog')}"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个记录</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th class="">编号</th>
+				<th class="">行为名称</th>
+				<th class="">执行者</th>
+				<th class="">执行时间</th>
+				<th class="">执行IP</th>
+				<th class="">操作</th>
+			<tbody>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+				<td>{$vo.id} </td>
+				<td>{:get_action($vo['action_id'],'title')}</td>
+				<td>{:get_nickname($vo['user_id'])}</td>
+				<td><span>{$vo.create_time|time_format}</span></td>
+				<td>{:long2ip($vo['action_ip'])}</td>
+				<td><a href="{:U('Action/edit?id='.$vo['id'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a> <a url="{:U('Action/remove?ids='.$vo['id'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a></td>
+			</tr>
+			</volist>
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	
+	<script type="text/javascript">
+	
+		function del(){
+		
+		swal({ 
+				title: "确认要执行该操作吗？", 
+				type: "warning", 
+				showCancelButton: true, 
+				closeOnConfirm: false, 
+				confirmButtonText: "是的", 
+				confirmButtonColor: "#ec6c62" 
+			}, function() { 
+				swal({
+					title: "删除全部日志中...",
+					imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+					showConfirmButton: false
+				});
+				
+				$.post("{:U('action/del')}", function(data){
+					if(data.status == 1){
+						swal({
+							title: data.info,
+							type: "success",
+							timer: 1000,
+							showConfirmButton: false
+						});
+						setTimeout(function() {
+							location=location;
+						},1000);
+					}
+					
+				});
+			});
+		}
+	
+	</script>
+</block>

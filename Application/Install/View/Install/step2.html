@@ -1,0 +1,107 @@
+<extend name="Public/base"/>
+
+<block name="header">
+    <li class="active"><a href="javascript:;">环境检测</a></li>
+    <li class="active"><a href="javascript:;">创建数据库</a></li>
+    <li><a href="javascript:;">安装</a></li>
+    <li><a href="javascript:;">完成</a></li>
+</block>
+
+<block name="body">
+    <h1>创建数据库</h1>
+    <form action="__SELF__" method="post">
+        <div class="create-database">
+            <h2>数据库连接信息</h2>
+            <div>
+                <select name="db[]">
+                    <option>mysql</option>
+                    <option>mysqli</option>
+                </select>
+                <span>数据库连接类型，服务器支持的情况下建议使用mysqli</span>
+            </div>
+            <div>
+                <input type="text" name="db[]" value="localhost">
+                <span>数据库服务器，数据库服务器IP，一般为localhost</span>
+            </div>
+            <div>
+                <input type="text" name="db[]" placeholder="gzbaiwei">
+                <span>数据库名</span>
+            </div>
+            <div>
+                <input type="text" name="db[]" value="">
+                <span>数据库用户名</span>
+            </div>
+            <div>
+                <input type="password" name="db[]" value="">
+                <span>数据库密码</span>
+            </div>
+            
+            <div>
+                <input type="text" name="db[]" value="3306">
+                <span>数据库端口，数据库服务连接端口，一般为3306</span>
+            </div>
+        
+            <div>
+                <input type="text" name="db[]" value="xd_">
+                <span>数据表前缀，同一个数据库运行多个系统时请修改为不同的前缀</span>
+            </div>
+        </div>
+        
+        <div class="create-database">
+            <h2>创始人帐号信息</h2>
+            <div>
+                <input type="text" name="admin[]" value="admin">
+                <span>用户名</span>
+            </div>
+            <div>
+                <input type="password" name="admin[]" value="">
+                <span>密码</span>
+            </div>
+            <div>
+                <input type="password" name="admin[]" value="">
+                <span>确认密码</span>
+            </div>
+			<div>
+				<br/><br/>
+                <input type="hidden" name="admin[]" value="<php>echo time().'@qq.com'</php>">
+            </div>
+        </div>
+    </form>
+</block>
+
+<block name="footer">
+    <a class="btn btn-success btn-large" href="{:U('Install/step1')}">上一步</a>
+    <button id="submit" class="btn btn-primary btn-large">下一步</button id="submit">
+	<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/sweetalert.css">
+    <script type="text/javascript">
+    //$("#submit").click(function(){$("form").submit()});
+	$(document).ready(function(){
+		$("#submit").click(function(){
+			//$("form").submit()
+			swal({
+				title: "加载中...",
+				imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+				showConfirmButton: false
+			});
+			$.post("__SELF__", $("form").serialize(),function(data){
+			
+				if(data.status == 0){
+					swal({
+						title: data.info,
+						type: "error",
+						timer: 1500,
+						showConfirmButton: false
+					});
+				}else if(data.status == 1){
+					location=data.url;
+				}
+				
+			}, "json");
+			
+			
+		});
+	});
+    </script>
+</block>

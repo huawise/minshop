@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="Author" content="技术支持：小蜜蜂竞价单页订单系统www.minbee.cn 咨询热线：15622741979"  rel="nofollow" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<link rel="shortcut icon" href="__PUBLIC__/Home/images/tubiao.ico" type="image/x-icon"/>
+<title>{$info.title}</title>
+<meta name="description" content="{:C('SITE_DESCRIBE')}" />
+<meta name="keywords" content="{:C('SITE_KEYWORDS')}" /> 
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/baiwei.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/swiper-3.3.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/time.lesser.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.liMarquee.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/style-6.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/layer.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/swiper-3.3.1.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/liMarquee.css">
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.lazyload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.smint.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.touchSwipe.min.js"></script>
+<eq name="language" value="1">
+<script type="text/javascript" src="__PUBLIC__/Home/js/language.js"></script>
+</eq>
+<script type="text/javascript"> 
+	jQuery(document).ready( 
+	function($){ 
+		$(".bw-content img").lazyload({ 
+			placeholder : "__PUBLIC__/Home/images/grey.gif", 
+			effect      : "fadeIn",
+			threshold : 200
+		}); 
+		
+		$(".newbuy").click(function() {
+			$('html, body').animate({
+				scrollTop: $("#buy").offset().top
+			}, 1000);
+		});
+		$('.audit-2').hide();
+		
+	}); 
+	
+	function GetDateStr(AddDayCount) { 
+		var dd = new Date(); 
+		dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期 
+		var y = dd.getFullYear(); 
+		var m = dd.getMonth()+1;//获取当前月份的日期 
+		var d = dd.getDate(); 
+		return y+"-"+m+"-"+d; 
+	} 
+	
+</script> 
+<eq name="audit['status']" value="0">
+<script type="text/javascript">
+if (/Android|webOS|iPhone|iPod|BlackBerry|Windows CE|Windows Phone/i.test(navigator.userAgent)) {
+   
+}else{
+	$(function($){
+		$('.audit-1').hide();
+		$('.audit-2').show();
+	});
+}
+</script>
+</eq>
+<script type="text/javascript">
+var y_jhs;
+$(function(){
+	y_jhs = $(".subMenu").position().top;
+});
+$(window).scroll(function(){
+	var top = $(document).scrollTop();
+	if(top >= y_jhs){
+		$(".subMenu").addClass("subMenuFixed");
+		$(".bw-content,.bw-review").addClass("subMenuMtop");
+	}else{
+		$(".subMenu").removeClass("subMenuFixed");
+		$(".bw-content,.bw-review").removeClass("subMenuMtop");
+	}
+});
+</script>
+
+
+
+<script type="text/javascript">
+	var temp = new Array({$options});
+	var json_num = "json_num.php";
+	var APP = "__APP__";
+	var post_order = "{:U('post_order')}";
+	var sms = "{:U('sms')}";
+	var EndTime = "<php> echo (time()+$endtime)*1000;</php>";
+	var post_cartadd = "{:U('post_cartadd')}";
+	var PUBLIC = "__PUBLIC__";
+</script>
+
+</head>
+<body>
+<div class="audit-1">
+<div class="swiper-container swiper1">
+    <div class="swiper-wrapper newtag1">
+        <volist name="info.images" id="v">
+        <div class="swiper-slide"><img src="{$v}"/></div>
+		</volist>	
+    </div>
+</div>
+<script language="javascript"> 
+var mySwiper = new Swiper('.swiper1',{
+loop:false,
+grabCursor: true,
+paginationClickable: true,
+autoplay: 5000
+})
+</script>
+<div class="c"></div>
+<div class="bw-price">
+	<div class="bw-price-l fl">
+    	<dl>
+        	<dt><em>{$info['currency']}</em><i>{$info.price}</i></dt>
+            <dd>
+            	<p>原价：{$info['currency']} <i>{$info.oldprice}元</i></p>
+                <span><i>{$info.number}</i> 件已售</span>
+            </dd>
+        </dl>
+    </div>
+    <div class="bw-price-r fr">
+    	<script language="javascript"> 
+		getRTime(<php> echo $endtime*1000;</php>);
+		</script>
+    	<p></p>
+    	<dt>距结束仅剩</dt>
+        <dd>
+        	<span class="num" id="J_TimeHour"></span><span class="dot">:</span>
+            <span class="num" id="J_TimeMin"></span><span class="dot">:</span>
+            <span class="num" id="J_TimeSec"></span><span class="dot">:</span>
+            <span class="num" id="J_TimeWSec"></span>
+        </dd>
+    </div>
+</div>
+<div class="c"></div>
+<div class="bw-titles">
+	<p>{$info.title}</p>
+    <span>{$info.song}</span>
+</div>
+<div class="c"></div>
+<div class="bw-baoyou">
+	<ul>
+    	<li>包邮</li>
+        <li>货到付款</li>
+        <li>七天退换</li>
+    </ul>
+</div>
+<div class="c"></div>
+<div class="subMenu">
+    <div class="inner">
+<div class="swiper-container swiper-container-horizontal" id="swiper-container2">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide swiper-slide-active active-nav"><a class="subNavBtn">商品介绍</a></div>
+		<div class="swiper-slide swiper-slide-next"><a class="subNavBtn">商品评价</a></div>
+		<a class="bw-cart-nav">立即抢购</a>
+	</div>
+</div>
+    </div>
+</div>
+<!--
+<div class="subMenu">
+    <div class="inner">
+        <a class="subNavBtn">商品介绍</a>
+        <a class="subNavBtn">商品评价</a>
+        <a class="bw-cart-nav">立即抢购</a>
+    </div>
+</div>
+-->
+<div class="c"></div>
+<div class="swiper-container swiper2">
+	<div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="bw-content">{$info.content}</div></div>
+		<div class="swiper-slide">
+			<div class="bw-review">
+			<foreach name="info.review" item="v" key="k">
+				<dl>
+					<dt>{$v[1]} <span class="bw-tb-<php> echo rand(1,2);</php>-<php> echo rand(2,5);</php>"></span></dt>
+					<dd>{$v[0]}</dd>
+					<p><script>document.write(GetDateStr(0));</script></p>
+				</dl>
+			</foreach>		
+			</div>
+		</div>
+	</div>
+</div>
+<script language="javascript"> 
+var mySwiper3 = new Swiper('.swiper2',{
+	paginationClickable: true,
+	onSlideChangeStart: function(){
+		updateNavPosition()
+	}
+});
+
+var mySwiper2 = new Swiper('#swiper-container2',{
+watchSlidesProgress : true,
+watchSlidesVisibility : true,
+slidesPerView : 3,
+onTap: function(){
+			mySwiper3.slideTo( mySwiper2.clickedIndex)
+		}
+});
+
+function updateNavPosition(){
+		$('#swiper-container2 .active-nav').removeClass('active-nav')
+		var activeNav = $('#swiper-container2 .swiper-slide').eq(mySwiper3.activeIndex).addClass('active-nav');
+		if (!activeNav.hasClass('swiper-slide-visible')) {
+			if (activeNav.index()>mySwiper2.activeIndex) {
+				var thumbsPerNav = Math.floor(mySwiper2.width/activeNav.width())-1
+				mySwiper2.slideTo(activeNav.index()-thumbsPerNav)
+			}else {
+				mySwiper2.slideTo(activeNav.index())
+			}	
+		}
+	}
+</script>
+<div class="c"></div>
+<nav>
+  <ul class="Transverse">
+ 	 <li><a href="{:U('index')}"><strong></strong></a></li>
+     <li><a href="sms:{$temp.phone}"><strong>短信订购</strong></a></li>
+	 <li class="nav-border"><a href="tel:{$temp.phone}"><strong>电话咨询</strong></a></li>
+  	 <li><a class="bw-cart-nav"><strong>在线下单</strong></a></li> 
+  </ul>
+</nav>
+<form>
+<input type="hidden" name="proid" value="{$proid}">
+<input type="hidden" name="gzid" value="{$gzid}">
+<input type="hidden" name="tid" value="{$info['template']}">
+<input type="hidden" name="pro_class" value="{$temp['pro_class']}">
+<input type="hidden" name="title" value="{$norms_pro[0]['title']}">
+<input type="hidden" name="size" value="{$norms_size[0]['title']}">
+<input type="hidden" name="color" value="{$norms_color[0]['title']}">
+<input type="hidden" name="total" value="{$norms_pro[0]['price']}">
+<input type="hidden" name="totals" value="{$norms_pro[0]['price']}">
+<input type="hidden" name="price" value="{$norms_pro[0]['price']}">
+<input type="hidden" name="number" value="{$norms_pro[0]['number']}">
+<input type="hidden" name="paytype" value="{$pay[0]}">
+<input type="hidden" id="num" name="num" value="1">
+<input type="hidden" name="nid" value="{$norms_pro[0]['nid']}">
+<input type="hidden" name="sid" value="{$norms_size[0]['nid']}">
+<input type="hidden" name="cid" value="{$norms_color[0]['nid']}">
+</form>
+<div class="bw-bg"></div>
+<div class="bw-buy">
+	<dl>
+		<dt><img src="{$info.thumb}"/></dt>
+        <dd>{$info['currency']}<i id="c-price">{$norms_pro[0]['price']}</i></dd>
+        <span onClick="times();">&times;</span>
+    </dl>
+    <div class="c"></div>
+	<notempty name="norms_pro">
+    <div class="bw-title">{$temp.pro_title}</div>
+    <div class="c"></div>
+    <ul>
+      <foreach name="norms_pro" item="v" key="k">
+      <li <if condition="($k eq 0)">class="ul-no"</if> onClick="pro(this,{$v.price},{$v.number},'{$v.title}',{$v.nid})">{$v['title']}<eq name="v.number" value="0">（已售完）</eq></li>
+	  </foreach>
+    </ul>
+	</notempty>
+    <div class="c"></div>
+	<notempty name="norms_size">
+    <div class="bw-title">{$temp.size_title}</div>
+    <div class="c"></div>
+    <ul>
+	   <foreach name="norms_size" item="v" key="k">
+       <li <if condition="($k eq 0)">class="ul-no"</if> onClick="sizety(this,'{$v.title}',{$v.nid})">{$v['title']}</li>
+       </foreach>
+	</ul>
+	</notempty>
+	<notempty name="norms_color">
+    <div class="bw-title">{$temp.color_title}</div>
+    <div class="c"></div>
+    <ul>
+	   <foreach name="norms_color" item="v" key="k">
+		<li <if condition="($k eq 0)">class="ul-no"</if> onClick="colorty(this,'{$v.title}',{$v.nid})">{$v['title']}</li>
+	   </foreach>
+	</ul>
+	</notempty>
+    <div class="c"></div>
+	<php>if(in_array(num,$temp['options']) || in_array(price,$temp['options'])){</php>
+    <div class="bw-title"><php>if(in_array(num,$temp['options'])){</php>数量<php>}</php>&nbsp;</div>
+    <div class="c"></div>
+    <div class="bw-sum">
+	<php>if(in_array(num,$temp['options'])){</php>
+    	<a class="b-sum-del" onClick="numdec();">&minus;</a>
+         <input type="text" id="num" name="num" value="1" readonly>
+        <a class="b-sum-add" onClick="numlnc();">+</a>
+        <span>库存<i class="bw-count">{$norms_pro[0]['number']}</i>件</span>
+	<php>}</php>	
+	<php>if(in_array(price,$temp['options'])){</php>
+		<strong>{$info['currency']}<em id="bw-showprice">{$norms_pro[0]['price']}</em></strong>
+	<php>}</php>	
+    </div>
+    <div class="c"></div>
+	<php>}</php>	
+    <p class="bw-addcar">确定</p>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".bw-cart-nav").click(function(){
+			
+			$('.bw-bg').show();
+			$('.bw-buy').show();
+		});
+	});
+	
+	function times(){
+		$('.bw-buy').slideUp();
+		setTimeout(function() { 
+			$('.bw-bg').hide();
+		},400);  
+	}
+
+$(function() {
+	$(".bw-addcar").click(function(){   
+		var total = $('input[name="total"]').val();
+		var number = parseInt($('input[name="number"]').val());
+		var num = parseInt($('input[name="num"]').val());
+		var navid = $("input[name='c-navid']").val();
+
+		if(total == '0.00'){ 
+			new TipBox({type:'tip',str:'请选择订购产品！',clickDomCancel:false,setTime:3000,hasBtn:true});
+			return false;
+		}
+		
+		if(number < num){ 
+			new TipBox({type:'tip',str:'库存有限，请谅解！',clickDomCancel:false,setTime:3000,hasBtn:true});
+			return false;
+		}
+		
+		$('.bw-buy').slideUp();
+		setTimeout(function() { 
+			$('.bw-bg').hide();
+		},400);  		
+		$.post(post_cartadd,$("form").serialize(),function(data){
+			window.location.href= "{:U('message?proid='.I('get.proid'))}";
+		},'json');
+		
+		
+	});
+	
+	var thi = $(".newtag1 div.swiper-slide").last();
+	thi.swipe({
+		swipe:function(event, direction, distance, duration, fingerCount) {
+			var jh = $(".subMenu").position().top;
+			if(direction == "left"){
+				$("html,body").animate({scrollTop:jh});
+			}
+		}
+	});
+	
+	var thit = $(".swiper2 div.swiper-slide").first();
+	thit.swipe({
+		swipe:function(event, direction, distance, duration, fingerCount) {
+			if(direction == "right"){
+				$("html,body").animate({scrollTop:0});
+			}
+		}
+	});
+	
+});
+$(window).resize(function(){
+	
+});
+</script>
+</div>
+<div class="audit-2">
+	<div class="audit-title">{$audit.title}</div>
+	<div class="audit-content">{$audit['content']}</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/Home/js/public.js"></script>

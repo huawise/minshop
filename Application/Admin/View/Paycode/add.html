@@ -1,0 +1,99 @@
+<extend name="Public/base" />
+<block name="body">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>支付二维码</b></div>
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <li <eq name="type" value="alipaycode">class="active"</eq>><a href="{:U('index?type=alipaycode')}">支付宝</a></li>
+		  <li <eq name="type" value="wechatcode">class="active"</eq>><a href="{:U('index?type=wechatcode')}">微信</a></li>
+		</ul>
+	</div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">支付金额</td>
+				<td><input name="price" type="text" value="{$info.price}"/> <span><i class="fa fa-exclamation-circle"></i> 请填写支付金额，金额请精确到分位（<kbd>88.00</kbd>）</span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">收款二维码</td>
+				<td>
+					<em>
+					<input type="file" id="upload_picture_thumb">
+					<input type="hidden" name="thumb" id="cover_id_thumb" value="{$info.thumb}"/>
+					</em>
+					<span><i class="fa fa-exclamation-circle"></i> 上传二维码</span>
+					<div class="c"></div>
+					<div class="upload-img-box">
+					<notempty name="info.thumb">
+						<div class="upload-pre-item"><img src="{$info.thumb}" width="150" height="150"/></div>
+					</notempty>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+					/* 初始化上传插件 */
+					$("#upload_picture_thumb").uploadify({
+						"height"          : 30,
+						"swf"             : "__STATIC__/uploadify/uploadify.swf",
+						"fileObjName"     : "download",
+						"buttonText"      : "<i class='fa fa-file-image-o'></i> 上传二维码",
+						"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+						"width"           : 120,
+						'removeTimeout'	  : 1,
+						'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+						"onUploadSuccess" : uploadPicturethumb
+					});
+					function uploadPicturethumb(file, data){
+						var data = $.parseJSON(data);
+						var src = '';
+						if(data.status){
+							src = data.url || '__ROOT__' + data.path
+							$("#cover_id_thumb").val(src);
+							$("#cover_id_thumb").parent().parent().find('.upload-img-box').html(
+								'<div class="upload-pre-item"><img src="' + src + '" width="150" height="150"/></div>'
+							);
+						} else {
+							updateAlert(data.info);
+							setTimeout(function(){
+								$('#top-alert').find('button').click();
+								$(that).removeClass('disabled').prop('disabled',false);
+							},1500);
+						}
+					}
+					</script>
+				</td>
+			  </tr>
+			  
+			  </tbody>
+		  </table>
+		</div>
+	</div>
+	<input type="hidden" name="pid" value="{$info.pid}">
+	<input type="hidden" name="type" value="{:I('get.type')}">
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+				<neq name="info.gzid" value="">
+				<php>	if(in_array("paycode_del",$peradmin[system])){ </php>
+				<li class="ul-del ahover"><a url="{:U('del?pid='.$info['pid'])}" class="ajax-get confirm"><i class="fa fa-trash-o"></i> 删除</a></li>
+				<php>	} </php>	
+				</neq>	
+				<li class="ul-list ahover"><a href="{:U('index?type='.$type)}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+	
+	
+	
+</block>
+<block name="script">
+<script type="text/javascript">
+	</script>
+</block>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="Author" content="技术支持：小蜜蜂竞价单页订单系统www.minbee.cn 咨询热线：15622741979"  rel="nofollow" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<link rel="shortcut icon" href="__PUBLIC__/Home/images/tubiao.ico" type="image/x-icon"/>
+<title>{$info.title}</title>
+<meta name="description" content="{:C('SITE_DESCRIBE')}" />
+<meta name="keywords" content="{:C('SITE_KEYWORDS')}" /> 
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/baiwei.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/swiper-3.3.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/time.lesser.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.liMarquee.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/style-4.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/layer.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/swiper-3.3.1.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/liMarquee.css">
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.lazyload.js"></script>
+<eq name="language" value="1">
+<script type="text/javascript" src="__PUBLIC__/Home/js/language.js"></script>
+</eq>
+<script type="text/javascript"> 
+	jQuery(document).ready( 
+	function($){ 
+		$(".bw-content img").lazyload({ 
+			placeholder : "__PUBLIC__/Home/images/grey.gif", 
+			effect      : "fadeIn",
+			threshold : 200
+		}); 
+		$('.audit-2').hide();
+		
+	}); 
+	
+	function GetDateStr(AddDayCount) { 
+		var dd = new Date(); 
+		dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期 
+		var y = dd.getFullYear(); 
+		var m = dd.getMonth()+1;//获取当前月份的日期 
+		var d = dd.getDate(); 
+		return y+"-"+m+"-"+d; 
+	} 
+</script> 
+<eq name="audit['status']" value="0">
+<script type="text/javascript">
+if (/Android|webOS|iPhone|iPod|BlackBerry|Windows CE|Windows Phone/i.test(navigator.userAgent)) {
+   
+}else{
+	$(function($){
+		$('.audit-1').hide();
+		$('.audit-2').show();
+	});
+}
+</script>
+</eq>
+
+
+<script type="text/javascript">
+	var temp = new Array({$options});
+	var json_num = "json_num.php";
+	var APP = "__APP__";
+	var post_order = "{:U('post_order')}";
+	var sms = "{:U('sms')}";
+	var PUBLIC = "__PUBLIC__";
+	
+	$(document).ready(function(){
+		$(".title-nav ul li a").click(function(){
+			$(".title-nav ul li a").removeClass();
+			$(this).addClass("hover");
+			var aid = $(this).attr('aid');
+			$(".bw-content").hide();
+			$(".bw-table").hide();
+			$(".review").hide();
+			$("#nav-"+aid).show();
+		});
+	});
+</script>
+
+</head>
+<body>
+<div class="audit-1">
+<div class="bw-title">{$info.title}</div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <volist name="info.images" id="v">
+        <div class="swiper-slide"><img src="{$v}"/></div>
+		</volist>	
+    </div>
+</div>
+<script language="javascript"> 
+var mySwiper = new Swiper('.swiper-container',{
+loop:false,
+grabCursor: true,
+paginationClickable: true,
+autoplay: 5000
+})
+</script>
+<div class="c"></div>
+<div class="price">
+	<div class="price-title">{$info.description}</div>
+	<div class="price-price">
+	<if condition="$info.price neq 0">
+		<div class="price-price-l fl">
+			<p>原　价：<span class="xian">{:(int)$info['oldprice']}</span></p>
+			<p>活动价：<span class="span-jiage"><em>{:(int)$info['price']}</em>/件 <neq name="info.price_addition" value="">{$info.price_addition}</neq></span></p>
+			<eq name="info.num_status" value="0">
+			<p>销　量：<span>{$info.number}件</span></p>
+			</eq>
+		</div>
+	</if>	
+		
+		<div class="price-price-r fr">
+		
+			<eq name="info.time_status" value="0">
+			<eq name="info.time_type" value="1">
+			<if condition="($info.starttime gt time())">
+			<dl>
+				<dt>活动未开始</dt>
+			</dl>
+			<elseif condition="($info.endtime lt time())"/>
+			<dl>
+				<dt>活动已结束</dt>
+			</dl>
+			<else />
+			<dl>
+				<dt>离抢购结束还剩</dt>
+				<dd><div id="remainTime_1" class="jltimer"></div><script language="javascript">addTimeLesser(1, {$endtime}); </script></dd>
+			</dl>
+			</if>
+			<else />
+			<dl>
+				<dt>离抢购结束还剩</dt>
+				<dd><div id="remainTime_1" class="jltimer"></div><script language="javascript">addTimeLesser(1, {$endtime}); </script></dd>
+			</dl>
+			</eq>
+			<else />
+			<dl>
+				<dt>活动进行中</dt>
+			</dl>
+			</eq>
+		</div>
+	</div>
+	<div class="c"></div>
+	<neq name="info.song" value="">
+	<div class="price-song"><a href="javascript:;">{$info.song}</a></div>
+	</neq>
+</div>
+<div class="c"></div>
+<div class="kefu">
+	<div class="kefu-l fl"><neq name="temp.phone" value="">货到付款客服中心(微信)：<a href="javascript:;">{$temp.phone}</a></neq></div>
+	<div class="kefu-r fr"><span></span> 4.99</div>
+</div>
+<div class="c"></div>
+<div class="title-nav">
+	<ul>
+		<li><a href="javascript:;" class="hover" aid="1">商品产品</a></li>
+		<li><a href="javascript:;" aid="2">商品参数</a></li>
+		<li><a href="javascript:;" aid="3">评论(7239)</a></li>
+	</ul>
+</div>
+<div class="c"></div>
+<div class="bw-content" id="nav-1">{$info.content}</div>
+<div class="c"></div>
+<div class="bw-table" id="nav-2">
+	<table border="1">
+	<foreach name="parameter" item="v" key="k">
+	  <tr>
+		<td>{$v[0]}</td>
+		<td>{$v[1]}</td>
+	  </tr>
+	</foreach>	
+	</table>
+</div>
+<div class="c"></div>
+<div class="review" id="nav-3">
+	<ul>
+	<foreach name="info.review" item="v" key="k">
+		<dl>
+			<dt>{$v[0]}</dt>
+			<dd><span class="fr"></span><span class="fl">{$v[1]}</span></dd>
+		</dl>
+	</foreach>	
+	</ul>
+</div>
+<script>
+	var time = GetDateStr(0);
+	$(".review .fr").html(time);
+</script> 
+<div class="c"></div>
+<div class="bwtitle" id="buy">{$temp['title']}</div>
+<div class="c"></div>
+<eq name="temphtml" value="1">
+	<include file="Index/temp-4"/>
+</eq>
+<if condition="($temp.delivery eq 0)">
+<notempty name="html">
+<script>
+	$(window).load(function(){
+		$('#fahuo').liMarquee({
+			direction: 'up',
+			scrollamount:20,
+		});
+	});
+</script> 
+<div class="bwtitle">{$temp['delivery_title']}</div>
+<div class="main-bg">
+	<div class="main">
+    	<div class="fahuo">
+        	<ul id="fahuo">
+			<foreach name="html" item="v" key="k">
+            	<li><span>发货通知</span>{$v}</li>
+			</foreach>
+			<foreach name="html" item="v" key="k">
+            	<li><span>发货通知</span>{$v}</li>
+			</foreach>
+            </ul>
+        </div>
+     </div>
+</div>
+</notempty>
+</if>
+<if condition="($temp.order eq 0)">
+<notempty name="orderhtml">
+<div id="bwfahuo"></div>
+<script type="text/javascript">
+var marquee = new Array(
+<?php foreach($orderhtml as $v){ ?>
+    "<p><span>[最新购买]：</span><?php echo $v;?> <font color='#FF0000'>√</font></p>",
+<?php }?>
+	"<p></p>"
+);
+</script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/bwfh.js"></script>
+</notempty>
+</if>
+<if condition="($temp.search eq 0)">
+<div class="main-bg">
+	<div class="main">
+        <div class="query">
+        	<div class="query-l fl"><input name="sphone" type="tel" maxlength="11" placeholder="请填写手机号"/></div>
+            <div class="query-r fr"><span id="sorder">查询</span></div>
+        </div>
+    </div>
+</div>
+</if>
+<div class="copyright">{:C('WEB_SITE_ICP')} {$statistical}</div>
+<include file="Index/nav"/>
+</div>
+<div class="audit-2">
+	<div class="audit-title">{$audit.title}</div>
+	<div class="audit-content">{$audit['content']}</div>
+</div>
+</body>
+</html>
+
+

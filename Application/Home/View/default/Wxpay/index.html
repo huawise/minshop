@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <title>微信安全支付</title>
+
+	<script type="text/javascript">
+
+		//调用微信JS api 支付
+		function jsApiCall()
+		{
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',
+				<?php echo $jsApiParameters; ?>,
+				function(res){
+					WeixinJSBridge.log(res.err_msg);
+					//alert(res.err_code+res.err_desc+res.err_msg);
+					if(res.err_msg == "get_brand_wcpay_request:ok"){
+						window.location.href="{$url}";
+					}
+				}
+			);
+		}
+
+		function callpay()
+		{
+			if (typeof WeixinJSBridge == "undefined"){
+			    if( document.addEventListener ){
+			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+			    }else if (document.attachEvent){
+			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+			    }
+			}else{
+			    jsApiCall();
+			}
+		}
+		
+		
+		window.onload = function()
+		{
+			if (typeof WeixinJSBridge == "undefined"){
+			    if( document.addEventListener ){
+			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+			    }else if (document.attachEvent){
+			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+			    }
+			}else{
+			    jsApiCall();
+			}
+		}
+	</script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/order.css">
+</head>
+<body>
+	<div class="title">微信安全支付</div>
+<div class="main-bg">
+
+	<div class="main">
+		<dl class="dl">
+        	<dt>订单号：</dt>
+            <dd>{$info.ordernum}</dd>
+        </dl>
+		<php>if(in_array(name,$options)){</php>
+		<dl class="dl">
+        	<dt>姓名：</dt>
+            <dd>{$info.name}</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(sex,$options)){</php>
+		<dl class="dl">
+        	<dt>性别：</dt>
+            <dd><eq name='info.sex' value='0'>女<else/>男</eq></dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(age,$options)){</php>
+		<dl class="dl">
+        	<dt>年龄：</dt>
+            <dd>{$info.age}（岁）</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(height,$options)){</php>
+		<dl class="dl">
+        	<dt>身高：</dt>
+            <dd>{$info.height}（CM）</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(weight,$options)){</php>
+		<dl class="dl">
+        	<dt>体重：</dt>
+            <dd>{$info.weight}（KG）</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(idnumber,$options)){</php>
+		<dl class="dl">
+        	<dt>身份证号：</dt>
+            <dd>{$info.idnumber}</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(phone,$options)){</php>
+		<dl class="dl">
+        	<dt>手机号：</dt>
+            <dd>{$info.phone}</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(tel,$options)){</php>
+		<dl class="dl">
+        	<dt>电话号码：</dt>
+            <dd>{$info.tel}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(address,$options)){</php>		
+		<dl class="dl">
+        	<dt>详情地址：</dt>
+            <dd>{$info.province}{$info.city}{$info.area}{$info.address}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(code,$options)){</php>	
+		<dl class="dl">
+        	<dt>邮编：</dt>
+            <dd>{$info.code}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(qq,$options)){</php>	
+		<dl class="dl">
+        	<dt>QQ号：</dt>
+            <dd>{$info.qq}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(wechat,$options)){</php>	
+		<dl class="dl">
+        	<dt>微信号：</dt>
+            <dd>{$info.wechat}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(email,$options)){</php>	
+		<dl class="dl">
+        	<dt>邮箱：</dt>
+            <dd>{$info.email}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(message,$options)){</php>	
+		<dl class="dl">
+        	<dt>留言：</dt>
+            <dd>{$info.message}&nbsp;</dd>
+        </dl>
+		<php>}</php>
+		<dl class="dl">
+        	<dt>付款方式：</dt>
+            <dd><span>{$pay[$info['paytype']]}</span></dd>
+        </dl>
+		<dl class="dl">
+        	<dt>总价：</dt>
+            <dd><b>{$currency} {$info.total}</b></dd>
+        </dl>
+		<dl class="dl">
+        	<dt>订购产品：</dt>
+            <dd>
+				<volist name="info.title" id="vo">
+				<p>{$vo} 数量：{$info.num} <neq name='info.color' value=''>颜色：{$info.color}</neq> <neq name='info.color' value=''>尺寸：{$info.size}</neq></p>
+				</volist>
+			</dd>
+        </dl>
+		<dl class="dl">
+        	<dt>下单时间：</dt>
+            <dd>{$info.addtime|time_format}</dd>
+        </dl>
+	</div>
+</div>
+
+<div align="center">
+	<button style="width:300px; height:40px; background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >微信支付</button>
+</div>
+
+<eq name="value" value="1">
+<div class="submit"><a href="__ROOT__/index.php?s=/index/info/proid/{$info.['info']}/uid/{$info.['uid']}.html">返回</a></div>
+<else/>
+<div class="submit"><a href="__ROOT__/html/{$info['proid']}-{$info.uid}.html">返回</a></div>
+</eq>
+</body>
+</html>

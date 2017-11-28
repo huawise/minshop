@@ -1,0 +1,63 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>管理员权限</b></div>
+	<div class="c"></div>
+	<br/>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<php>	if(in_array("per_add",$peradmin[system])){ </php>
+				<li class="ul-add ahover"><a href="{:U('addpermissions')}"><i class="fa fa-plus-square-o"></i> 添加权限</a></li>
+			<php>	} </php>
+				<li class="ul-break ahover"><a href="{:U('permissions')}"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个权限</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th>PID</th>
+				<th>权限组名称</th>
+				<th>操作</th>
+			<tbody>
+			<volist name="list" id="vo">
+			<neq name="vo.perid" value="1">
+			<tr>
+				<td>{$vo.perid}</td>
+				<td>{$vo.name}</td>
+				<td>
+				<neq name="vo.perid" value="1">
+				<php>	if(in_array("per_update",$peradmin[system])){ </php>
+				<a href="{:U('addpermissions?perid='.$vo['perid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a>
+				<php>	} </php>
+				<php>	if(in_array("per_del",$peradmin[system])){ </php>
+				<a url="{:U('delpermissions?perid='.$vo['perid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a>
+				<php>	} </php>
+				</neq>
+				</td>
+			</tr>
+			</neq>
+			</volist>
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	
+	<script type="text/javascript">
+	
+	
+	
+	</script>
+</block>

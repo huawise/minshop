@@ -1,0 +1,393 @@
+<extend name="Public/base" />
+<block name="body">
+<link href="__CSS__/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__JS__/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>产品管理</b></div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">产品标题</td>
+				<td><input name="title" type="text" /> <span><i class="fa fa-exclamation-circle"></i> 请填写产品名称</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">描述</td>
+				<td>
+					<textarea name="description" class="textarea">{$info.description}</textarea>
+					<span class="span"><i class="fa fa-exclamation-circle"></i> 填写产品描述</span>
+				</td>
+			  </tr>
+			  <tr>
+				<td align="right">产品参数</td>
+				<td>
+					<textarea name="parameter" class="textarea">{$info.parameter}</textarea>
+					<span class="span"><i class="fa fa-exclamation-circle"></i> 填写产品参数，例如（<kbd>标题:参数</kbd>），多个参数换行分隔</span>
+				</td>
+			  </tr>
+			   <tr>
+				<td width="120" align="right">下单送</td>
+				<td><input name="song" type="text" /> <span><i class="fa fa-exclamation-circle"></i> 请填写下单送</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">产品内容</td>
+				<td>
+					<textarea name="content"></textarea>
+					{:hook('adminArticleEdit',array('name'=>'content'))}  
+				</td>
+			  </tr>
+			  <tr>
+				<td align="right">活动时间状态</td>
+				<td><em><input type="checkbox" name="time_status"></em><span class="span"><i class="fa fa-exclamation-circle"></i> 活动时间开启状态</span></td>
+			  </tr>
+			  <tr class='time_status time_checked'>
+				<td align="right">活动时间类型</td>
+				<td>
+				<label data-type="1" class="alert_1"><i class="fa fa-circle"></i> 设定开始时间，截止时间类型</label>
+				<label data-type="2" class="alert_2"><i class="fa fa-circle-thin"></i> 时间循环类型</label>
+				<input type="hidden" name="time_type" value="1"> 
+				<span><i class="fa fa-exclamation-circle"></i> 活动时间类型</span></td>
+			  </tr>
+			  <tr  class="time_status time_checked">
+				<td align="right">活动时间</td>
+				<td> <input type="text" name="starttime" class="text time" id="starttime" placeholder="开始时间" readonly="readonly" value="{$s}"/> - <input type="text" name="endtime" class="text time" id="endtime" placeholder="截止时间" readonly="readonly" value="{$e}"/><span><i class="fa fa-exclamation-circle"></i> 请填写活动的开始时间跟结束时间</span></td>
+			  </tr>
+			   <tr class='time_status time_checked'>
+				<td width="120" align="right">活动倒数时间</td>
+				<td><input name="time_sum" type="text" value="{$info.time_sum}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写活动倒数时间，时间为秒数。<kbd>一小时等于3600秒，60秒*60分</kbd></span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">封面图片</td>
+				<td>
+					<em>
+					<input type="file" id="upload_picture_thumb">
+					<input type="hidden" name="thumb" id="cover_id_thumb"/>
+					</em>
+					<span><i class="fa fa-exclamation-circle"></i> 上传封面图片，<kbd>双击图片删除</kbd></span>
+					<div class="c"></div>
+					<div class="upload-img-box">
+					<notempty name="info.thumb">
+						<div class="upload-pre-item"></div>
+					</notempty>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+					/* 初始化上传插件 */
+					$("#upload_picture_thumb").uploadify({
+						"height"          : 30,
+						"swf"             : "__STATIC__/uploadify/uploadify.swf",
+						"fileObjName"     : "download",
+						"buttonText"      : "<i class='fa fa-file-image-o'></i> 上传封面图片",
+						"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+						"width"           : 120,
+						'removeTimeout'	  : 1,
+						'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+						"onUploadSuccess" : uploadPicturethumb
+					});
+					function uploadPicturethumb(file, data){
+						var data = $.parseJSON(data);
+						var src = '';
+						if(data.status){
+							src = data.url || '__ROOT__' + data.path
+							$("#cover_id_thumb").val(src);
+							$("#cover_id_thumb").parent().parent().find('.upload-img-box').html(
+								'<div class="upload-pre-item"><img src="' + src + '" width="150" height="150" ondblclick="removethumb(this)"/></div>'
+							);
+						} else {
+							updateAlert(data.info);
+							setTimeout(function(){
+								$('#top-alert').find('button').click();
+								$(that).removeClass('disabled').prop('disabled',false);
+							},1500);
+						}
+					}
+					function removethumb(o)
+					{
+						var p = $(o).parent().parent();
+						$(o).parent().remove();
+						setIdsthumb();
+					}
+					function setIdsthumb()
+					{
+						var ids = [];
+						$("#cover_id_thumb").parent().parent().find('.upload-img-box').find('.upload-pre-item').each(function(){
+							ids.push($(this).attr('val'));
+						});
+						if(ids.length > 0) $("#cover_id_thumb").val(ids.join(','));
+						else $("#cover_id_thumb").val('');
+					}
+					</script>
+				</td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">上传图组图片</td>
+				<td>
+					<em>
+					<input type="file" id="upload_picture_images"> 
+					<input type="hidden" name="images" id="cover_id_images" value="{$form.value}"/>  
+					</em>
+					<span><i class="fa fa-exclamation-circle"></i> 上传图组图片，<kbd>双击图片删除</kbd></span>
+					<div class="c"></div>
+					<div class="upload-img-box">                                
+						<notempty name="form['value']">                            
+						<php> $mulimages = explode(",",$form["value"]); </php>
+						<foreach name="mulimages" item="one">
+						<div class="upload-pre-item" val="{$one}" style="float:left;margin-right:10px"><img src="{$one|get_cover='path'}" ondblclick="removePictureimages(this)"/></div>
+						</foreach>
+						</notempty>
+					</div>
+					<script type="text/javascript">
+						//上传图片
+						/* 初始化上传插件 */
+						$("#upload_picture_images").uploadify({
+							"height"          : 30,
+							"swf"             : "__STATIC__/uploadify/uploadify.swf",
+							"fileObjName"     : "download",
+							"buttonText"      : "<i class='fa fa-file-image-o'></i> 上传图组图片",
+							"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+							"width"           : 120,
+							'removeTimeout'   : 1,
+							'fileTypeExts'    : '*.jpg; *.png; *.gif;',
+							"onUploadSuccess" : uploadPictureimages
+						});
+						function uploadPictureimages(file, data){
+							var data = $.parseJSON(data);
+							var src = '';
+							if(data.status){
+								src = data.url || '__ROOT__' + data.path
+								$("#cover_id_images").parent().parent().find('.upload-img-box').append(
+									'<div class="upload-pre-item" val="' + src + '" style="float:left;margin-right:10px"><img src="' + src + '" width="150" height="150" ondblclick="removePictureimages(this)"/></div>'
+								);
+								setPictureIdsimages();    
+							} else {
+								updateAlert(data.info);
+								setTimeout(function(){
+									$('#top-alert').find('button').click();
+									$(that).removeClass('disabled').prop('disabled',false);
+								},1500);
+							}
+						}
+						function removePictureimages(o)
+						{
+							var p = $(o).parent().parent();
+							$(o).parent().remove();
+							setPictureIdsimages();
+						}
+						function setPictureIdsimages()
+						{
+							var ids = [];
+							$("#cover_id_images").parent().parent().find('.upload-img-box').find('.upload-pre-item').each(function(){
+								ids.push($(this).attr('val'));
+							});
+							if(ids.length > 0) $("#cover_id_images").val(ids.join(','));
+							else $("#cover_id_images").val('');
+						}
+					</script>
+				</td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">底部图片</td>
+				<td>
+					<em>
+					<input type="file" id="upload_picture_foot_thumb">
+					<input type="hidden" name="foot_thumb" id="cover_id_foot_thumb"/>
+					</em>
+					<span><i class="fa fa-exclamation-circle"></i> 上传底部图片，<kbd>双击图片删除</kbd></span>
+					<div class="c"></div>
+					<div class="upload-img-box">
+					<notempty name="info.foot_thumb">
+						<div class="upload-pre-item"></div>
+					</notempty>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+					/* 初始化上传插件 */
+					$("#upload_picture_foot_thumb").uploadify({
+						"height"          : 30,
+						"swf"             : "__STATIC__/uploadify/uploadify.swf",
+						"fileObjName"     : "download",
+						"buttonText"      : "<i class='fa fa-file-image-o'></i> 上传底部图片",
+						"uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+						"width"           : 120,
+						'removeTimeout'	  : 1,
+						'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+						"onUploadSuccess" : uploadPicturethumb
+					});
+					function uploadPicturethumb(file, data){
+						var data = $.parseJSON(data);
+						var src = '';
+						if(data.status){
+							src = data.url || '__ROOT__' + data.path
+							$("#cover_id_foot_thumb").val(src);
+							$("#cover_id_foot_thumb").parent().parent().find('.upload-img-box').html(
+								'<div class="upload-pre-item"><img src="' + src + '" width="150" height="150" ondblclick="removefootthumb(this)"/></div>'
+							);
+						} else {
+							updateAlert(data.info);
+							setTimeout(function(){
+								$('#top-alert').find('button').click();
+								$(that).removeClass('disabled').prop('disabled',false);
+							},1500);
+						}
+					}
+					function removefootthumb(o)
+					{
+						var p = $(o).parent().parent();
+						$(o).parent().remove();
+						setIdsfootthumb();
+					}
+					function setIdsfootthumb()
+					{
+						var ids = [];
+						$("#cover_id_foot_thumb").parent().parent().find('.upload-img-box').find('.upload-pre-item').each(function(){
+							ids.push($(this).attr('val'));
+						});
+						if(ids.length > 0) $("#cover_id_foot_thumb").val(ids.join(','));
+						else $("#cover_id_foot_thumb").val('');
+					}
+					</script>
+				</td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">产品原价</td>
+				<td><input name="oldprice" type="text" /> <span><i class="fa fa-exclamation-circle"></i> 请填写产品原价,例如（<kbd>100</kbd>）</span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">产品活动价</td>
+				<td><input name="price" type="text" value="{$info.price}"/><span><i class="fa fa-exclamation-circle"></i> 请填写产品活动价,例如（<kbd>100</kbd>）</span> 附加说明： <input name="price_addition" type="text" value="{$info.price_addition}"/> <span><i class="fa fa-exclamation-circle"></i> 请填写产品活动价附加说明</span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">产品折扣</td>
+				<td><input name="discount" type="text" /> <span><i class="fa fa-exclamation-circle"></i> 请填写产品折扣,例如（<kbd>0.85</kbd>）</span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">货币符号</td>
+				<td><input name="currency" type="text" value="¥" /> <span><i class="fa fa-exclamation-circle"></i> 请填写货币符号,例如（<kbd>¥</kbd>）</span></td>
+			  </tr>
+			   <tr>
+				<td align="right">购买量状态</td>
+				<td><em><input type="checkbox" name="num_status"></em><span class="span"><i class="fa fa-exclamation-circle"></i> 购买量状态</span></td>
+			  </tr>
+			  <tr class='num_status time_checked'>
+				<td width="120" align="right">产品购买量</td>
+				<td><input name="number" type="text" /> <span><i class="fa fa-exclamation-circle"></i> 请填写产品购买量,例如（<kbd>100</kbd>）</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">评论状态</td>
+				<td><em><input type="checkbox" name="review_status"></em><span class="span"><i class="fa fa-exclamation-circle"></i> 评论状态</span></td>
+			  </tr>
+			  <tr  class="review_status time_checked">
+				<td align="right">评论内容</td>
+				<td><textarea name="review" class="textarea" style="width:800px; height:300px;"></textarea> <span><i class="fa fa-exclamation-circle"></i> 格式（<kbd>评论内容|用户名</kbd>），多个评论换行分开 </span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">产品模板</td>
+				<td>
+				<select name="template">
+					<foreach name="temp" item="v" key="k">
+					<option value="{$v.tid}">{$v.name}</option>
+					</foreach>
+				</select>
+				<span><i class="fa fa-exclamation-circle"></i> 请选择产品模板，<a href="{:U('template/index')}" target="_blank">产品模板管理</a></span></td>
+			  </tr>
+			  <tr>
+				<td width="120" align="right">下单页面风格</td>
+				<td>
+				<select name="style">
+					<foreach name="style" item="v" key="k">
+					<option value="{$k}">{$v}</option>
+					</foreach>
+				</select>
+				<span><i class="fa fa-exclamation-circle"></i> 请选择产品风格</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">状态</td>
+				<td><em><input type="checkbox" name="status" checked></em><span class="span"><i class="fa fa-exclamation-circle"></i> 产品状态，是否可以下单</span></td>
+			  </tr>
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+				<li class="ul-list ahover"><a href="{:U('index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	Think.setValue("status", {$info.status|default=1});
+	Think.setValue("template", {$info.template|default=1});
+	$(function(){
+		$('.time').datetimepicker({
+			format: 'yyyy-mm-dd hh:ii:ss',
+			language:"zh-CN",
+			minView:0,
+			autoclose:true
+		});
+		showTab();
+		
+		$("input[name='time_status']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("input[name='num_status']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("input[name='review_status']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("input[name='status']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$('input[name="time_status"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state){
+				$('.time_status').show(500);
+			}else{
+				$('.time_status').hide(500);
+			}
+		});
+		$('input[name="num_status"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state){
+				$('.num_status').show(500);
+			}else{
+				$('.num_status').hide(500);
+			}
+		});
+		
+		$('input[name="review_status"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state){
+				$('.review_status').show(500);
+			}else{
+				$('.review_status').hide(500);
+			}
+		});
+		
+		$(".alert_1").click(function(){
+			var type = $(this).data('type');
+			$(".alert_2 i").removeClass('fa-circle');
+			$(".alert_1 i").removeClass('fa-circle-thin');
+			$(".alert_1 i").addClass('fa-circle');
+			$(".alert_2 i").addClass('fa-circle-thin');
+			$('input[name="time_type"]').val(type);
+			
+		});
+		$(".alert_2").click(function(){
+			var type = $(this).data('type');
+			$(".alert_1 i").removeClass('fa-circle');
+			$(".alert_2 i").removeClass('fa-circle-thin');
+			$(".alert_2 i").addClass('fa-circle');
+			$(".alert_1 i").addClass('fa-circle-thin');
+			$('input[name="time_type"]').val(type);
+			
+		});
+		
+		
+	});
+	</script>
+</block>

@@ -1,0 +1,76 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>支付二维码</b></div>
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <li <eq name="type" value="alipaycode">class="active"</eq>><a href="{:U('index?type=alipaycode')}">支付宝</a></li>
+		  <li <eq name="type" value="wechatcode">class="active"</eq>><a href="{:U('index?type=wechatcode')}">微信</a></li>
+		</ul>
+	</div>
+	<div class="col-md-12 paycode">
+		<p>手机上登录【支付宝】→【收款】→【设置金额】→输入你产品的价格→确定，然后长按二维码图片→保存图片到相册，然后把二维码图片发到电脑上，设定金额，上传二维码。</p>
+		<p>手机上登录【微信】→点击屏幕右上角的加号→【收付款】→【我要收款】→【设置金额】→输入你产品的价格→确定，然后长按二维码图片→保存图片，然后把二维码图片发到电脑上，设定金额，上传二维码。</p>
+	</div>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+			<php>	if(in_array("paycode_add",$peradmin[system])){ </php>
+				<li class="ul-add ahover"><a href="{:U('add?type='.$type)}"><i class="fa fa-plus-square-o"></i> 添加二维码</a></li>
+			<php>	} </php>
+			<php>	if(in_array("paycode_del",$peradmin[system])){ </php>	
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除二维码<a></li>
+			<php>	} </php>	
+				<li class="ul-break ahover"><a href="{:U('index?type='.$type)}"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个二维码</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th width="200">金额</th>
+				<th width="200">二维码</th>
+				<th>操作</th>
+			<tbody>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><input class="ids" type="checkbox" name="pid[]" value="{$vo.pid}" /></td>
+				<td>&yen; {$vo.price}</td>
+				<td id="code"><img src="{$vo.thumb}" width="20"/></td>
+				<td><php>	if(in_array("paycode_update",$peradmin[system])){ </php>	<a href="{:U('add?pid='.$vo['pid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a><php>	} </php>	 <php>	if(in_array("paycode_del",$peradmin[system])){ </php>	<a url="{:U('del?pid='.$vo['pid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a><php>	} </php>	</td>
+			</tr>
+			</volist>
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+<div class="code-img"></div>
+</block>
+
+<block name="script">
+	
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$(".table-list #code").mouseover(function (e) {
+			var thumb = $(this).children("img").attr("src");
+			var html = '<img src="'+thumb+'"/>';
+			$(".code-img").html(html);
+			$(".code-img").css({"left": e.pageX+20,"top": e.pageY+10,"display": "block"});
+		});
+		$(".table-list #code").mouseleave(function () {
+			$(".code-img").css({"display": "none"});
+		});
+	});
+	
+	</script>
+</block>

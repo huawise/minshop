@@ -1,0 +1,45 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>产品管理</b></div>
+	<php>	if(in_array("pro_update",$peradmin[product])){ </php>
+	<div class="col-md-12 main-nav">
+		<ul class="nav nav-tabs">
+		  <li <eq name="type" value="">class="active"</eq>><a href="{:U('update?proid='.$proid)}">产品详情</a></li>
+		  <li <eq name="type" value="5">class="active"</eq>><a href="{:U('audit?proid='.$proid.'&type=5')}">产品审核</a></li>
+		  <li <eq name="type" value="1">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=1')}"><eq name="info[temp][pro_title]" value="">产品类别一<else/>产品{$info['temp']['pro_title']}</eq></a></li>
+		  <li <eq name="type" value="2">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=2')}"><eq name="info[temp][size_title]" value="">产品类别二<else/>产品{$info['temp']['size_title']}</eq></a></li>
+		  <li <eq name="type" value="3">class="active"</eq>><a href="{:U('norms/index?proid='.$proid.'&type=3')}"><eq name="info[temp][color_title]" value="">产品类别三<else/>产品{$info['temp']['color_title']}</eq></a></li>
+		  <li <eq name="type" value="4">class="active"</eq>><a href="{:U('gz?proid='.$proid.'&type=4')}">推广链接</a></li>
+		</ul>
+	</div>
+	<php>	} </php>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="200">推广渠道</th>
+				<th>推广URL</th>
+				
+			<tbody>
+			<volist name="_list" id="vo">
+			<eq name="value" value="1">
+			<tr>
+				<td><a href="{:U('home/index/info?proid='.$proid.'&gzid='.$vo['gzid'].'&uid='.UID)}" target="_blank">{$vo.name}</a></td>
+				<td><php>echo _SERVER_NAME_;</php>{:U('home/index/info?proid='.$proid.'&gzid='.$vo['gzid'].'&uid='.UID)}</td>
+			</tr>
+			<else/>
+			<tr>
+				<td><a href="__ROOT__/html/{$proid}/{$vo['gzid']}-{:UID}.html" target="_blank">{$vo.name}</a></td>
+				<td><php>echo _SERVER_NAME_;</php>__ROOT__/html/{$proid}/{$vo['gzid']}-{:UID}.html</td>
+			</tr>
+			</eq>
+			</volist>
+		</table>
+	</div>
+	
+</block>
+<block name="script">
+
+<script type="text/javascript">
+	
+</script>
+</block>

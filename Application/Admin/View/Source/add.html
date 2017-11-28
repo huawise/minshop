@@ -1,0 +1,43 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单来源管理</b></div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="120" align="right">订单来源名称</td>
+				<td><input name="name" type="text" value="{$info.name}"/> <span><i class="fa fa-exclamation-circle"></i> 请填写订单来源名称</span></td>
+			  </tr>
+			  
+			  </tbody>
+		  </table>
+		</div>
+	</div>
+	<input type="hidden" name="gzid" value="{$info.gzid}">
+	<div class="height-50"></div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+				<neq name="info.gzid" value="">
+				<php>	if(in_array("source_del",$peradmin[system])){ </php>
+				<li class="ul-del ahover"><a url="{:U('del?gzid='.$info['gzid'])}" class="ajax-get confirm"><i class="fa fa-trash-o"></i> 删除模板</a></li>
+				<php>	} </php>	
+				</neq>	
+				<li class="ul-list ahover"><a href="{:U('index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+	
+	
+	
+</block>
+<block name="script">
+<script type="text/javascript">
+	</script>
+</block>

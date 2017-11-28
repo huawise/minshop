@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>小蜜蜂管理中心</title>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/layer.css">	
+<link rel="stylesheet" type="text/css" href="__CSS__/m-style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+</head>
+
+<body>
+<header><a class="fa fa-chevron-left fa-lg" href="{:U('index/mindex')}"></a>修改密码</header>
+<form action="__SELF__" method="post" class="form-horizontal">
+<neq name="uid" value="1">
+<input name="perid" type="hidden" value="{$user.perid}"/>
+</neq>
+<div class="password">
+	<dl>
+    	<dt>昵称</dt>
+        <dd><input name="nickname" type="text" value="{$user.nickname}" /></dd>
+    </dl>
+    <dl>
+    	<dt>原密码</dt>
+        <dd><input name="old" type="password" autocomplete="off"/></dd>
+    </dl>
+    <dl>
+    	<dt>新密码</dt>
+        <dd><input name="password" type="password" autocomplete="off"/></dd>
+    </dl>
+    <dl>
+    	<dt>确认密码</dt>
+        <dd><input name="repassword" type="password" autocomplete="off"/></dd>
+    </dl>
+    <p><button class="" type="submit">保 存</button></p>
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+	//表单提交
+	$(document)
+	$("form").submit(function(){
+		layer.load(1,{shade: [0.5,'#000']});
+		var self = $(this);
+		$.post(self.attr("action"), self.serialize(), success, "json");
+		return false;
+		
+		function success(data){
+			if(data.status){
+				layer.closeAll('loading');
+				parent.layer.msg(data.info,{icon: 6, time: 1800});
+				setTimeout(function() {
+					window.location.href = data.url;
+				},2000);
+			} else {
+				layer.closeAll('loading');
+				parent.layer.msg(data.info,{icon: 5, time: 1800});
+			}
+		}
+		
+	});
+</script>

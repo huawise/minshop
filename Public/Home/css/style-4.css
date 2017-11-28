@@ -1,0 +1,187 @@
+@charset "utf-8";
+/* CSS Document */
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,html{margin:0;padding:0;}
+html{ background:#e2e2e2;}
+body{ font-size:14px; font-family:"微软雅黑",Arial; background:#fff;-webkit-text-size-adjust:100%; max-width:750px; overflow-x:hidden; margin:0 auto; }
+a{text-decoration:none; font-family:"微软雅黑";}
+a:hover{text-decoration:none;}
+em,i{font-style:normal;}
+li{list-style:none;}
+img{border:0;vertical-align:middle;}
+table{border-collapse:collapse;border-spacing:0;}
+input{font-family:"微软雅黑"; }
+select{font-family:"微软雅黑";}
+p{word-wrap:break-word;}
+.c{clear:both;}
+.e{display:inline-block;*display:inline;*zoom:1;height:100%;width:1px;margin-left:-1px;vertical-align:middle;}
+.fr{ float:right;}
+.fl{ float:left;}
+.ptop-6{ padding-top:4px;}
+.ptop-20{ padding-top:20px;}
+
+.audit-2{ display:nome;}
+.audit-title{ height:45px; line-height:45px; padding:0px 3%; font-size:16px; background:#000; font-weight:bold; color:#fff; text-align:center;text-overflow: ellipsis; overflow: hidden;white-space: nowrap;text-shadow:1px 1px 1px #333;}
+.audit-content img{ width:100%;}
+
+.swiper-slide img{ width:100%;}
+.bw-title{ width:100%; height:45px; line-height:45px; overflow:hidden; text-align:center; color:#fff; font-size:20px; background:#c00;}
+.thumb img{ width:100%}
+.price{ width:100%; overflow:hidden;}
+.price-title{ height:30px; line-height:30px; width:96%; padding:0px 2%; font-weight:bold; color:#333; font-size:14px; border-bottom:1px solid #ccc;}
+.price-price{  padding:5px 2%;}
+.price-price p{ line-height:25px; font-size:14px;}
+.price-price p span{ color:#888;}
+.price-price p span.xian{ text-decoration:line-through;}
+.price-price p span.span-jiage{ color:#c00;}
+.price-price p span.span-jiage em{ font-weight:bold; font-size:16px;}
+.price-price-l{ width:50%;}
+.price-price-r{ width:47%; }
+.price dl{ width:100%; background:#c00; color:#fff; text-align:center;padding:10px 0px; border-radius:5px;margin-top:13px;}
+.price dl dt{ font-size:16px; line-height:30px; }
+.price dl dd span{ font-size:16px; font-weight:bold; padding:0px 5px;}
+.price-song{ margin:20px 2%; width:96%;}
+.price-song a{ border:2px solid #c00; color:#000; padding:2px 5px; display:inline-block;}
+.price-song a:hover{ color:#c00;}
+.kefu{ width:100%; overflow:hidden; border-top:1px solid #ccc; height:40px; line-height:40px;}
+.kefu-l{ padding-left:2%;}
+.kefu-l a{ color:#337ab7;}
+.kefu-r{ color:#c00; padding-right:2%; border-left:1px solid #ccc; padding-left:2%;}
+.kefu-r span{ background:url(../images/detail_v1_2.png) no-repeat;background-position:0 -35px;background-size: 100px auto; width: 60px; height: 10px; display:inline-block;}
+.title-nav{ height:40px; line-height:40px; border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
+.title-nav ul li{ float:left; width:33.33%; text-align:center;}
+.title-nav ul li:nth-child(2){ border-left:1px solid #ccc;border-right:1px solid #ccc;box-sizing: border-box;}
+.title-nav ul li a{ color:#000;}
+.title-nav ul li a.hover{ color:#c00; border-bottom:2px solid #c00;}
+.bw-content{ margin:10px 0px; overflow:hidden;}
+.bw-content img{ width:100%;}
+.bwtitle{ height:40px; line-height:40px; background:#0C6; color:#fff; font-size:16px; padding-left:2%; margin:2% 0px 0px 0px;}
+
+.review{ width:96%; overflow:hidden; margin:10px auto; color:#666; display:none;}
+.review dl{ border-bottom:1px solid #ccc; overflow:hidden; padding:5px 0px;}
+.review dl dt{ line-height:20px; font-size:14px; color:#333}
+.review dl dd{ margin-top:5px;}
+
+
+.bw-table{ width:96%; margin:20px auto; display:none; overflow:hidden;}
+.bw-table table{ border:1px solid #ccc; width:100%;}
+.bw-table table tr{ height:30px; line-height:30px; width:100%;}
+.bw-table table tr td:nth-child(1){ width:110px; text-align:left; padding:0px 10px; font-weight:bold; font-size:12px; color:#333;}
+.bw-table table tr td:nth-child(2){ padding:0px 10px; font-size:12px; color:#666;}
+
+.main-bg{ height:auto; padding:0px 10px; overflow:hidden; background:#EBFFEF;}
+.main{ overflow:hidden; background:#EBFFEF;}
+.main dl{ width:100%; font-size:14px; margin:10px 0px; overflow:hidden; clear:both;}
+.main dl.dl dt{ float: left; display: block;  height: 34px; line-height: 34px; text-align:left; clear:both;padding:0px; margin:0px;}
+.main dl.dl dt i{ color:red;}
+.main dl.dl dd{ width:100%; min-height: 34px;clear:both;padding:0px; margin:0px;}
+.main dl.dl dd input{font-size:14px;}
+.main dl.dl dd input[type="radio"]{ display: block; float: left;  width: 15px; height: 15px;margin: 3px 6px 9px 0;}
+.main dl.dl dd label{ padding-right: 15px;clear:both; text-align:left;float: left; color:#F00; font-weight:bold;}
+.main dl.dl dd select[name="option"]{ height:34px; line-height:34px; border:1px solid #ccc; border-radius:3px; padding:0px 10px; width:100%;}
+.main dl.dl dd select{ height:34px; line-height:34px; border:1px solid #ccc; border-radius:3px; padding:0px 2%; width:32.3%;font-size:14px;}
+.main dl.dl dd ul li{ line-height:20px; float:left; border:2px solid #ccc; border-radius:5px; padding:6px 10px; margin:5px 10px 5px 0; cursor:pointer; overflow:hidden;}
+.main dl.dl dd ul input[type="checkbox"]{ display:none;}
+.main dl.dl dd ul .ul-no{border:2px solid #0C6; color:#fff; background:#0C6;}
+.main dl.dl dd ul ol{ float:left;  border:2px solid #ccc; border-radius:5px; padding:5px;margin:5px 10px 5px 0;cursor:pointer;}
+.main dl.dl dd ul ol img{ width:54px; height:54px;}
+.main dl.dl dd ul span{ display:inline-block; padding:5px 7px;border:2px solid #ccc; border-radius:5px;margin:5px 10px 5px 0;cursor:pointer;}
+.main dl.dl dd ul span em{ padding-left:5px;}
+.main dl.dl dd ul span img{ width:54px; height:54px;}
+.main dl.dl dd a{display: block;float: left; width: 26px; height: 26px; border: 1px solid #CCC;cursor: pointer; background: url(../images/jjh.gif) no-repeat;}
+.main dl.dl dd a.dec{ background-position: 0 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
+.main dl.dl dd a.lnc{ background-position: -26px 0;border-top-right-radius: 4px;border-bottom-right-radius: 4px;}
+.main dl.dl dd #num{float: left;width: 50px;height: 26px;line-height: 26px;text-align: center; border-width: 1px 0; border-radius: 0; padding:0px; border: 1px solid #CCC;}
+.main dl.dl dd strong{float: left; height: 26px;line-height: 26px;font-size: 16px;color: #000; border-radius:5px; border:1px solid #ccc; padding:3px 15px; background:#eceeef;}
+.main dl.dl dd input[type="text"]{ height:34px; line-height:34px; border-radius:3px; border:1px solid #ccc; width:94%; padding:0px 2%;}
+.main dl.dl dd input[type="tel"]{ height:34px; line-height:34px; border-radius:3px; border:1px solid #ccc; width:94%; padding:0px 2%;}
+.main dl.dl dd .textarea {display: block;width: 96%; padding: 1%;height: 60px;border-radius:3px; border:1px solid #ccc;font-family:"微软雅黑";font-size:14px;}
+.main dl.dl dd b{ font-weight:normal; border:2px solid #ccc; line-height:34px; line-height:34px; margin:5px 2px; border-radius:3px; display:inline-block; padding:0px 10px;cursor:pointer;}
+.main dl.dl dd input[name="sms"]{ width:55% !important;}
+.main dl.dl dd .sms-bg{ background:#666; color:#fff;}
+.main dl.dl dd i{ float:right; width:35%; text-align:center; line-height:34px; background:#0C6; border-radius:3px; color:#fff; cursor:pointer;}
+.main dl.dl dd b.b-no{border:2px solid #0C6; color:#0C6;}
+.main dl.dl dd b.huodao{ background:url(../images/car.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.dl dd b.alipay{ background:url(../images/alipay.jpg) no-repeat 5px center ; background-size:23px 23px; padding-left:33px;}
+.main dl.dl dd b.wechat{ background:url(../images/wxpay.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.dl dd b.alipaycode{ background:url(../images/alipay.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.dl dd b.wechatcode{ background:url(../images/wxpay.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.dl p{ padding:3px 5px; border-radius:3px; margin-top:10px;color:#0C6; border:1px solid #0C6; line-height:20px;display:none;}
+.main dl.dl p.dis-show{display:block;}
+
+
+.main dl.left dt{ float: left; display: block; width: 70px; height: 34px; line-height: 34px; padding-right: 10px; text-align: right;text-overflow: ellipsis; overflow: hidden;white-space: nowrap;}
+.main dl.left dt i{ color:red;}
+.main dl.left dd{ margin-left: 80px; min-height: 34px;}
+.main dl.left dd a{display: block;float: left; width: 26px; height: 26px; border: 1px solid #CCC;cursor: pointer; background: url(../images/jjh.gif) no-repeat;}
+.main dl.left dd a.dec{ background-position: 0 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}
+.main dl.left dd a.lnc{ background-position: -26px 0;border-top-right-radius: 4px;border-bottom-right-radius: 4px;}
+.main dl.left dd #num{float: left;width: 50px;height: 26px;line-height: 26px;text-align: center; border-width: 1px 0; border-radius: 0; padding:0px; border: 1px solid #CCC;}
+.main dl.left dd strong{float: left; height: 26px;line-height: 26px; font-weight:normal;}
+.main dl.left dd strong em{font-size: 16px;color: #F60; font-weight:bold;}
+.main dl.left dd input[type="text"]{ height:34px; line-height:34px; border-radius:3px; border:1px solid #ccc; width:94%; padding:0px 2%;}
+.main dl.left dd input[type="tel"]{ height:34px; line-height:34px; border-radius:3px; border:1px solid #ccc; width:94%; padding:0px 2%;}
+.main dl.left dd .textarea {display: block;width: 96%; padding: 1%;height: 60px;border-radius:3px; border:1px solid #ccc;font-family:"微软雅黑";font-size:14px;}
+.main dl.left dd b{ font-weight:normal; border:2px solid #ccc; line-height:34px; line-height:34px; margin:5px 2px; border-radius:3px; display:inline-block; padding:0px 10px;cursor:pointer;}
+.main dl.left dd input[name="sms"]{ width:55% !important;}
+.main dl.left dd .sms-bg{ background:#666; color:#fff;}
+.main dl.left dd i{ float:right; width:35%; text-align:center; line-height:34px; background:#0C6; border-radius:3px; color:#fff; cursor:pointer;}
+.main dl.left dd b.b-no{border:2px solid #0C6; color:#0C6;}
+.main dl.left dd label span.huodao{ background:url(../images/car.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.left dd label span.alipay{ background:url(../images/alipay.jpg) no-repeat 5px center ; background-size:23px 23px; padding-left:33px;}
+.main dl.left dd label span.wechat{ background:url(../images/wxpay.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.left dd label span.alipaycode{ background:url(../images/alipay.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.left dd label span.wechatcode{ background:url(../images/wxpay.jpg) no-repeat 5px center; background-size:23px 23px; padding-left:33px;}
+.main dl.left p{ padding:3px 5px; border-radius:3px; margin-top:10px;color:#0C6; border:1px solid #0C6; line-height:20px;display:none;}
+.main dl.left p.dis-show{display:block;}
+.main dl.left dd select{ height:34px; line-height:34px; border:1px solid #ccc; border-radius:3px; padding:0px 2%; width:32.3%;font-size:14px;}
+.main dl.left dd label{ padding-right: 15px; text-align:left;float: left; color:#F60; margin-bottom:5px;}
+.main dl.left dd input[type="radio"]{ display: block; float: left;  width: 15px; height: 15px;margin: 3px 0px;}
+
+
+nav {margin:0 auto; padding:0; width:100%;position:fixed; left:0; bottom:0;
+-webkit-animation:fadeInUpBig 1s 0.2s ease both;-moz-animation:fadeInUpBig 1s 0.2s ease both;z-index:999; }
+nav ul {margin:0 auto;padding:0 0; height:45px; width:100%; background:#0C6; overflow:hidden;max-width:750px;}
+nav ul li {  float:left; text-align:center;box-sizing: border-box;}
+nav ul li.nav-border{ border-right:1px dashed #fff;  border-left:1px dashed #fff;}
+nav ul li a { display:block; line-height:45px;width:100%;color:#fff;font-size:0.8em;text-shadow:1px 1px 1px #333;}
+nav ul li a strong { display:block; position: relative;top:10px;left:0; font-weight:normal;}
+nav ul.Transverse {position:relative;}
+nav ul.Transverse li a {border-right:1px dotted #f66;}
+nav ul.Transverse li:last-child a {border-right:0px;}
+nav ul.Transverse li a strong{ display:inline; position: inherit;font-weight:normal;padding-left:32px; line-height:45px;font-size:14px;}
+nav ul.Transverse li.index a strong{background:url("../images/home.png") left center no-repeat; background-size: 28px 28px;}
+nav ul.Transverse li.buy a strong{background:url("../images/xiadan.png") left center no-repeat; background-size: 23px 23px;}
+nav ul.Transverse li.tel a strong{background:url("../images/call.png") left center no-repeat; background-size: 28px 28px;}
+nav ul.Transverse li.sms a strong{background:url("../images/sms.png") left center no-repeat; background-size: 28px 28px;}
+nav ul.Transverse li.qq a strong{background:url("../images/qq.png") left center no-repeat; background-size: 25px 25px;}
+nav ul.Transverse li.top a strong{background:url("../images/top.png") left center no-repeat; background-size: 28px 28px;}
+nav ul.Transverse li span {color:#333}
+
+
+
+.copyright{ font-size:14px; text-align:center; line-height:30px; margin-bottom:50px;}
+.submit{ width:200px; font-size:20px; height:40px; line-height:40px; background:#0C6; color:#fff; text-align:center; margin:10px auto; overflow:hidden; cursor:pointer;}
+
+#bwfahuo{width:92%;font-size:12px;line-height:1.8em;padding:15px 4% 15px 4%;background:#EFEFEF;}
+#bwfahuo span{color:#0C3;}
+
+.fahuo{ height:260px; overflow:hidden; width:96%; margin:10px auto;}
+.fahuo ul{ overflow:hidden;}
+.fahuo ul li{ padding:10px 0px; color:#666; overflow:hidden;}
+.fahuo ul li span{ background:#0C6; display:inline-block; color:#fff; padding:3px 5px; margin-right:10px; border-radius:15px;}
+
+.query{ width:98%; margin:10px auto; overflow:hidden;}
+.query-l{ width:80%;}
+.query-l input[type="tel"]{ width:96%; border:1px solid #ccc; border-radius:3px; padding:0px 2%; height:34px; line-height:34px;font-size:14px;}
+.query-r{ width:18%;}
+.query-r span{ width:100%; text-align:center; background:#0C6; display:inline-block; font-size:16px; line-height:34px; height:34px; color:#fff; border-radius:3px;cursor:pointer;text-shadow:1px 1px 1px #333;}
+
+
+@media screen and (max-width:500px){
+	.bw-title{height:40px; line-height:40px;font-size:16px; }
+	.price dl dt{ font-size:14px; }
+	.price dl dd span{ font-size:15px; padding:0px 3px;}
+	.kefu{ font-size:12px;}
+	
+	nav ul.Transverse li a strong{ display:inline; position: inherit;font-weight:normal; line-height:45px;font-size:16px;}
+}

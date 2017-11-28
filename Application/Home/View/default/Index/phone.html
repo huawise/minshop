@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<title>订单查询</title>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/order.css">
+<eq name="language" value="1">
+<script type="text/javascript" src="__PUBLIC__/Home/js/language.js"></script>
+</eq>
+<script type="text/javascript">
+
+function explain(id){
+	var text = $('#explain_'+id).val();
+	$.post("{:U('explain')}", {orderid:id,explain:text}, function(data){
+		if(data.status == 1){
+			swal({
+				title: data.info,
+				type: "success",
+				timer: 2000,
+				showConfirmButton: false
+			});
+		}
+	}, "json");
+}
+</script>
+</head>
+
+<body>
+<div class="title">订单查询</div>
+<div class="main-bg">
+<foreach name="list" item="v" key="k">
+	<div class="main">
+		<dl class="dl">
+        	<dt>订单号：</dt>
+            <dd>{$v.ordernum}</dd>
+        </dl>
+		<php>if(in_array(name,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>姓名：</dt>
+            <dd>{$v.name}</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(sex,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>性别：</dt>
+            <dd><eq name='v.sex' value='0'>女<else/>男</eq></dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(age,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>年龄：</dt>
+            <dd>{$v.age}（岁）</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(height,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>身高：</dt>
+            <dd>{$v.height}（CM）</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(weight,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>体重：</dt>
+            <dd>{$v.weight}（KG）</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(idnumber,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>身份证号：</dt>
+            <dd>{$v.idnumber}</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(phone,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>手机号：</dt>
+            <dd>{$v.phone}</dd>
+        </dl>
+		<php>}</php>	
+		<php>if(in_array(tel,$v['options'])){</php>
+		<dl class="dl">
+        	<dt>电话号码：</dt>
+            <dd>{$v.tel}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(address,$v['options'])){</php>		
+		<dl class="dl">
+        	<dt>详情地址：</dt>
+            <dd>{$v.province}{$v.city}{$v.area}{$v.address}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(code,$v['options'])){</php>	
+		<dl class="dl">
+        	<dt>邮编：</dt>
+            <dd>{$v.code}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(qq,$v['options'])){</php>	
+		<dl class="dl">
+        	<dt>QQ号：</dt>
+            <dd>{$v.qq}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(wechat,$v['options'])){</php>	
+		<dl class="dl">
+        	<dt>微信号：</dt>
+            <dd>{$v.wechat}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(email,$v['options'])){</php>	
+		<dl class="dl">
+        	<dt>邮箱：</dt>
+            <dd>{$v.email}</dd>
+        </dl>
+		<php>}</php>
+		<php>if(in_array(message,$v['options'])){</php>	
+		<dl class="dl">
+        	<dt>留言：</dt>
+            <dd>{$v.message}&nbsp;</dd>
+        </dl>
+		<php>}</php>
+		<dl class="dl">
+        	<dt>付款方式：</dt>
+            <dd><span><eq name='v.paytype' value='huodao'>货到付款</eq><eq name='v.paytype' value='alipaycode'>支付宝二维码</eq><eq name='v.paytype' value='wechatcode'>微信二维码</eq><eq name='v.paytype' value='wechat'>微信支付</eq><eq name='v.paytype' value='alipay'>支付宝</eq><eq name='v.paytype' value='ty'>同意支付</eq><eq name='v.paytype' value='bty'>不同意支付</eq></span></dd>
+        </dl>
+		<dl class="dl">
+        	<dt>总价：</dt>
+            <dd><b>{$v.currency} {$v.total}</b></dd>
+        </dl>
+		<dl class="dl">
+        	<dt>订购产品：</dt>
+            <dd>
+				<volist name="v.title" id="vo">
+				<p>{$vo} 数量：{$v.num} <neq name='v.color' value=''>{$v['temp']['color_title']}：{$v.color}</neq> <neq name='v.size' value=''>{$v['temp']['size_title']}：{$v.size}</neq></p>
+				</volist>
+			</dd>
+        </dl>
+		<dl class="dl">
+        	<dt>下单时间：</dt>
+            <dd>{$v.addtime|time_format}</dd>
+        </dl>
+		<dl class="dl">
+        	<dt>状态：</dt>
+            <dd><span>{$status[$v['status']]}</span></dd>
+        </dl>
+		<dl class="dl">
+        	<dt>快递公司：</dt>
+            <dd>{$v.exp_com}</dd>
+        </dl>
+		<dl class="dl">
+        	<dt>快递号：</dt>
+            <dd>{$v.exp_num}</dd>
+        </dl>
+		<dl class="dl">
+			<dt>补充说明：</dt>
+			<dd><textarea name="explain_{$v['orderid']}" id="explain_{$v['orderid']}" placeholder="在此处你可以补充说明你的详细支付信息，如果你的订单状态是未发货的话。以便我们确认您的订单。">{$v['explain']}</textarea></dd>
+			<i OnClick="explain({$v['orderid']});">提交说明</i>
+		</dl>
+		<eq name="ems" value="1">
+		<eq name='v.status' value='3'>
+		<dl class="dl">
+        	<li><a href="{:U('ems?ordernum='.$v['ordernum'].'&proid='.$proid)}">查询物流</a></li>
+        </dl>
+		</eq>
+		</eq>
+	</div>
+	<br/>
+	</foreach>
+</div>
+<eq name="value" value="1">
+<div class="submit"><a href="{:U('index/info?proid='.$proid.'&uid='.$list[0]['uid'])}">返回</a></div>
+<else/>
+<div class="submit"><a href="__ROOT__/html/{$proid}-{$list[0]['uid']}.html">返回</a></div>
+</eq>
+<div class="h-30"></div>
+</body>
+</html>

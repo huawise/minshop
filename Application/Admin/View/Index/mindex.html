@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>小蜜蜂管理中心</title>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/layer.css">	
+<link rel="stylesheet" type="text/css" href="__CSS__/m-style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+<script>
+$(document).ready(function(){
+  $("#user").click( function () {
+	  var html = '<div class="login"><a href="{:U('admin/user/update?uid='.UID)}"><i class="fa fa-edit"></i> 修改密码</a><a href="javascript:;" onclick="logout();"><i class="fa fa-sign-out"></i> 退出登录</a></div>';
+	  layer.tips(html, '#user', {
+		  tips: [3,'#fff']
+	  });
+	});
+});
+
+function  logout(){
+	layer.load(1,{shade: [0.5,'#000']});
+	$.get("{:U('Public/logout')}", function(data){
+		layer.closeAll('loading');
+		parent.layer.msg("退出登录成功！",{icon: 6, time: 1800});
+		setTimeout(function() {
+			location=location;
+		},2000);
+	});
+}
+	
+function cache(){
+	layer.load(1,{shade: [0.5,'#000']});
+	$.get("{:U('Index/deldir')}", function(data){
+		layer.closeAll('loading');
+		parent.layer.msg("清除缓存成功！",{icon: 6, time: 1800});
+		setTimeout(function() {
+			location=location;
+		},2000);
+	});
+}	
+	
+</script>
+</head>
+
+<body>
+<div class="user-bg">
+	<dl class="user">
+    	<dt><img src="__ROOT__/Public/Admin/images/logo.png"/></dt>
+        <dd>{:get_nickname(UID)} </dd>
+    </dl>
+	<span class="fa fa-gear (alias) fa-lg fa-spin" id="user"></span>
+	<div class="div-dl">
+    	<dl>
+        	<dt>今日订单</dt>
+            <dd>{$news_day_count}</dd>
+        </dl>
+        <dl>
+        	<dt>昨日订单</dt>
+            <dd>{$zuo_day_count}</dd>
+        </dl>
+        <dl>
+        	<dt>本月订单</dt>
+            <dd>{$news_month_count}</dd>
+        </dl>
+        <dl>
+        	<dt>上月订单</dt>
+            <dd>{$zuo_month_count}</dd>
+        </dl>
+    </div>
+</div>
+<div class="main">
+	<ul>
+    	<li><a href="{:U('order/orderpro')}">查看订单记录<i class="fa fa-list-alt fa-lg"></i></a></li>
+        <li><a href="{:U('product/orderpro')}">查看我的链接<i class="fa fa-chain fa-lg"></i></a></li>
+		<li><a href="{:U('order/search')}">查询订单<i class="fa fa-search fa-lg"></i></a></li>
+		<li><a href="{:U('order/selectsum')}">更多订单统计<i class="fa fa-bar-chart-o fa-lg"></i></a></li>
+        <li class="li-no"><a href="javascript:;" Onclick="cache();">清除缓存<i class="fa fa-trash-o fa-lg main-ico"></i></a></li>
+    </ul>
+</div>
+
+<div class="main">
+	<div class="main-title"><i class="fa fa-list-alt fa-lg"></i> 订单统计</div>
+    <table width="100%">
+      <tr>
+        <th scope="col">日统计</th>
+        <th scope="col">订单数量</th>
+        <th scope="col">订单金额(元)</th>
+      </tr>
+	  <foreach name="d_list" item="v" key="k">
+      <tr>
+        <td>{$v.day} 日</td>
+        <td>{$v.count}</td>
+        <td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+      </tr>
+      </foreach>
+    </table>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<link rel="shortcut icon" href="__PUBLIC__/Home/images/tubiao.ico" type="image/x-icon"/>
+
+<title>关于我们</title>
+<style>
+html,body,header,footer,a{ margin:0; padding:0;}
+html{ background:#F1F1F1;}
+body{ max-width:750px; margin:0 auto; background:#fff;}
+header{ height:40px; line-height:40px; font-size:18px; color:#fff; text-align:center; background:#FF6700;}
+footer{ margin-top:10px; text-align:center; font-size:16px; padding-top:10px; border-top:1px solid #ddd; line-height:30px;}
+footer a{ color:#333; margin:0 6px; text-decoration:none;}
+img{ border:0;}
+.content{ margin:1%; width:98%;word-wrap:break-word; word-break:break-all; white-space:normal;}
+.content img{ max-width:100%;}
+.list img{ width:100%;}
+</style>
+</head>
+<body>
+<header>关于我们</header>
+
+<div class="content">{$contact}</div>
+</volist>
+<footer>
+<a href="{:U('home/index/index')}">网站首页</a><a href="{:U('home/index/contact')}">联系我们</a><a href="{:U('home/index/about')}">关于我们</a>
+</footer>
+
+</body>
+</html>

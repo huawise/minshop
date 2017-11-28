@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>小蜜蜂管理中心</title>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/layer.css">	
+<link rel="stylesheet" type="text/css" href="__CSS__/m-style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+</head>
+
+<body>
+<header><a class="fa fa-chevron-left fa-lg" href="{:U('product/orderpro')}"></a>推广链接</header>
+<div class="url">
+	<table width="100%">
+      <tr>
+        <th scope="col">推广渠道</th>
+        <th scope="col">操作</th>
+      </tr>
+	  <volist name="_list" id="vo">
+	  <eq name="value" value="1">
+      <tr>
+        <td><a href="{:U('home/index/info?proid='.$proid.'&gzid='.$vo['gzid'].'&uid='.UID)}" target="_blank">{$vo.name}</a></td>
+        <td><i url="<php>echo _SERVER_NAME_;</php>{:U('home/index/info?proid='.$proid.'&gzid='.$vo['gzid'].'&uid='.UID)}" title="{$vo.name}">复制</i></td>
+      </tr>
+	  <else/>
+	  <tr>
+        <td><a href="__ROOT__/html/{$proid}/{$vo['gzid']}-{:UID}.html" target="_blank">{$vo.name}</a></td>
+        <td><i url="<php>echo _SERVER_NAME_;</php>__ROOT__/html/{$proid}/{$vo['gzid']}-{:UID}.html">复制</i></td>
+      </tr>
+	  </eq>
+       </volist>    
+    </table>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".url table tr i").click(function(){
+			var url = $(this).attr('url');
+			var title = $(this).attr('title');
+			var html = "<div class='html'>"+url+"</div>";
+			layer.open({
+			  type: 1,
+			  title:title,
+			  skin: 'layui-layer-demo', //样式类名
+			  closeBtn: 0, //不显示关闭按钮
+			  anim: 2,
+			  shadeClose: true, //开启遮罩关闭
+			  content: html,
+			});
+		});
+	});
+</script>

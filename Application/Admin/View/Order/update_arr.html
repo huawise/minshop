@@ -1,0 +1,99 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<form action="__SELF__" method="post" class="form-horizontal">
+    <div class="col-md-12 main-main">
+		<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>订单管理</b></div>
+		<div class="col-md-12 show-table">
+			
+			<div class="col-md-12">
+				<table class="table table-bordered">
+				  <tbody>
+					<tr>
+					  <td align="right" width="120">订单状态</td>
+					  <td>
+						<select name="status">
+							<option value="0">请选择</option>
+							<option value="1">未发货</option>
+							<option value="2">已发货</option>
+							<option value="3">已签收</option>
+							<option value="4">拒收</option>
+							<option value="5">待发货</option>
+						  </select>
+					  </td>
+					</tr>
+					<tr>
+					  <td align="right">修改订单</td>
+					  <td>
+						<table class="table table-bordered">
+						  <tbody>
+							<th width="100">订单ID</th>
+							<th width="250">订单单号</th>
+							<th width="150">姓名</th>
+							<th width="200">手机</th>
+							<th width="200">状态</th>
+						  </tbody>
+						 <volist name="order" id="v">
+						  <tr>
+							<td>{$v.orderid}</td>
+							<td>{$v.ordernum}</td>
+							<td>{$v.name}</td>
+							<td>{$v.phone}</td>
+							<td><eq name="v.status" value="1">未发货</eq><eq name="v.status" value="2">已发货</eq><eq name="v.status" value="3">已签收</eq><eq name="v.status" value="4">拒收</eq><eq name="v.status" value="5">待发货</eq></td>
+						  </tr>
+						  </volist>
+						</table>
+					  </td>
+					</tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+				<li class="ahover"><a id="submit"><i class="fa fa-check-circle-o"></i> 保存订单</a></li>
+				<li class="ul-list ahover"><a href="{:U('index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</block>
+
+<block name="script">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#submit").click(function(){
+			swal({
+				title: "数据提交中...",
+				imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+				showConfirmButton: false
+			});
+			var form = $('form').serialize();
+			$.post("{:U('json_update_arr')}",form,function(data){
+				if(data.status == 0){
+					swal({
+						title: data.info,
+						type: "error",
+						timer: 1500,
+						showConfirmButton: false
+					});
+				}else{
+					swal({
+						title: data.info,
+						type: "success",
+						timer: 1500,
+						showConfirmButton: false
+					});
+					setTimeout(function() {
+						window.location.href = "{:U('index')}";
+					},1500);
+				}
+			}, "json");
+		});
+	});
+	
+</script>
+</block>

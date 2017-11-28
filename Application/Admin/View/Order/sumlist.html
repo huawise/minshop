@@ -1,0 +1,123 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>综合统计</b></div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<div class="col-md-6">
+			<table class="table table-bordered table-list">
+				<tbody>
+					<th>月统计</th>
+					<th>订单数量</th>
+					<th>订单金额（元）</th>
+					<th width="75">统计操作</th>
+				<tbody>
+				<foreach name="m_list" item="v" key="k">
+				<tr>
+					<td>{$k} 月</td>
+					<td>{$v.count}</td>
+					<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+					<td><a href="{:U('order/index?starttime='.$v['stime'].'&endtime='.$v['etime'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i>  查看</a></td>
+				</tr>
+				</foreach>
+				
+			</table>
+		</div>
+		<div class="col-md-6">
+			<table class="table table-bordered table-list">
+				<tbody>
+					<th>日统计</th>
+					<th>订单数量</th>
+					<th>订单金额（元）</th>
+					<th width="75">统计操作</th>
+				<tbody>
+				<foreach name="d_list" item="v" key="k">
+				<tr>
+					<td>{$v.day} 日</td>
+					<td>{$v.count}</td>
+					<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+					<td><a href="{:U('order/index?starttime='.$v['stime'].'&endtime='.$v['etime'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i>  查看</a></td>
+				</tr>
+				</foreach>
+				
+			</table>
+		</div>
+	</div>
+	<div class="col-md-12 main-cen">
+		
+		<div class="col-md-12">
+			<table class="table table-bordered table-list">
+				<tbody>
+					<th>付款方式</th>
+					<th>订单数量</th>
+					<th>订单总金额（元）</th>
+					<th>已支付金额（元）</th>
+					<th>未支付金额（元）</th>
+					<th width="75">统计操作</th>
+				<tbody>
+				<volist name="paylist" id="v">
+				<tr>
+					<td>{$v.title}</td>
+					<td>{$v.count}</td>
+					<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+					<td><eq name="v.ytotal" value="">&yen; 0.00<else/>&yen; {$v.ytotal}</eq></td>
+					<td><eq name="v.wtotal" value="">&yen; 0.00<else/>&yen; {$v.wtotal}</eq></td>
+					<td><a href="{:U('order/index?paytype='.$v['type'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i> 查看</a></td>
+				</tr>
+				</volist>
+				
+			</table>
+		</div>	
+	</div>
+	<div class="col-md-12 main-cen">
+		<div class="col-md-6">
+			<table class="table table-bordered table-list">
+				<tbody>
+					<th>订购产品</th>
+					<th>订单数量</th>
+					<th>订单金额（元）</th>
+					<th width="75">统计操作</th>
+				<tbody>
+				<volist name="product" id="v">
+				<tr>
+					<td>{$v.title}</td>
+					<td>{$v.count}</td>
+					<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+					<td><a href="{:U('order/index?proid='.$v['proid'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i>  查看</a></td>
+				</tr>
+				</volist>
+				
+			</table>
+		</div>	
+		<div class="col-md-6">
+			<table class="table table-bordered table-list">
+				<tbody>
+					<th>所在地区</th>
+					<th>订单数量</th>
+					<th>订单金额（元）</th>
+					<th width="75">统计操作</th>
+				<tbody>
+				<volist name="province" id="v">
+				<tr>
+					<td>{$v.title}</td>
+					<td>{$v.count}</td>
+					<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+					<td><a href="{:U('order/index?province='.$v['title'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i>  查看</a></td>
+				</tr>
+				</volist>
+				
+			</table>
+		</div>	
+	</div>
+	
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+	
+	
+	</script>
+</block>

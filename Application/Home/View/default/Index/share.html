@@ -1,0 +1,93 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    wx.config({
+        debug: false,
+        appId: '<?php echo $signPackage["appId"];?>',
+        timestamp: <?php echo $signPackage["timestamp"];?>,
+        nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+        signature: '<?php echo $signPackage["signature"];?>',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'checkJsApi',
+            'openLocation',
+            'getLocation',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'
+          ]
+    });
+	
+	
+	wx.ready(function () {
+	
+		 wx.checkJsApi({
+			jsApiList: [
+				'getLocation',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage'
+			],
+			success: function (res) {
+				//alert(JSON.stringify(res));
+			}
+		});
+		
+		wx.onMenuShareAppMessage({
+		  title: '<?php echo $info['title'];?>',
+		  desc: '<?php echo $info['description'];?>',
+		  <?php
+			if($value == 1){
+		  ?>
+		  link: '<?php echo _SERVER_NAME_.'/index.php?s=/home/index/info/proid/'.$proid.'/gzid/'.$gzid.'/uid/'.$uid.'.html';?>',
+		  <?php
+			}else{
+		  ?>
+		  
+		  link: '<?php echo _SERVER_NAME_.'/html/'.$proid.'/'.$gzid.'-'.$uid.'.html';?>',
+		  <?php
+			}
+		  ?>
+		  imgUrl: '<?php echo 'http://'.$_SERVER['SERVER_NAME'].$info['thumb'];?>',
+		  trigger: function (res) {
+			
+		  },
+		  success: function (res) {
+			// alert('已分享');
+		  },
+		  cancel: function (res) {
+			// alert('已取消');
+		  },
+		  fail: function (res) {
+			// alert(JSON.stringify(res));
+		  }
+		});
+		
+		wx.onMenuShareTimeline({
+		  title: '<?php echo $info['title'];?>',
+		   <?php
+			if($value == 1){
+		  ?>
+		  link: '<?php echo _SERVER_NAME_.'/index.php?s=/home/index/info/proid/'.$proid.'/gzid/'.$gzid.'/uid/'.$uid.'.html';?>',
+		  <?php
+			}else{
+		  ?>
+		  
+		  link: '<?php echo _SERVER_NAME_.'/html/'.$proid.'/'.$gzid.'-'.$uid.'.html';?>',
+		  <?php
+			}
+		  ?>
+		  imgUrl: '<?php echo 'http://'.$_SERVER['SERVER_NAME'].$info['thumb'];?>',
+		  trigger: function (res) {
+		  },
+		  success: function (res) {
+			location.href = '{$share}';
+		  },
+		  cancel: function (res) {
+		  },
+		  fail: function (res) {
+		  }
+		});
+	
+	 
+	
+	});
+	
+</script>

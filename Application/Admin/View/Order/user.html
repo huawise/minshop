@@ -1,0 +1,55 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>员工统计</b></div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<div class="col-md-6">
+			<table class="table table-bordered table-list">
+				<div class="user-table-title">员工总订单</div>
+				<tbody>
+					<th>员工(ID)</th>
+					<th>订单数量</th>
+					<th>订单金额（元）</th>
+					<th width="75">统计操作</th>
+				<tbody>
+				<foreach name="member" item="v" key="k">
+				<tr>
+					<td>{$v['nickname']}(ID:{$v['uid']})</td>
+					<td>{$v.count}</td>
+					<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+					<td><a href="{:U('order/index?uid='.$v['uid'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i>  查看</a></td>
+				</tr>
+				</foreach>
+				
+			</table>
+		</div>
+		<div class="col-md-6">
+			<table class="table table-bordered table-list">
+				<div class="user-table-title">员工今日订单</div>
+				<tbody>
+					<th>员工(ID)</th>
+					<th>订单数量</th>
+					<th>订单金额（元）</th>
+					<th width="75">统计操作</th>
+				<tbody>
+				<foreach name="day_order" item="v" key="k">
+				<tr>
+					<td>{$v['nickname']}(ID:{$v['uid']})</td>
+					<td>{$v.count}</td>
+					<td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+					<td><a href="{:U('order/index?starttime='.$stime.'&endtime='.$etime.'&uid='.$v['uid'])}" class="ahover a-list a"><i class="fa fa-circle-thin"></i>  查看</a></td>
+				</tr>
+				</foreach>
+				
+			</table>
+		</div>
+	</div>
+	
+	
+</div>
+</block>
+<block name="script">
+	
+</block>

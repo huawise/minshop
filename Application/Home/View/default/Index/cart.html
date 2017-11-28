@@ -1,0 +1,140 @@
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/cart.css">
+<div class="bw-cart-ico"><a>1</a></div>
+<div class="bw-cart-nav">
+	<li navid="1">加入购物车</li>
+    <li navid="2">立即购买</li>
+</div>
+<input name="c-navid" type="hidden" value="1"/>
+<div class="bw-bg"></div>
+<div class="bw-buy">
+	<dl>
+		<dt id="c-thumb"><img src="{$norms_pro[0]['thumb']}"/></dt>
+        <dd>&yen;<i id="c-price">{$norms_pro[0]['price']}</i></dd>
+		<em id="c-title">{$norms_pro[0]['title']}</em>
+        <span onClick="times();">&times;</span>
+    </dl>
+    <div class="c"></div>
+	<notempty name="norms_pro">
+    <div class="bw-title">{$temp.pro_title}</div>
+    <div class="c"></div>
+    <ul>
+      <foreach name="norms_pro" item="v" key="k">
+      <li <if condition="($k eq 0)">class="ul-no"</if> onClick="pro(this,{$v.price},{$v.number},'{$v.title}',{$v.nid},'{$v.thumb}')">{$v['title']}<eq name="v.number" value="0">（已售完）</eq></li>
+	  </foreach>
+    </ul>
+	</notempty>
+    <div class="c"></div>
+	<notempty name="norms_size">
+    <div class="bw-title">{$temp.size_title}</div>
+    <div class="c"></div>
+    <ul>
+	   <foreach name="norms_size" item="v" key="k">
+       <li <if condition="($k eq 0)">class="ul-no"</if> onClick="sizety(this,'{$v.title}',{$v.nid})">{$v['title']}</li>
+       </foreach>
+	</ul>
+	</notempty>
+	<notempty name="norms_color">
+    <div class="bw-title">{$temp.color_title}</div>
+    <div class="c"></div>
+    <ul>
+	   <foreach name="norms_color" item="v" key="k">
+		<li <if condition="($k eq 0)">class="ul-no"</if> onClick="colorty(this,'{$v.title}',{$v.nid})">{$v['title']}</li>
+	   </foreach>
+	</ul>
+	</notempty>
+    <div class="c"></div>
+	<php>if(in_array(num,$temp['options']) || in_array(price,$temp['options'])){</php>
+    <div class="bw-title"><php>if(in_array(num,$temp['options'])){</php>数量<php>}</php>&nbsp;</div>
+    <div class="c"></div>
+    <div class="bw-sum">
+	<php>if(in_array(num,$temp['options'])){</php>
+    	<a class="b-sum-del" onClick="numdec();">&minus;</a>
+         <input type="text" id="num" name="num" value="1" readonly>
+        <a class="b-sum-add" onClick="numlnc();">+</a>
+        <span>库存<i class="bw-count">{$norms_pro[0]['number']}</i>件</span>
+	<php>}</php>	
+	<php>if(in_array(price,$temp['options'])){</php>
+		<strong>&yen;<em id="bw-showprice">{$norms_pro[0]['price']}</em></strong>
+	<php>}</php>	
+    </div>
+    <div class="c"></div>
+	<php>}</php>	
+    <p class="bw-addcar">确定</p>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.fly.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".bw-cart-nav li").click(function(){
+			$('.bw-bg').show();
+			$('.bw-buy').show();
+			var navid = $(this).attr('navid');
+			$("input[name='c-navid']").val(navid);
+		});
+	});
+	
+	function times(){
+		$('.bw-buy').slideUp();
+		setTimeout(function() { 
+			$('.bw-bg').hide();
+		},400);  
+	}
+
+$(function() {
+	var offset = $(".bw-cart-ico").offset();  //结束的地方的元素
+	$(".bw-addcar").click(function(event){   //是$(".addcar")这个元素点击促发的 开始动画的位置就是这个元素的位置为起点
+	
+		var total = $('input[name="total"]').val();
+		var number = parseInt($('input[name="number"]').val());
+		var num = parseInt($('input[name="num"]').val());
+		var navid = $("input[name='c-navid']").val();
+
+		
+		if(total == '0.00'){ 
+			new TipBox({type:'tip',str:'请选择订购产品！',clickDomCancel:false,setTime:3000,hasBtn:true});
+			return false;
+		}
+		
+		if(number < num){ 
+			new TipBox({type:'tip',str:'库存有限，请谅解！',clickDomCancel:false,setTime:3000,hasBtn:true});
+			return false;
+		}
+		var addcar = $(this);
+		var img = $('.bw-buy dl dt img').attr('src');
+		var flyer = $('<img class="u-flyer" src="'+img+'">');
+		flyer.fly({
+			start: {
+				left: event.pageX,
+				top: event.pageY-600,
+			},
+			end: {
+				left: offset.left+10,
+				top: offset.top+10,
+				width: 0,
+				height: 0
+			},
+			onEnd: function(){
+				addcar.css("cursor","default");
+				this.destory();
+			}
+		});
+		
+		$('.bw-buy').slideUp();
+		setTimeout(function() { 
+			$('.bw-bg').hide();
+		},400);  
+		
+		if(navid == 1){
+			$.post(post_cartadd,$("form").serialize(),function(data){
+				
+			},'json');
+			
+		}else{
+			$.post(post_cartadd,$("form").serialize(),function(data){
+				
+			},'json');
+		}
+		
+	});
+});
+</script>

@@ -1,0 +1,366 @@
+<extend name="Public/base" />
+<block name="body">
+<link href="__CSS__/component.css" rel="stylesheet">
+<link href="__CSS__/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__JS__/bootstrap-switch.min.js"></script>
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>模板管理</b></div>
+	<form action="__SELF__" method="post" class="form-horizontal">
+	<div class="col-md-12">
+		<div class="table-responsive">
+		  <table class="table add-pro-table">
+			<caption>&nbsp;</caption>
+			<tbody>
+			  <tr>
+				<td width="140" align="right">模板名称</td>
+				<td><input name="name" type="text" value="{$info.name}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写模板名称</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">订单标题</td>
+				<td><input name="title" type="text" value="{$info.title}"/> <span><i class="fa fa-exclamation-circle"></i> 请填写订单标题</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">类别一</td>
+				<td>
+				<select name="pro_class">
+					<option value="1">单选</option>
+					<option value="2">单选+图片</option>
+					<option value="3">多选</option>
+					<option value="4">多选+图片</option>
+					<option value="5">下拉</option>
+					<option value="6">单选按钮</option>
+				</select>
+				<input name="pro_title" type="text" value="{$info.pro_title}"/>
+				<span><i class="fa fa-exclamation-circle"></i> 类别一显示方式&类别名称</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">类别二</td>
+				<td>
+				<select name="size_class">
+					<option value="1">单选</option>
+					<option value="2">单选+图片</option>
+					<option value="3">下拉</option>
+					<option value="4">单选按钮</option>
+				</select>
+				<input name="size_title" type="text" value="{$info.size_title}"/>
+				<span><i class="fa fa-exclamation-circle"></i> 类别二显示方式&类别名称</span></td>
+			  </tr>
+			   <tr>
+				<td align="right">类别三</td>
+				<td>
+				<select name="color_class">
+					<option value="1">单选</option>
+					<option value="2">单选+图片</option>
+					<option value="3">下拉</option>
+					<option value="4">单选按钮</option>
+				</select>
+				<input name="color_title" type="text" value="{$info.color_title}"/>
+				<span><i class="fa fa-exclamation-circle"></i> 类别三显示方式&类别名称</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">表单选项</td>
+				<td>
+					<ul class="table-ul">
+					<foreach name="options" item="vo" key="k">
+					<php>
+					if(in_array($k,$info['options'])){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="options[]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>
+					</foreach>
+					</ul>
+				</td>
+			  </tr>
+			   <tr>
+				<td align="right">付款方式</td>
+				<td>
+					<div class="table-dl">
+						<dl>
+							<dt><p class='<eq name="info[pay_type][huodao][status]" value="1">table-dl-bg</eq> ahover'><eq name="info[pay_type][huodao][status]" value="1"><i class="fa fa-check-square-o"></i><else/><i class="fa fa-square-o"></i></eq> 货到付款<input name="huodao" type="hidden" value="{$info[pay_type][huodao][status]}"/></p></dt>
+							<dd>折扣：<input name="huodao_discount" class="input-mini" type="text" value="{$info[pay_type][huodao][discount]}"/></dd>
+					<dd>排序：<input name="huodao_sort" type="text" class="input-mini" value="{$info[pay_type][huodao][sort]}"/></dd>
+					<dd><input name="huodao_content" type="text" class="input-w600" value="{$info[pay_type][huodao][content]}"/></dd>
+						</dl>
+						<dl>
+							<dt><p class='<eq name="info[pay_type][alipay][status]" value="1">table-dl-bg</eq> ahover'><eq name="info[pay_type][alipay][status]" value="1"><i class="fa fa-check-square-o"></i><else/><i class="fa fa-square-o"></i></eq> 支付宝付款<input name="alipay"  type="hidden" value="{$info[pay_type][alipay][status]}"/></p></dt>
+							<dd>折扣：<input name="alipay_discount" type="text" class="input-mini" value="{$info[pay_type][alipay][discount]}"/></dd>
+							<dd>排序：<input name="alipay_sort" type="text" class="input-mini" value="{$info[pay_type][alipay][sort]}"/></dd>
+							<dd><input name="alipay_content" type="text" class="input-w600" value="{$info[pay_type][alipay][content]}"/></dd>
+							<span><i class="fa fa-exclamation-circle"></i> <a href="{:U('admin/config/group?id=6')}" target="_blank">配置支付宝</a></span>
+						</dl>
+						<dl>
+							<dt><p class='<eq name="info[pay_type][wechat][status]" value="1">table-dl-bg</eq> ahover'><eq name="info[pay_type][wechat][status]" value="1"><i class="fa fa-check-square-o"></i><else/><i class="fa fa-square-o"></i></eq> 微信付款<input name="wechat"  type="hidden" value="{$info[pay_type][wechat][status]}"/></p></dt>
+							<dd>折扣：<input name="wechat_discount" type="text" class="input-mini" value="{$info[pay_type][wechat][discount]}"/></dd>
+							<dd>排序：<input name="wechat_sort" type="text" class="input-mini" value="{$info[pay_type][wechat][sort]}"/></dd>
+							<dd><input name="wechat_content" type="text" class="input-w600" value="{$info[pay_type][wechat][content]}"/></dd>
+							<span><i class="fa fa-exclamation-circle"></i> <a href="{:U('admin/config/group?id=7')}" target="_blank">配置微信</a></span>
+						</dl>
+						<dl>
+							<dt><p class='<eq name="info[pay_type][alipaycode][status]" value="1">table-dl-bg</eq> ahover'><eq name="info[pay_type][alipaycode][status]" value="1"><i class="fa fa-check-square-o"></i><else/><i class="fa fa-square-o"></i></eq> 支付宝二维码<input name="alipaycode"  type="hidden" value="{$info[pay_type][alipaycode][status]}"/></p></dt>
+							<dd>折扣：<input name="alipaycode_discount" type="text" class="input-mini" value="{$info[pay_type][alipaycode][discount]}"/></dd>
+							<dd>排序：<input name="alipaycode_sort" type="text" class="input-mini" value="{$info[pay_type][alipaycode][sort]}"/></dd>
+							<dd><input name="alipaycode_content" type="text" class="input-w600" value="{$info[pay_type][alipaycode][content]}"/></dd>
+							<span><i class="fa fa-exclamation-circle"></i> <a href="{:U('paycode/index')}" target="_blank">配置支付宝二维码</a></span>
+						</dl>
+						<dl>
+							<dt><p class='<eq name="info[pay_type][wechatcode][status]" value="1">table-dl-bg</eq> ahover'><eq name="info[pay_type][wechatcode][status]" value="1"><i class="fa fa-check-square-o"></i><else/><i class="fa fa-square-o"></i></eq> 微信二维码<input name="wechatcode"  type="hidden" value="{$info[pay_type][wechatcode][status]}"/></p></dt>
+							<dd>折扣：<input name="wechatcode_discount" type="text" class="input-mini" value="{$info[pay_type][wechatcode][discount]}"/></dd>
+							<dd>排序：<input name="wechatcode_sort" type="text" class="input-mini" value="{$info[pay_type][wechatcode][sort]}"/></dd>
+							<dd><input name="wechatcode_content" type="text" class="input-w600" value="{$info[pay_type][wechatcode][content]}"/></dd>
+							<span><i class="fa fa-exclamation-circle"></i> <a href="{:U('paycode/index?type=wechatcode')}" target="_blank">配置微信二维码</a></span>
+						</dl>
+					</div>
+				</td>
+			  </tr>
+			  <tr>
+				<td align="right">短信验证码开关</td>
+				<td><em><input type="checkbox" name="sms" <eq name="info.sms" value="0">checked</eq>></em><span class="span"><i class="fa fa-exclamation-circle"></i> 短信验证码开关</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">显示发货通知开关</td>
+				<td><em><input type="checkbox" name="delivery" <eq name="info.delivery" value="0">checked</eq>></em><span class="span"><i class="fa fa-exclamation-circle"></i> 显示发货通知开关</span></td>
+			  </tr>
+			  <tr class='delivery <eq name="info.delivery" value="1">time_checked</eq>'>
+				<td align="right">发货通知标题</td>
+				<td><input name="delivery_title" type="text" value="{$info.delivery_title}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写发货通知标题</span></td>
+			  </tr>
+			  <tr class='delivery <eq name="info.delivery" value="1">time_checked</eq>'>
+				<td align="right">自定义发货通知内容</td>
+				<td><textarea name="delivery_content" class="textarea" style="width:800px;height:300px;">{$info.delivery_content}</textarea> <span><i class="fa fa-exclamation-circle"></i> 每条信息已换行隔开， ｛｝大括号内是系统变量，不能修改，时间：<kbd>{time}</kbd></span></td>
+			  </tr>
+			  <tr>
+				<td align="right">显示最新下单开关</td>
+				<td><em><input type="checkbox" name="order" <eq name="info.order" value="0">checked</eq>></em><span class="span"><i class="fa fa-exclamation-circle"></i> 显示发货通知开关</span></td>
+			  </tr>
+			 <tr class='order <eq name="info.order" value="1">time_checked</eq>'>
+				<td align="right">最新下单标题</td>
+				<td><input name="order_title" type="text" value="{$info.order_title}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写发货通知标题</span></td>
+			  </tr>
+			 <tr class='order <eq name="info.order" value="1">time_checked</eq>'>
+				<td align="right">自定义最新下单内容</td>
+				<td><textarea name="order_content" class="textarea" style="width:800px;height:300px;">{$info.order_content}</textarea> <span><i class="fa fa-exclamation-circle"></i> 每条信息已换行隔开， ｛｝大括号内是系统变量，不能修改,时间：<kbd>{time}</kbd></span></td>
+			  </tr>
+			  <tr>
+				<td align="right">订单提交设置开关</td>
+				<td><em><input type="checkbox" name="alert" <eq name="info.alert" value="0">checked</eq>></em><span class="span"><i class="fa fa-exclamation-circle"></i> 订单提交设置开关</span></td>
+			  </tr>
+			  <tr class='alerts <eq name="info.alert" value="1">time_checked</eq>'>
+				<td align="right">表单提交成功提示方式</td>
+				<td>
+				<label data-type="1" class="alert_1"><eq name="info.alert_type" value="1"><i class="fa fa-circle"></i><else/><i class="fa fa-circle-thin"></i></eq> 跳转到成功页面</label>
+				<label data-type="2" class="alert_2"><eq name="info.alert_type" value="2"><i class="fa fa-circle"></i><else/><i class="fa fa-circle-thin"></i></eq> 弹出对话框</label>
+				<input type="hidden" name="alert_type" value="{$info.alert_type}"> 
+				<span><i class="fa fa-exclamation-circle"></i> 表单提交成功提示方式</span></td>
+			  </tr>
+			  <tr class='alerts <eq name="info.alert" value="1">time_checked</eq>'>
+				<td align="right">自定义跳转网址</td>
+				<td><input name="alert_href" type="text" value="{$info.alert_href}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写自定义跳转网址</span></td>
+			  </tr>
+			  <tr class='alerts <eq name="info.alert" value="1">time_checked</eq>'>
+				<td align="right">自定义对话框消息</td>
+				<td><textarea name="alert_content" class="textarea">{$info.alert_content}</textarea> <span><i class="fa fa-exclamation-circle"></i> ｛｝大括号内是系统变量，不能修改 <a href="javascript:;" data-modal="modal-1" class="md-trigger"><kbd>系统变量说明</kbd></a></span></td>
+			  </tr>
+			  <tr>
+				<td align="right">默认留言内容</td>
+				<td><input name="message" type="text" value="{$info.message}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写默认留言内容</span></td>
+			  </tr>
+			  <tr>
+				<td align="right">底部导航开关</td>
+				<td><em><input type="checkbox" name="nav" <eq name="info.nav" value="0">checked</eq>></em><span class="span"><i class="fa fa-exclamation-circle"></i> 底部导航开关</span></td>
+			  </tr>
+			  
+			  <tr class='navs <eq name="info.nav" value="1">time_checked</eq>'>
+				<td align="right">表单选项</td>
+				<td>
+					<ul class="table-nav">
+					<foreach name="nav" item="vo" key="k">
+					<php>
+					if(in_array($k,$info['nav_temp'])){
+					</php>
+						<li class="table-ul-bg ahover" data-opk="{$k}" data-opname="{$vo}"><i class="fa fa-check-square-o"></i> {$vo} <input type="hidden" name="nav_temp[]" value="{$k}"/></li>
+					<php>
+					}else{
+					</php>	
+						<li class="ahover" data-opk="{$k}" data-opname="{$vo}"><i class="fa fa-square-o"></i> {$vo}</li>
+					<php>
+					}
+					</php>
+					</foreach>
+					</ul>
+					
+				</td>
+			  </tr>
+			  <tr class='navs <eq name="info.nav" value="1">time_checked</eq>'>
+				<td align="right">电话咨询号码</td>
+				<td><input name="phone" type="text" value="{$info.phone}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写电话咨询号码</span></td>
+			  </tr>
+			   <tr class='navs <eq name="info.nav" value="1">time_checked</eq>'>
+				<td align="right">短信咨询号码</td>
+				<td><input name="smsphone" type="text" value="{$info.smsphone}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写短信咨询号码</span></td>
+			  </tr>
+			  <tr class='navs <eq name="info.nav" value="1">time_checked</eq>'>
+				<td align="right">QQ咨询号码</td>
+				<td><input name="qq" type="text" value="{$info.qq}" /> <span><i class="fa fa-exclamation-circle"></i> 请填写QQ咨询号码</span></td>
+			  </tr>
+			  
+			  <tr>
+				<td align="right">订单查询开关</td>
+				<td><em><input type="checkbox" name="search" <eq name="info.search" value="0">checked</eq>></em><span class="span"><i class="fa fa-exclamation-circle"></i> 订单查询开关</span></td>
+			  </tr>
+			  </tbody>
+		  </table>
+		</div>
+	</div>
+	<div class="height-50"></div>
+	<input type="hidden" name="tid" value="{$info.tid}">
+	<div class="col-md-12">
+		<div class="updata-ul">
+			<ul>
+			
+			<php>	if(in_array("template_update",$peradmin[product])){ </php>
+				<li><button class="submit-btn ajax-post ahover" id="submit" type="submit" target-form="form-horizontal"><i class="fa fa-check-circle-o"></i> 保 存</button></li>
+			<php>	} </php>
+			<neq name="info.tid" value="1">
+			<php>	if(in_array("template_del",$peradmin[product])){ </php>			
+				<li class="ul-del ahover"><a url="{:U('del?tid='.$info['tid'])}" class="ajax-get confirm"><i class="fa fa-trash-o"></i> 删除模板</a></li>
+			<php>	} </php>
+			</neq>	
+				<li class="ul-list ahover"><a href="{:U('index')}"><i class="fa fa-list"></i> 返回列表</a></li>
+				<li class="ul-break ahover"><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> 刷 新</a></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+	
+	
+	<div class="md-modal md-effect-1" id="modal-1">
+    <div class="md-content">
+      <h3>通用系统变量</h3>
+      <div>
+        <p>订单号：{ordernum}　订购日期：{time}　订购产品：{title}　产品尺码：{size}  产品颜色：{color}　数量：{num}　价格：{total}　姓名：{name}　手机：{phone}  省份：{province}	城市：{city}  区域：{area}  地址：{address}	 …… 更多变量请联系客服</p>
+        <button class="md-close btn-sm btn-primary">关闭</button>
+      </div>
+    </div>
+  </div>
+  <div class="md-overlay"></div>
+</block>
+<block name="script">
+<script src="__JS__/classie.js"></script>
+<script src="__JS__/modalEffects.js"></script>
+<script type="text/javascript">
+	Think.setValue("pro_class", {$info.pro_class|default=1});
+	Think.setValue("size_class", {$info.size_class|default=1});
+	Think.setValue("color_class", {$info.color_class|default=1});
+	$(function(){
+		
+		$("[name='sms']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("[name='delivery']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("[name='alert']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("[name='nav']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("[name='order']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		$("[name='search']").bootstrapSwitch({onText:'开启',offText:'关闭'});
+		
+		$('input[name="delivery"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state){
+				$('.delivery').show(500);
+			}else{
+				$('.delivery').hide(500);
+			}
+		});
+		$('input[name="order"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state){
+				$('.order').show(500);
+			}else{
+				$('.order').hide(500);
+			}
+		});
+		$('input[name="alert"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state){
+				$('.alerts').show(500);
+			}else{
+				$('.alerts').hide(500);
+			}
+		});
+		
+		$('input[name="nav"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			if(state){
+				$('.navs').show(500);
+			}else{
+				$('.navs').hide(500);
+			}
+		});
+		
+		
+		
+		$(".table-ul li").click(function(){
+			var opk = $(this).data('opk');
+			var opname = $(this).data('opname');
+			if($(this).hasClass('table-ul-bg') ) {
+				var html = '<i class="fa fa-square-o"></i> '+opname;
+				$(this).removeClass('table-ul-bg');
+				$(this).html(html);
+			}else{
+				var html = '<i class="fa fa-check-square-o"></i> '+opname+'<input type="hidden" name="options[]" value="'+opk+'"/>';
+				$(this).addClass('table-ul-bg');
+				$(this).html(html);
+			}
+			
+		});
+		
+		$(".table-nav li").click(function(){
+			var opk = $(this).data('opk');
+			var opname = $(this).data('opname');
+			if($(this).hasClass('table-ul-bg') ) {
+				var html = '<i class="fa fa-square-o"></i> '+opname;
+				$(this).removeClass('table-ul-bg');
+				$(this).html(html);
+			}else{
+				var html = '<i class="fa fa-check-square-o"></i> '+opname+'<input type="hidden" name="nav_temp[]" value="'+opk+'"/>';
+				$(this).addClass('table-ul-bg');
+				$(this).html(html);
+			}
+			
+		});
+		
+		
+		$(".table-dl dt p").click(function(){
+			if($(this).hasClass('table-dl-bg') ) {
+				$(this).removeClass('table-dl-bg');
+				$(this).find('i').removeClass('fa-check-square-o');
+				$(this).find('i').addClass('fa-square-o');
+				$(this).find('input').val(0);
+			
+			}else{
+				$(this).addClass('table-dl-bg');
+				$(this).find('i').removeClass('fa-square-o');
+				$(this).find('i').addClass('fa-check-square-o');
+				$(this).find('input').val(1);
+			}
+		});
+		
+		$(".alert_1").click(function(){
+			var type = $(this).data('type');
+			$(".alert_2 i").removeClass('fa-circle');
+			$(".alert_1 i").removeClass('fa-circle-thin');
+			$(".alert_1 i").addClass('fa-circle');
+			$(".alert_2 i").addClass('fa-circle-thin');
+			$('input[name="alert_type"]').val(type);
+			
+		});
+		$(".alert_2").click(function(){
+			var type = $(this).data('type');
+			$(".alert_1 i").removeClass('fa-circle');
+			$(".alert_2 i").removeClass('fa-circle-thin');
+			$(".alert_2 i").addClass('fa-circle');
+			$(".alert_1 i").addClass('fa-circle-thin');
+			$('input[name="alert_type"]').val(type);
+			
+		});
+	});
+	</script>
+</block>

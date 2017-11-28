@@ -1,0 +1,141 @@
+<extend name="Public/base" />
+
+<block name="body">
+<div class="col-md-12 main-main">
+	<div class="col-md-12 main-top"><i class="fa fa-bars fa-2x"></i> <b>产品管理</b></div>
+	<div class="c"></div>
+	<br/>
+	<div class="col-md-12">
+		<div class="nav-list-ul">
+			<ul>
+				<php>	if(in_array("pro_add",$peradmin[product])){ </php>
+				<li class="ul-add ahover"><a href="{:U('add')}"><i class="fa fa-plus-square-o"></i> 添加产品</a></li>
+				<php>	} </php>	
+				<php>	if(in_array("pro_del",$peradmin[product])){ </php>
+				<li class="ul-del ahover"><a class="ajax-post confirm" url="{:U('del_arr')}" target-form="ids"><i class="fa fa-trash-o"></i> 删除产品<a></li>
+				<php>	} </php>	
+				<li class="ul-add ahover"><a class="target-sort" url="{:U('sorts')}" target-form="sort"><i class="fa fa-sort-amount-asc"></i> 排 序<a></li>
+				<li class="ul-break ahover"><a href="{:U('index')}"><i class="fa fa-refresh"></i> 刷 新</a></li>
+				<eq name="language" value="1">
+				<li class="ul-add ahover"><a url="{:U('language?t=0')}" class="confirm ajax-get"><i class="fa fa-eye"></i> 前台语言【繁体】</a></li>
+				<else/>
+				<li class="ul-add ahover"><a url="{:U('language?t=1')}" class="confirm ajax-get"><i class="fa fa-eye"></i> 前台语言【简体】</a></li>
+				</eq>
+				<eq name="value" value="1">
+				<li class="a-list ahover"><a url="{:U('htmlvalue?t=0')}" class="confirm ajax-get"><i class="fa  fa-power-off"></i> 一键开启静态</a></li>
+				<else/>
+				<li class="a-list ahover"><a url="{:U('htmlvalue?t=1')}" class="confirm ajax-get"><i class="fa fa-times-circle"></i> 一键关闭静态</a></li>
+				<li class="a-add ahover"><a onclick="htmls();"><i class="fa fa-h-square"></i> 一键生成静态</a></li>
+				<li>如果产品详情页面有任何改动，请重新点击（一键生成静态）</li>
+				</eq>
+			</ul>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="order-title">
+		<ul>
+			<li>共查询到<span>{$count}</span>个产品</li>
+		</ul>
+	</div>
+	<div class="c"></div>
+	<div class="col-md-12 main-cen">
+		<table class="table table-bordered table-list">
+			<tbody>
+				<th width="20"><input class="check-all" type="checkbox"/></th>
+				<th width="60">排序</th>
+				<th>产品标题</th>
+				<th>原价</th>
+				<th>活动价</th>
+				<th>购买量</th>
+				<th>产品模板</th>
+				<th>产品风格</th>
+				<th>添加时间</th>
+				<th>状态</th>
+				<th width="240">操作</th>
+			<tbody>
+			<volist name="_list" id="vo">
+			<tr>
+				<td><input class="ids" type="checkbox" name="proid[]" value="{$vo.proid}" /></td>
+				<td><input type="text" value="{$vo.sort}" name="sort[{$vo.proid}]" class="sort"/></td>
+				<td>
+				<eq name="value" value="1">
+				<a href="{:U('home/index/info?proid='.$vo[proid].'&uid='.UID)}" target="_blank">{$vo.title}</a>
+				<else/>
+				<a href="__ROOT__/html/{$vo[proid]}-{:UID}.html" target="_blank">{$vo.title}</a>
+				</eq>
+				</td>
+				<td>&yen; {$vo.oldprice}</td>
+				<td>&yen; {$vo.price}</td>
+				<td>{$vo.number}</td>
+				<td>{$vo.temp}</td>
+				<td>{$vo.style}</td>
+				<td>{$vo.addtime|time_format}</td>
+				<td><eq name="vo.status" value="1"><font color="red" style="font-weight:bold;">开启</font><else/>关闭</eq></td>
+				<td><php>	if(in_array("pro_update",$peradmin[product])){ </php><a href="{:U('update?proid='.$vo['proid'])}" class="a a-list ahover"><i class="fa fa-edit"></i> 详 情</a><php>	} </php> <php>	if(in_array("pro_del",$peradmin[product])){ </php><a url="{:U('del?proid='.$vo['proid'])}" class="confirm ajax-get a a-del ahover"><i class="fa fa-trash-o"></i> 删 除</a><php>	} </php> <a href="{:U('product/gz?proid='.$vo['proid'].'&type=4')}" class="a a-add ahover"><i class="fa fa-chain"></i> 推广链接</a>	</td>
+			</tr>
+			</volist>
+		</table>
+	</div>
+</div>
+<div class="page col-md-12">{$_page}</div>
+</block>
+
+<block name="script">
+	
+	<script type="text/javascript">
+		function htmls(){
+			swal({
+				title: "生成静态中...",
+				imageUrl: "__PUBLIC__/Admin/images/loadtime.gif",
+				showConfirmButton: false
+			});
+			
+			$.get("{:U('home/index/html')}", function(data){
+				//swal("生成静态成功！", "", "success"); 
+				swal({
+					title: "生成静态成功！",
+					type: "success",
+					timer: 1000,
+					showConfirmButton: false
+				});
+			});
+		}
+	
+		$(document).ready(function(){
+			$(".target-sort").click(function(){ 
+				var url = $(this).attr('url');
+				var target = $(this).attr('target-form');
+				var form = $('.'+target);
+				query = form.serialize();
+				swal({ 
+					title: "确认要执行该操作吗?", 
+					type: "warning", 
+					showCancelButton: true, 
+					closeOnConfirm: false, 
+					confirmButtonText: "是的", 
+					confirmButtonColor: "#ec6c62" 
+				}, function() { 
+					
+					$.post(url,query).success(function(data){
+						if (data.status==1) {
+							if (data.url) {
+								swal(data.info, "", "success");
+							}else{
+								swal(data.info, "", "success");
+							}
+							setTimeout(function(){
+								location.reload();
+							},1500);
+						}else{
+							swal(data.info, "", "error");
+							setTimeout(function(){
+								location.reload();
+							},1500);
+						}
+					});
+				});
+			});
+		});
+	
+	</script>
+</block>

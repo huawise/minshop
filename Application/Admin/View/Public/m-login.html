@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>小蜜蜂管理中心</title>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/layer.css">	
+<link rel="stylesheet" type="text/css" href="__CSS__/m-style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+</head>
+
+<body>
+<div class="top"></div>
+<div class="enter">
+	<div class="enter-logo"></div>
+	<div class="enter-txt">小蜜蜂管理中心</div>
+    <form action="{:U('login')}" method="post" class="login-form">
+        <ul>
+            <li><i class="fa fa-user"></i><input name="username" type="text" placeholder="请填写用户名"/></li>
+            <li><i class="fa fa-lock"></i><input type="password" name="password" placeholder="请填写密码" /></li>
+			<egt name="num" value="3">
+			<ol class="show" id="verify">
+			<else/>
+			<ol class="hide" id="verify">
+			</egt>
+			<span><i class="fa fa-key"></i><input name="verify" type="text" placeholder="请填写验证码" /></span><span><img class="verifyimg reloadverify" alt="点击切换" src="{:U('Public/verify')}"></span></ol>
+            <p><button class="login-btn" type="submit">登 录</button></p>
+        </ul>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+		
+	//表单提交
+	$(document)
+	$("form").submit(function(){
+		layer.load(1,{shade: [0.5,'#000']});
+		var self = $(this);
+		$.post(self.attr("action"), self.serialize(), success, "json");
+		return false;
+		
+		function success(data){
+			if(data.status){
+				layer.closeAll('loading');
+				parent.layer.msg(data.info,{icon: 6, time: 1800});
+				setTimeout(function() {
+					window.location.href = data.url;
+				},2000);
+			} else {
+				layer.closeAll('loading');
+				parent.layer.msg(data.info,{icon: 5, time: 1800});
+				if(data.num >= 3){
+					$('#verify').show();
+				}
+				//刷新验证码
+				$(".reloadverify").click();
+			}
+		}
+		
+	});
+	
+	$(function(){
+		//初始化选中用户名输入框
+		$("#itemBox").find("input[name=username]").focus();
+		//刷新验证码
+		var verifyimg = $(".verifyimg").attr("src");
+		$(".reloadverify").click(function(){
+			if( verifyimg.indexOf('?')>0){
+				$(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+			}else{
+				$(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+			}
+		});
+
+		//placeholder兼容性
+			//如果支持 
+		function isPlaceholer(){
+			var input = document.createElement('input');
+			return "placeholder" in input;
+		}
+			//如果不支持
+		if(!isPlaceholer()){
+			$(".placeholder_copy").css({
+				display:'block'
+			})
+			$("#itemBox input").keydown(function(){
+				$(this).parents(".item").next(".placeholder_copy").css({
+					display:'none'
+				})                    
+			})
+			$("#itemBox input").blur(function(){
+				if($(this).val()==""){
+					$(this).parents(".item").next(".placeholder_copy").css({
+						display:'block'
+					})                      
+				}
+			})
+		}
+	});
+</script>

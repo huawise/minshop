@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>小蜜蜂管理中心</title>
+<script type="text/javascript" src="__ROOT__/Public/Admin/js/jquery.js"></script>	
+<link rel="stylesheet" type="text/css" href="__CSS__/m-style.css">
+<link rel="stylesheet" type="text/css" href="__CSS__/font-awesome.min.css">
+</head>
+
+<body>
+<header><a class="fa fa-chevron-left fa-lg" href="{:U('order/selectsum')}"></a>订单统计</header>
+<eq name="t" value="months">
+<div class="main">
+	<div class="main-title"><i class="fa fa-calendar-o fa-lg"></i> 按月统计</div>
+    <table width="100%">
+      <tr>
+        <th scope="col">月统计</th>
+        <th scope="col">订单数量</th>
+        <th scope="col">订单金额(元)</th>
+      </tr>
+	<foreach name="m_list" item="v" key="k">
+      <tr>
+        <td>{$k} 月</td>
+        <td>{$v.count}</td>
+        <td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+      </tr>
+      </foreach>
+    </table>
+</div>
+</eq>
+<eq name="t" value="day">
+<div class="main">
+	<div class="main-title"><i class="fa fa-calendar fa-lg"></i> 按日统计</div>
+    <table width="100%">
+      <tr>
+        <th scope="col">日统计</th>
+        <th scope="col">订单数量</th>
+        <th scope="col">订单金额(元)</th>
+      </tr>
+	  <foreach name="d_list" item="v" key="k">
+      <tr>
+        <td>{$v.day} 日</td>
+        <td>{$v.count}</td>
+        <td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+      </tr>
+      </foreach>
+    </table>
+</div>
+</eq>
+<eq name="t" value="pro">
+<div class="main">
+	<div class="main-title"><i class="fa fa-cube fa-lg"></i> 按产品统计</div>
+    <table width="100%">
+      <tr>
+        <th scope="col">产品名称</th>
+        <th scope="col">订单数量</th>
+        <th scope="col">订单金额(元)</th>
+      </tr>
+	 <volist name="product" id="v">
+      <tr>
+        <td>{$v.title}</td>
+        <td>{$v.count}</td>
+        <td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+      </tr>
+     </volist>
+    </table>
+</div>
+</eq>
+<eq name="t" value="pay">
+<div class="main">
+	<div class="main-title"><i class="fa fa-credit-card fa-lg"></i> 按支付方式统计</div>
+    <table width="100%">
+      <tr>
+        <th scope="col">支付方式</th>
+        <th scope="col">订单数量</th>
+        <th scope="col">订单金额(元)</th>
+      </tr>
+	  <volist name="paylist" id="v">
+      <tr>
+        <td>{$v.title}</td>
+        <td>{$v.count}</td>
+        <td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+      </tr>
+     </volist>
+    </table>
+</div>
+</eq>
+<eq name="t" value="area">
+
+<div class="main">
+	<div class="main-title"><i class="fa fa-globe fa-lg"></i> 按所在地区统计</div>
+    <table width="100%">
+      <tr>
+        <th scope="col">所在地区</th>
+        <th scope="col">订单数量</th>
+        <th scope="col">订单金额(元)</th>
+      </tr>
+	 <volist name="province" id="v">
+      <tr>
+        <td>{$v.title}</td>
+        <td>{$v.count}</td>
+        <td><eq name="v.total" value="">&yen; 0.00<else/>&yen; {$v.total}</eq></td>
+      </tr>
+     </volist>
+    </table>
+</div>
+</eq>
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+    $("table tr:last").css({"border-bottom":"none"});
+})
+</script>

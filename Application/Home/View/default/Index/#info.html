@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"> 
+<meta content="yes" name="apple-mobile-web-app-capable"> 
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="320" name="MobileOptimized">
+<meta content="telephone=no" name="format-detection">
+<title>{$info.title}</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="__PUBLIC__/Home/css/not3style.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/swiper-3.3.1.min.css">
+<script src="__PUBLIC__/Home/js/jquery.js"></script>
+<script src="__PUBLIC__/Home/js/time.lesser.js"></script>
+<script src="__PUBLIC__/Home/js/notorder.js"></script>
+<script src="__PUBLIC__/Home/js/layer.js"></script>
+<script src="__PUBLIC__/Home/js/swiper-3.3.1.min.js"></script>
+<style>
+section.buy{background: <?php echo $color_bg;?> !important;}
+#page{max-width:750px; }
+</style>
+</head>
+
+<body>
+<div id="page">
+   <header>
+    <h1>{$info.title}</h1>
+   </header>
+  
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+	<volist name="images" id="v">
+        <div class="swiper-slide"><img src="{$v}"/></div>
+	</volist>	
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+<script language="javascript"> 
+var mySwiper = new Swiper('.swiper-container',{
+pagination : '.swiper-pagination',
+loop:false,
+grabCursor: true,
+paginationClickable: true,
+autoplay: 5000
+//pagination : '#swiper-pagination1',
+})
+</script>
+    
+    <section class="buy">
+     <div class="row1">
+       <strong>￥{$info.price}</strong>
+       
+       <ol>
+        <li><p>原价</p>￥{$info.oldprice}</li>
+        <li><p>节省</p>￥{$info.preferential}</li>
+       </ol>
+       
+     </div>
+     
+     <div class="row2">
+      <strong>{$info.number}人已购买</strong> 
+      <div class="djs">
+        <div class="time-count">
+		<if condition="($info.starttime gt time())">
+			<span>活动未开始</span>
+		<elseif condition="($info.endtime lt time())"/>
+			<span>活动已结束</span>
+		<else />
+		 <div id="remainTime_1" class="jltimer"></div>
+            <script language="javascript">
+                addTimeLesser(1, {$endtime});
+            </script>
+		</if>
+           
+        </div>
+       </div>             
+     </div>
+     
+     <article class="des"></article>
+	 <if condition="($info.starttime gt time())">
+		<a class="btn">活动未开始</a>
+	<elseif condition="($info.endtime lt time())"/>
+		<a class="btn">活动已结束</a>
+	<else />
+	 <div id="remainTime_1" class="jltimer"></div>
+		<script language="javascript">
+			addTimeLesser(1, {$endtime});
+		</script>
+		<a class="btn" href="#buy">立即购买</a>
+	</if>
+     
+    </section>
+    
+<article class="showcontent">    
+<div>
+<!--
+<h2 style="color:#6C594D;font-size:18px;font-family:微软雅黑;background:#EEE9E6;">抢购描述</h2>
+<div class="description">{$info.description}</div>
+<h2 style="color:#6C594D;font-size:18px;font-family:微软雅黑;background:#EEE9E6;">产品简介</h2>
+-->
+<div class="content">{$info.content}</div>
+
+</div>
+</article>  
+
+<if condition="($info.starttime gt time())">
+		
+<elseif condition="($info.endtime lt time())"/>
+	
+<else />
+
+<article id="buy">
+
+<div id="not3qiehuan">
+<ul id="qh">
+ <li id="qha" class="on" onclick="not3change('qha','not3order');">填写订单</li>
+ <li id="qhb" class="m" onclick="not3change('qhb','not3check');">订单查询</li>
+</ul>
+</div>
+<div id="not3order" style="">
+<form id="form" name="form" action="" method="post" onsubmit="return postcheck()">
+<input name="proid" type="hidden" value="{:I('get.proid')}">
+<script>var notzfbzk="0";</script>
+<div class="not3p">产品选择<span>*</span></div>
+  <div class="not3orderkuai">
+    <ul>
+      <input name="attr" type="hidden" value="{$info['type'][$key]['title']}">
+	  <foreach name="info.type" item="v" key="k" >
+	  <li onclick="fn(this,{$v.price},{$k})" class="ks <if condition="($k eq $key)">mouon</if>">{$v.title}</li>
+	  </foreach>
+    </ul>
+  </div>
+   <div class="not3p">购买数量<span>*</span></div>
+   <div class="numb">
+       <span><input id="min1" name="" type="button" value="-" onclick="minnumber()"></span>
+       <em><input id="mun" name="mun" type="text" value="1" onfocus="this.blur()"></em>
+       <span><input id="add1" name="" type="button" value="+" onfocus="this.blur()" onclick="addnumber()"></span>
+   </div>
+   
+   <div class="not3p">商品价格<span>*</span></div>
+   <div class="not3orderkuai">
+       <span class="mouon f18">￥ <b id="total1">{$info['type'][$key]['price']}</b> 元</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i onclick="addcat()">加入购物车</i>
+       <input name="price" id="price" type="hidden" value="{$info['type'][$key]['price']}">
+       <input id="danjia" type="hidden" value="{$info['type'][$key]['price']}">
+	   <input id="id" type="hidden" value="{$key}">
+   </div>
+
+   <div class="not3p">购物车<span>*</span></div>
+   <div class="carlist">
+   </div>
+   <div class="not3p">商品总价<span>*</span></div>
+   <div id="cararr">￥0</div>
+   <input id="carjiage" type="hidden" value="0">
+   <div class="not3p">付款方式<span>*</span></div>
+   <div class="car">
+       <if condition="$ail_status eq 1"><span class="" carid="1" id="alipay">支付宝</span></if>
+	   <if condition="$wx_status eq 1"><span class="" carid="2" id="wxpay">微信</span></if>
+	   <if condition="$hd_status eq 1"><span class="" carid="3" id="daofu">货到付款</span></if>
+	   <div class="clear"></div>
+	   <p id="postage">{$postage}</p>
+   </div>
+   
+   <input name="fang" id="fang" type="hidden" value="1">
+   <div class="not3p">收货人姓名<span>*</span></div>
+   <div class="pad"><input name="name" class="bod2" placeholder="请输入收货人的姓名或者称呼"></div>
+                
+   <div class="not3p">联系手机<span>*</span></div>
+   <div class="pad"><input name="mob" class="bod2" placeholder="请输入您的手机号码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')"></div>
+                
+   <div class="not3p">所在地区<span>*</span></div>
+   <div class="pad">
+        <select id="s_province" name="province" class="bod2"><option value="所属省份">所属省份</option><option value="北京市">北京市</option><option value="天津市">天津市</option><option value="上海市">上海市</option><option value="重庆市">重庆市</option><option value="河北省">河北省</option><option value="山西省">山西省</option><option value="内蒙古">内蒙古</option><option value="辽宁省">辽宁省</option><option value="吉林省">吉林省</option><option value="黑龙江省">黑龙江省</option><option value="江苏省">江苏省</option><option value="浙江省">浙江省</option><option value="安徽省">安徽省</option><option value="福建省">福建省</option><option value="江西省">江西省</option><option value="山东省">山东省</option><option value="河南省">河南省</option><option value="湖北省">湖北省</option><option value="湖南省">湖南省</option><option value="广东省">广东省</option><option value="广西">广西</option><option value="海南省">海南省</option><option value="四川省">四川省</option><option value="贵州省">贵州省</option><option value="云南省">云南省</option><option value="西藏">西藏</option><option value="陕西省">陕西省</option><option value="甘肃省">甘肃省</option><option value="青海省">青海省</option><option value="宁夏">宁夏</option><option value="新疆">新疆</option><option value="香港">香港</option><option value="澳门">澳门</option><option value="台湾省">台湾省</option></select>
+        <select id="s_city" name="city" class="bod2 mar_t"><option value="所属地级市">所属地级市</option></select>
+        <select id="s_county" name="area" class="bod2"><option value="所属市、县级市">所属市、县级市</option></select>
+        <script class="resources library" src="__PUBLIC__/Home/js/area.js" type="text/javascript"></script>
+        <script type="text/javascript">_init_area();</script>
+        <script type="text/javascript">
+        var Gid  = document.getElementById ;
+        var showArea = function(){
+        Gid('show').innerHTML = "<h3>省" + Gid('s_province').value + " - 市" + 	
+        Gid('s_city').value + " - 县/区" + 
+        Gid('s_county').value + "</h3>"
+        }
+        Gid('s_county').setAttribute('onchange','showArea()');
+        </script>
+   </div>
+                
+   <div class="not3p">详细地址<span>*</span></div>
+   <div class="pad"><input type="text" name="address" class="bod2" placeholder="请输入您的详细地址，方便快递员上门送货"></div>
+   
+   <div class="not3p">备注信息 （选填）</div>
+   <div class="pad"><textarea name="guest" class="bod2" rows="3" placeholder="请输入您对商品的特殊要求，如商品颜色、数量等"></textarea></div>
+   <div class="gou" onclick="javascript:return postcheck();"><a id="tijiao">我填好了  提交订单</a></div>
+   <p class="lianxi">{:C('WEB_SITE_DESCRIPTION')}</p>
+   <script>getfrom();</script>
+</form>
+<script>
+//quehuo();
+
+$(document).ready(function(){
+	$(".car span").click( function () {
+		var carid = $(this).attr("carid");
+		$("#fang").val(carid);
+		$(".car span").removeClass();
+		$(this).addClass("mouon");
+		if(carid == 3){
+			$("#postage").show();
+		}else{
+			$("#postage").hide();
+		}
+	});
+	
+	$(".car span").eq(0).addClass('mouon');
+	var id = $(".car span").eq(0).attr('carid');
+	$("#fang").val(id);
+});
+
+
+function fn(obj,price,id)
+{
+	$(obj).siblings().removeClass('mouon');
+	$(obj).addClass('mouon');
+	$("input[name='attr']").val($(obj).html());
+	$("#total1").html(price);
+	$("#mun").val(1);
+	$("#price").val((price).toFixed(2));
+	$("#danjia").val((price).toFixed(2));
+	$("#id").val(id);
+}
+
+function addcat(){
+	var attr = $("input[name='attr']").val();
+	var mun = $("#mun").val();
+	var id = $("#id").val();
+	var price = $("#price").val();
+	var danjia = $("#danjia").val();
+	//var html = $('.carlist').html();
+	var cararr = $('#carjiage').val();
+	
+	if(cararr){
+		var car = (parseFloat(cararr)+parseFloat(price)).toFixed(2);
+		//$('#cararr').html('￥'+car);
+		$('#carjiage').val(car);
+	}else{
+		//$('#cararr').html('￥'+price);
+		$('#carjiage').val(price);
+	}
+	
+	$.post("{:U('cart')}",{mun:mun,id:id,price:price,attr:attr},function(data){
+		$('.carlist').html(data.html);
+		$('#cararr').html('￥'+data.total);
+		$('#carjiage').val(data.total);
+	},"json");
+	
+}
+
+function delcat(id){
+	$.post("{:U('cartdel')}",{id:id},function(data){
+		$('.carlist').html(data.html);
+		if(!data.total){
+			$('#cararr').html('￥0');
+			$('#carjiage').val('0');
+		}else{
+			$('#cararr').html('￥'+data.total);
+			$('#carjiage').val(data.total);
+		}
+	},"json");
+	
+}
+
+</script>
+
+<script>
+var not3chanpin=new Array({$type});
+var not3yanse=new Array();
+var not3chima=new Array();
+</script>
+<div id="fahuo">
+	<script type="text/javascript" src="__PUBLIC__/Home/js/fahuo.js"></script>
+    <script>
+	document.writeln("<ul>");
+	document.writeln("<li><span>[最新购买]：<\/span>王**（133****4096）在10分钟前订购了 "+getfahuo()+" <font color='#FF0000'>√<\/font><\/li>");document.writeln("<li><span>[最新购买]：<\/span>秦**（139****1955）在15分钟前订购了 "+getfahuo()+" <font color='#FF0000'>√<\/font><\/li>");document.writeln("<li><span>[最新购买]：<\/span>李**（136****7163）在3分钟前订购了 "+getfahuo()+" <font color='#FF0000'>√<\/font><\/li>");document.writeln("<li><span>[最新购买]：<\/span>赵**（139****1955）在7分钟前订购了 "+getfahuo()+" <font color='#FF0000'>√<\/font><\/li>");document.writeln("<li><span>[最新购买]：<\/span>周**（151****2588）在4分钟前订购了 "+getfahuo()+" <font color='#FF0000'>√<\/font><\/li>");document.writeln("<li><span>[最新购买]：<\/span>赵**（139****1955）在7分钟前订购了 "+getfahuo()+" <font color='#FF0000'>√<\/font><\/li>");	document.writeln("<\/ul>");
+	</script>
+</div>
+</div>
+
+<div id="not3check" style="display:none">
+   <div class="not3p">手机号码<span>*</span></div>
+   <div class="pad"><input type="text" name="chatel" class="bod2" value="" placeholder="请输入你提交订单的手机号码"></div>
+   <div id="notcheckresult" style="padding:8px;"></div>
+   <div class="gou" id="cha"><a>查询订单</a></div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/diqu.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/not3.js"></script>
+</article>
+
+</if>
+
+
+<footer>
+<p style="background:#ED145B;text-align:center"><img src="__PUBLIC__/Home/images/foot.jpg" style="max-width:640px;width:100%"></p>
+<p></p>
+<a href="{:U('home/index/index')}">网站首页</a><a href="{:U('home/index/contact')}">联系我们</a><a href="{:U('home/index/about')}">关于我们</a><br>
+{:C('WEB_SITE_ICP')}<p style="text-align:center;"><img style="max-width:100%;" src="__PUBLIC__/Home/images/footer.jpg" /></p>
+<p>
+
+<a href="jubao.html">举报</a>
+
+</p>
+</footer>
+</div><!--/page-->
+<br><br>
+
+<nav>
+  <ul class="Transverse">
+     <li><a href="#buy"><strong>在线下单</strong></a></li> 
+	 <li><a href="tel:{:C('WEB_SITE_TITLE')}"><strong>电话咨询</strong></a></li>
+  	 <li><a href="sms:{:C('WEB_SITE_TITLE')}"><strong>短信订购</strong></a></li>
+  </ul>
+</nav>
+
+</body>
+</html>
+<script>
+$("#cha").click(function(){
+	
+	var cha = $("input[name='chatel']").val();
+	if(cha == ''){
+		alert('请输入手机号码！');
+		return false;
+	}else{
+		window.location.href = "__APP__/home/index/phone/phone/"+cha+".html";
+	}
+	
+});
+$('select[name="fang"]').change(function(){
+	if($(this).val() == "退货"){
+		$("#putbank").show();
+	}else{
+		$("#putbank").hide();
+	}
+});
+</script>
